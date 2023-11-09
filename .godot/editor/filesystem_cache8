@@ -1,6 +1,7 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1699506174
+::res://::1699506294
 icon.svg::CompressedTexture2D::8409829438006571512::1699300623::1699300633::1::::<><>::
+README.md::TextFile::-1::1699506253::0::1::::<><>::
 ::res://addons/::1699408209
 ::res://addons/AWOC/::1699408209
 plugin.cfg::TextFile::-1::1699408209::0::1::::<><>::
@@ -68,7 +69,5 @@ slot_container.gd::GDScript::-1::1699408209::0::1::::<>AWOCBasePane<>::
 slot_container.tscn::PackedScene::4183763643459313173::1699505254::0::1::::<><>::uid://drffev6w87ljh::::res://addons/AWOC/Themes/main_theme.tres<>res://addons/AWOC/Scenes/Parts/SlotContainer/slot_container.gd<>uid://b4lrc2ct3tv6g::::res://addons/AWOC/Scenes/Parts/HideSlotContainer/hide_slot_container.tscn<>uid://dewa5wjv0dbel::::res://addons/AWOC/Images/Save.svg<>uid://cg741telb0c24::::res://addons/AWOC/Images/Remove.svg<>uid://bajmsg6jpht1s::::res://addons/AWOC/Images/GuiVisibilityHidden.svg<>uid://dp60fbkc3xia::::res://addons/AWOC/Images/GuiVisibilityVisible.svg<>uid://cnuepoi4ynvoy::::res://addons/AWOC/Images/Add.svg
 ::res://addons/AWOC/Themes/::1699505254
 main_theme.tres::Theme::8363106161759843573::1699505254::0::1::::<><>::
-::res://TestModel/::1699484358
-male.glb::PackedScene::5487138178028381235::1698429069::1699484358::1::::<><>::uid://d3redjpm606g4
-male_confirm_texture.png::CompressedTexture2D::9159892816585894365::1698429112::1699484358::1::::<><>::
+::res://TestModel/::1699506184
 test_model.glb::PackedScene::5623864389044670945::1698203750::1699484043::1::::<><>::
