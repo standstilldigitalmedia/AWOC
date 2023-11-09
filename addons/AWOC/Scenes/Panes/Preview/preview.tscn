@@ -1,0 +1,139 @@
+[gd_scene load_steps=13 format=3 uid="uid://c1gvj38yelvvs"]
+
+[ext_resource type="Script" path="res://addons/AWOC/Scenes/Panes/Preview/preview.gd" id="1_cfbee"]
+[ext_resource type="Theme" uid="uid://drffev6w87ljh" path="res://addons/AWOC/Themes/main_theme.tres" id="2_b762g"]
+[ext_resource type="Material" uid="uid://bfh18l781n0ff" path="res://addons/AWOC/Scenes/AWOCEditor/new_standard_material_3d.tres" id="2_yae7d"]
+[ext_resource type="Texture2D" uid="uid://5a4bi2dff8dk" path="res://addons/AWOC/Images/RotateLeft.svg" id="3_avu86"]
+[ext_resource type="Texture2D" uid="uid://b38kjo75amqwy" path="res://addons/AWOC/Images/ArrowUp.svg" id="4_1gbus"]
+[ext_resource type="Texture2D" uid="uid://ddrmclnfoer4s" path="res://addons/AWOC/Images/RotateRight.svg" id="5_oma2g"]
+[ext_resource type="Texture2D" uid="uid://c4dbqhgevxie6" path="res://addons/AWOC/Images/ArrowLeft.svg" id="6_t2an4"]
+[ext_resource type="Texture2D" uid="uid://dy8yvja4x1nsr" path="res://addons/AWOC/Images/CenterView.svg" id="7_ya2yd"]
+[ext_resource type="Texture2D" uid="uid://t35u6qnqssdk" path="res://addons/AWOC/Images/ArrowRight.svg" id="8_sl82n"]
+[ext_resource type="Texture2D" uid="uid://cnuepoi4ynvoy" path="res://addons/AWOC/Images/Add.svg" id="9_jc64w"]
+[ext_resource type="Texture2D" uid="uid://dpfqlxlqoeppx" path="res://addons/AWOC/Images/ArrowDown.svg" id="10_lhppb"]
+[ext_resource type="Texture2D" uid="uid://ctyltspjtpj25" path="res://addons/AWOC/Images/CurveConstant.svg" id="11_hkx8j"]
+
+[node name="Preview" type="VBoxContainer" node_paths=PackedStringArray("viewport", "camera")]
+anchors_preset = -1
+anchor_right = 0.26
+anchor_bottom = 0.606
+offset_right = -299.52
+offset_bottom = -392.688
+script = ExtResource("1_cfbee")
+viewport = NodePath("SubViewportContainer/SubViewport")
+camera = NodePath("SubViewportContainer/SubViewport/Camera3D")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+layout_mode = 2
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+own_world_3d = true
+handle_input_locally = false
+size = Vector2i(300, 300)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6.02478)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1000, 0, 0, 0, 1000, 0, 0, 0, 1, 0, 0, -211.347)
+material_override = ExtResource("2_yae7d")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="CenterContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 3
+
+[node name="RotateLeft" type="Button" parent="CenterContainer/GridContainer"]
+custom_minimum_size = Vector2(23, 23)
+layout_mode = 2
+theme = ExtResource("2_b762g")
+icon = ExtResource("3_avu86")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Up" type="Button" parent="CenterContainer/GridContainer"]
+custom_minimum_size = Vector2(23, 23)
+layout_mode = 2
+theme = ExtResource("2_b762g")
+icon = ExtResource("4_1gbus")
+icon_alignment = 1
+expand_icon = true
+
+[node name="RotateRight" type="Button" parent="CenterContainer/GridContainer"]
+custom_minimum_size = Vector2(23, 23)
+layout_mode = 2
+theme = ExtResource("2_b762g")
+icon = ExtResource("5_oma2g")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Left" type="Button" parent="CenterContainer/GridContainer"]
+custom_minimum_size = Vector2(23, 23)
+layout_mode = 2
+theme = ExtResource("2_b762g")
+icon = ExtResource("6_t2an4")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Center" type="Button" parent="CenterContainer/GridContainer"]
+custom_minimum_size = Vector2(23, 23)
+layout_mode = 2
+theme = ExtResource("2_b762g")
+icon = ExtResource("7_ya2yd")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Right" type="Button" parent="CenterContainer/GridContainer"]
+custom_minimum_size = Vector2(23, 23)
+layout_mode = 2
+theme = ExtResource("2_b762g")
+icon = ExtResource("8_sl82n")
+icon_alignment = 1
+expand_icon = true
+
+[node name="ZoomIn" type="Button" parent="CenterContainer/GridContainer"]
+custom_minimum_size = Vector2(23, 23)
+layout_mode = 2
+theme = ExtResource("2_b762g")
+icon = ExtResource("9_jc64w")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Down" type="Button" parent="CenterContainer/GridContainer"]
+custom_minimum_size = Vector2(23, 23)
+layout_mode = 2
+theme = ExtResource("2_b762g")
+icon = ExtResource("10_lhppb")
+icon_alignment = 1
+expand_icon = true
+
+[node name="ZoomOut" type="Button" parent="CenterContainer/GridContainer"]
+custom_minimum_size = Vector2(23, 23)
+layout_mode = 2
+theme = ExtResource("2_b762g")
+icon = ExtResource("11_hkx8j")
+icon_alignment = 1
+expand_icon = true
+
+[connection signal="button_down" from="CenterContainer/GridContainer/RotateLeft" to="." method="_on_rotate_left_button_down"]
+[connection signal="button_up" from="CenterContainer/GridContainer/RotateLeft" to="." method="on_button_up"]
+[connection signal="button_down" from="CenterContainer/GridContainer/Up" to="." method="_on_up_button_down"]
+[connection signal="button_up" from="CenterContainer/GridContainer/Up" to="." method="on_button_up"]
+[connection signal="button_down" from="CenterContainer/GridContainer/RotateRight" to="." method="_on_rotate_right_button_down"]
+[connection signal="button_up" from="CenterContainer/GridContainer/RotateRight" to="." method="on_button_up"]
+[connection signal="button_down" from="CenterContainer/GridContainer/Left" to="." method="_on_left_button_down"]
+[connection signal="button_up" from="CenterContainer/GridContainer/Left" to="." method="on_button_up"]
+[connection signal="pressed" from="CenterContainer/GridContainer/Center" to="." method="_on_center_pressed"]
+[connection signal="button_down" from="CenterContainer/GridContainer/Right" to="." method="_on_right_button_down"]
+[connection signal="button_up" from="CenterContainer/GridContainer/Right" to="." method="on_button_up"]
+[connection signal="button_down" from="CenterContainer/GridContainer/ZoomIn" to="." method="_on_zoom_in_button_down"]
+[connection signal="button_up" from="CenterContainer/GridContainer/ZoomIn" to="." method="on_button_up"]
+[connection signal="button_down" from="CenterContainer/GridContainer/Down" to="." method="_on_down_button_down"]
+[connection signal="button_up" from="CenterContainer/GridContainer/Down" to="." method="on_button_up"]
+[connection signal="button_down" from="CenterContainer/GridContainer/ZoomOut" to="." method="_on_zoom_out_button_down"]
+[connection signal="button_up" from="CenterContainer/GridContainer/ZoomOut" to="." method="on_button_up"]

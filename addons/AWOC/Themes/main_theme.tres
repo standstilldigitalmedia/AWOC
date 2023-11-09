@@ -1,0 +1,55 @@
+[gd_resource type="Theme" load_steps=9 format=3 uid="uid://drffev6w87ljh"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jjps5"]
+bg_color = Color(0.0392157, 0.0784314, 0.0392157, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oefto"]
+bg_color = Color(0.0392157, 0.196078, 0.0392157, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x351x"]
+bg_color = Color(0.0392157, 0.196078, 0.0392157, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v2l2w"]
+bg_color = Color(0, 0.156863, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y13hn"]
+bg_color = Color(0.0392157, 0.196078, 0.0392157, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_24kjj"]
+bg_color = Color(0.823529, 1, 0.823529, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qpbkb"]
+bg_color = Color(0.784314, 1, 0.784314, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_et0qj"]
+bg_color = Color(0.392157, 0.6, 0.392157, 1)
+
+[resource]
+Button/colors/font_color = Color(0.784314, 1, 0.784314, 1)
+Button/colors/font_disabled_color = Color(0.784314, 1, 0.784314, 0.501961)
+Button/colors/font_focus_color = Color(0.784314, 1, 0.784314, 1)
+Button/colors/font_hover_color = Color(0.784314, 1, 0.784314, 1)
+Button/colors/font_hover_pressed_color = Color(0.784314, 1, 0.784314, 1)
+Button/colors/font_pressed_color = Color(0.784314, 1, 0.784314, 1)
+Button/colors/icon_disabled_color = Color(0.784314, 1, 0.784314, 0.4)
+Button/colors/icon_focus_color = Color(0.784314, 1, 0.784314, 1)
+Button/colors/icon_hover_color = Color(0.784314, 1, 0.784314, 1)
+Button/colors/icon_hover_pressed_color = Color(0.784314, 1, 0.784314, 1)
+Button/colors/icon_normal_color = Color(0.784314, 1, 0.784314, 1)
+Button/colors/icon_pressed_color = Color(0.784314, 1, 0.784314, 1)
+Button/styles/disabled = SubResource("StyleBoxFlat_jjps5")
+Button/styles/focus = SubResource("StyleBoxFlat_oefto")
+Button/styles/hover = SubResource("StyleBoxFlat_x351x")
+Button/styles/normal = SubResource("StyleBoxFlat_v2l2w")
+Button/styles/pressed = SubResource("StyleBoxFlat_y13hn")
+CheckButton/constants/check_v_offset = -3
+Label/colors/font_color = Color(0.784314, 1, 0.784314, 1)
+LineEdit/colors/caret_color = Color(0, 0.117647, 0, 1)
+LineEdit/colors/clear_button_color_pressed = Color(1, 1, 1, 1)
+LineEdit/colors/font_color = Color(0, 0.196078, 0, 1)
+LineEdit/colors/font_placeholder_color = Color(0, 0.196078, 0, 0.6)
+LineEdit/colors/font_selected_color = Color(0, 0.196078, 0, 1)
+LineEdit/colors/font_uneditable_color = Color(0, 0.196078, 0, 0.501961)
+LineEdit/styles/focus = SubResource("StyleBoxFlat_24kjj")
+LineEdit/styles/normal = SubResource("StyleBoxFlat_qpbkb")
+LineEdit/styles/read_only = SubResource("StyleBoxFlat_et0qj")

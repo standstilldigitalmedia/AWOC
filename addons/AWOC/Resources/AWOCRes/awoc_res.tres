@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="AWOCRes" load_steps=2 format=3 uid="uid://c0hyqui7r2qsj"]
+
+[ext_resource type="Script" path="res://addons/AWOC/Resources/AWOCRes/awoc_res.gd" id="1_1vw1k"]
+
+[resource]
+script = ExtResource("1_1vw1k")
+slots_dictionary = {}
