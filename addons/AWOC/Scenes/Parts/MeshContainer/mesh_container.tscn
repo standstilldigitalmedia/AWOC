@@ -1,16 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://bu3ogqavigfh8"]
+[gd_scene load_steps=5 format=3 uid="uid://bu3ogqavigfh8"]
 
 [ext_resource type="Theme" uid="uid://drffev6w87ljh" path="res://addons/AWOC/Themes/main_theme.tres" id="1_pgpnn"]
 [ext_resource type="Script" path="res://addons/AWOC/Scenes/Parts/MeshContainer/mesh_container.gd" id="1_ule3x"]
-[ext_resource type="Texture2D" uid="uid://cg741telb0c24" path="res://addons/AWOC/Images/Remove.svg" id="2_svavy"]
 [ext_resource type="Texture2D" uid="uid://bajmsg6jpht1s" path="res://addons/AWOC/Images/GuiVisibilityHidden.svg" id="3_a08x3"]
 [ext_resource type="Texture2D" uid="uid://dp60fbkc3xia" path="res://addons/AWOC/Images/GuiVisibilityVisible.svg" id="4_b0gln"]
 
 [node name="MeshContainer" type="HBoxContainer" node_paths=PackedStringArray("mesh_label", "hide_button", "show_button")]
 anchors_preset = -1
-anchor_right = 0.139
+anchor_right = 0.205
 anchor_bottom = 0.04
-offset_right = -160.128
+offset_right = -236.16
 offset_bottom = -25.92
 script = ExtResource("1_ule3x")
 mesh_label = NodePath("MeshNameLabel")
@@ -18,16 +17,18 @@ hide_button = NodePath("HideButton")
 show_button = NodePath("ShowButton")
 
 [node name="MeshNameLabel" type="Label" parent="."]
-custom_minimum_size = Vector2(180, 26)
+custom_minimum_size = Vector2(206, 26)
 layout_mode = 2
 theme = ExtResource("1_pgpnn")
 text = "Label Name"
+clip_text = true
+text_overrun_behavior = 1
 
-[node name="DeleteButton" type="Button" parent="."]
+[node name="ShowButton" type="Button" parent="."]
 custom_minimum_size = Vector2(26, 26)
 layout_mode = 2
 theme = ExtResource("1_pgpnn")
-icon = ExtResource("2_svavy")
+icon = ExtResource("3_a08x3")
 icon_alignment = 1
 
 [node name="HideButton" type="Button" parent="."]
@@ -35,12 +36,8 @@ visible = false
 custom_minimum_size = Vector2(26, 26)
 layout_mode = 2
 theme = ExtResource("1_pgpnn")
-icon = ExtResource("3_a08x3")
-icon_alignment = 1
-
-[node name="ShowButton" type="Button" parent="."]
-custom_minimum_size = Vector2(26, 26)
-layout_mode = 2
-theme = ExtResource("1_pgpnn")
 icon = ExtResource("4_b0gln")
 icon_alignment = 1
+
+[connection signal="pressed" from="ShowButton" to="." method="_on_show_button_pressed"]
+[connection signal="pressed" from="HideButton" to="." method="_on_hide_button_pressed"]

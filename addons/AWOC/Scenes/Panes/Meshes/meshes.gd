@@ -10,6 +10,14 @@ extends AWOCBasePane
 
 var preview_mesh_list: Array
 
+func show_mesh(mesh_name: String):
+	preview_mesh_list.append(mesh_name)
+	awoc_editor.preview_awoc(preview_mesh_list)
+
+func hide_mesh(mesh_name: String):
+	preview_mesh_list.erase(mesh_name)
+	awoc_editor.preview_awoc(preview_mesh_list)
+	
 func populate_mesh_list_container():
 	if awoc_editor != null:
 		if awoc_editor.awoc_obj.source_avatar_file == null:
@@ -24,6 +32,8 @@ func populate_mesh_list_container():
 			child.queue_free()
 		for mesh_name in awoc_editor.awoc_obj.source_mesh_list:
 			var new_mesh_container = mesh_container.instantiate()
+			new_mesh_container.hide_mesh.connect(hide_mesh)
+			new_mesh_container.show_mesh.connect(show_mesh)
 			mesh_list_container.add_child(new_mesh_container)
 			new_mesh_container.set_mesh_name(mesh_name)
 	

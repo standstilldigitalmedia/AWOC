@@ -51,8 +51,8 @@ func serialize_mesh(mesh):
 		var surface_count = mesh.mesh.get_surface_count()
 		if surface_count < 1:
 			print(mesh.name + " has no surface count")
-		#for surface in surface_count:
-		mesh_array = mesh.mesh.surface_get_arrays(0)
+		for surface in surface_count:
+			mesh_array.append(mesh.mesh.surface_get_arrays(surface))
 		return mesh_array
 	return null
 	
@@ -60,7 +60,8 @@ func deserialize_mesh(mesh_array: Array, skeleton: Skeleton3D):
 	var new_mesh_3d: MeshInstance3D = MeshInstance3D.new()
 	skeleton.add_child.call_deferred(new_mesh_3d)
 	var new_mesh: ArrayMesh = ArrayMesh.new()
-	new_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,mesh_array)
+	for array in mesh_array:
+		new_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,array)
 	new_mesh_3d.mesh = new_mesh
 	new_mesh_3d.set_skeleton_path("..")
 	#new_mesh_3d.skeleton = skeleton

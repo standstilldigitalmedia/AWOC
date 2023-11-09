@@ -50,7 +50,7 @@ title = "New AWOC"
 initial_position = 2
 size = Vector2i(400, 300)
 theme = ExtResource("1_fdlwc")
-filters = PackedStringArray("*.tres ; Resource")
+filters = PackedStringArray("*.res ; Resource")
 
 [node name="LoadAWOCDialog" type="FileDialog" parent="MainContainer"]
 title = "Open a File"
@@ -59,7 +59,7 @@ size = Vector2i(400, 300)
 theme = ExtResource("1_fdlwc")
 ok_button_text = "Open"
 file_mode = 0
-filters = PackedStringArray("*.tres ; Resource")
+filters = PackedStringArray("*.res ; Resource")
 
 [connection signal="pressed" from="MainContainer/CenterContainer/VBoxContainer/NewAWOCButton" to="." method="_on_new_awoc_button_pressed"]
 [connection signal="pressed" from="MainContainer/CenterContainer/VBoxContainer/LoadAWOCButton" to="." method="_on_load_awoc_button_pressed"]
