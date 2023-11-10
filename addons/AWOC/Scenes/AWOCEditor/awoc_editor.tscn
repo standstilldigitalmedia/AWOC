@@ -103,12 +103,6 @@ theme = ExtResource("1_okiqg")
 disabled = true
 text = "Materials"
 
-[node name="AnimationsButton" type="Button" parent="MainScrollContainer/MainBackground/MainMarginContainer/MainContainer/AWOCMainContainer/AWOCBottomContainer/LeftNavigation"]
-layout_mode = 2
-theme = ExtResource("1_okiqg")
-disabled = true
-text = "Animations"
-
 [node name="RecipesButton" type="Button" parent="MainScrollContainer/MainBackground/MainMarginContainer/MainContainer/AWOCMainContainer/AWOCBottomContainer/LeftNavigation"]
 layout_mode = 2
 theme = ExtResource("1_okiqg")
@@ -120,6 +114,12 @@ layout_mode = 2
 theme = ExtResource("1_okiqg")
 disabled = true
 text = "Wardrobes"
+
+[node name="AnimationsButton" type="Button" parent="MainScrollContainer/MainBackground/MainMarginContainer/MainContainer/AWOCMainContainer/AWOCBottomContainer/LeftNavigation"]
+layout_mode = 2
+theme = ExtResource("1_okiqg")
+disabled = true
+text = "Animations"
 
 [node name="RightPaneBackground" type="ColorRect" parent="MainScrollContainer/MainBackground/MainMarginContainer/MainContainer/AWOCMainContainer/AWOCBottomContainer"]
 custom_minimum_size = Vector2(260, 550)
@@ -139,6 +139,6 @@ layout_mode = 2
 [connection signal="pressed" from="MainScrollContainer/MainBackground/MainMarginContainer/MainContainer/AWOCMainContainer/AWOCBottomContainer/LeftNavigation/SlotsButton" to="." method="_on_slots_button_pressed"]
 [connection signal="pressed" from="MainScrollContainer/MainBackground/MainMarginContainer/MainContainer/AWOCMainContainer/AWOCBottomContainer/LeftNavigation/MeshesButton" to="." method="_on_meshes_button_pressed"]
 [connection signal="pressed" from="MainScrollContainer/MainBackground/MainMarginContainer/MainContainer/AWOCMainContainer/AWOCBottomContainer/LeftNavigation/MaterialsButton" to="." method="_on_materials_button_pressed"]
-[connection signal="pressed" from="MainScrollContainer/MainBackground/MainMarginContainer/MainContainer/AWOCMainContainer/AWOCBottomContainer/LeftNavigation/AnimationsButton" to="." method="_on_animations_button_pressed"]
 [connection signal="pressed" from="MainScrollContainer/MainBackground/MainMarginContainer/MainContainer/AWOCMainContainer/AWOCBottomContainer/LeftNavigation/RecipesButton" to="." method="_on_recipes_button_pressed"]
 [connection signal="pressed" from="MainScrollContainer/MainBackground/MainMarginContainer/MainContainer/AWOCMainContainer/AWOCBottomContainer/LeftNavigation/WardrobesButton" to="." method="_on_wardrobes_button_pressed"]
+[connection signal="pressed" from="MainScrollContainer/MainBackground/MainMarginContainer/MainContainer/AWOCMainContainer/AWOCBottomContainer/LeftNavigation/AnimationsButton" to="." method="_on_animations_button_pressed"]

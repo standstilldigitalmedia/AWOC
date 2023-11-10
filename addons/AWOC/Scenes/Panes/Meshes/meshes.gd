@@ -20,7 +20,7 @@ func hide_mesh(mesh_name: String):
 	
 func populate_mesh_list_container():
 	if awoc_editor != null:
-		if awoc_editor.awoc_obj.source_avatar_file == null:
+		if awoc_editor.awoc_obj.source_avatar_uid < 1:
 			add_meshes_container.visible = true
 			mesh_list_background.visible = false
 			return
@@ -50,8 +50,7 @@ func _on_mesh_object_file_path_button_pressed():
 
 func _on_load_mesh_dialog_file_selected(path):
 	mesh_object_file_path_label.set_text(path)
-	awoc_editor.awoc_obj.source_mesh_path = path
-	awoc_editor.awoc_obj.init_source_avatar()
+	awoc_editor.awoc_obj.init_source_avatar(path)
 	awoc_editor.save_current_awoc()
 	populate_mesh_list_container()
 	

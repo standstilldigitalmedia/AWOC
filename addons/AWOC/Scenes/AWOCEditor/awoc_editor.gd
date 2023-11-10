@@ -43,6 +43,9 @@ func load_pane(pane: PackedScene):
 		disable_left_nav(true)
 	else:
 		disable_left_nav(false)
+	
+	if 	current_preview_pane != null:
+		current_preview_pane.free_subject()
 		
 	if current_pane != null:
 		current_pane.queue_free()

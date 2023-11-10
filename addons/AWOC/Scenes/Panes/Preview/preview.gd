@@ -15,6 +15,10 @@ var rotate_speed: int = 3
 var camera_position: Vector3
 var subject_rotation: Vector3 = Vector3.ZERO
 
+func free_subject():
+	if subject != null:
+		subject.queue_free()
+
 func set_new_subject(new_subject: Node3D):
 	if subject != null:
 		subject.queue_free()
