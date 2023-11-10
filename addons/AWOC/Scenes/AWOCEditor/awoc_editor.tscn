@@ -122,12 +122,12 @@ disabled = true
 text = "Animations"
 
 [node name="RightPaneBackground" type="ColorRect" parent="MainScrollContainer/MainBackground/MainMarginContainer/MainContainer/AWOCMainContainer/AWOCBottomContainer"]
-custom_minimum_size = Vector2(260, 550)
+custom_minimum_size = Vector2(285, 550)
 layout_mode = 2
 color = Color(1, 1, 1, 0.0196078)
 
 [node name="RightPaneScrollContainer" type="ScrollContainer" parent="MainScrollContainer/MainBackground/MainMarginContainer/MainContainer/AWOCMainContainer/AWOCBottomContainer/RightPaneBackground"]
-custom_minimum_size = Vector2(270, 550)
+custom_minimum_size = Vector2(285, 550)
 layout_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0

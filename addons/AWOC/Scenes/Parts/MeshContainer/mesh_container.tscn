@@ -6,10 +6,11 @@
 [ext_resource type="Texture2D" uid="uid://dp60fbkc3xia" path="res://addons/AWOC/Images/GuiVisibilityVisible.svg" id="4_b0gln"]
 
 [node name="MeshContainer" type="HBoxContainer" node_paths=PackedStringArray("mesh_label", "hide_button", "show_button")]
+custom_minimum_size = Vector2(265, 0)
 anchors_preset = -1
-anchor_right = 0.205
+anchor_right = 0.23
 anchor_bottom = 0.04
-offset_right = -236.16
+offset_right = -264.96
 offset_bottom = -25.92
 script = ExtResource("1_ule3x")
 mesh_label = NodePath("MeshNameLabel")
@@ -17,7 +18,7 @@ hide_button = NodePath("HideButton")
 show_button = NodePath("ShowButton")
 
 [node name="MeshNameLabel" type="Label" parent="."]
-custom_minimum_size = Vector2(206, 26)
+custom_minimum_size = Vector2(235, 26)
 layout_mode = 2
 theme = ExtResource("1_pgpnn")
 text = "Label Name"

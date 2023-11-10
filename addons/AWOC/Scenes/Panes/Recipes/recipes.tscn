@@ -4,11 +4,11 @@
 [ext_resource type="Script" path="res://addons/AWOC/Scenes/Panes/Recipes/recipes.gd" id="1_fkohn"]
 
 [node name="Recipes" type="MarginContainer"]
-custom_minimum_size = Vector2(270, 550)
+custom_minimum_size = Vector2(260, 550)
 anchors_preset = -1
-anchor_right = 0.234
+anchor_right = 0.226
 anchor_bottom = 0.849
-offset_right = -269.568
+offset_right = -260.352
 offset_bottom = -550.152
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5

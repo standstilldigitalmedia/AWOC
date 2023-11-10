@@ -1,8 +1,9 @@
+Button
+LineEdit
+HBoxContainer
 Label
 CSGBox3D
 CSGSphere3D
-Button
-HBoxContainer
 VBoxContainer
 ScrollContainer
 MarginContainer
@@ -17,6 +18,5 @@ SubViewport
 SubViewportContainer
 ConfirmationDialog
 OptionButton
-LineEdit
 PanelContainer
 Control

@@ -6,12 +6,12 @@
 [ext_resource type="Texture2D" uid="uid://cnuepoi4ynvoy" path="res://addons/AWOC/Images/Add.svg" id="3_572tw"]
 
 [node name="Slots" type="MarginContainer" node_paths=PackedStringArray("add_slot_name_edit", "slots_scroll_container")]
-custom_minimum_size = Vector2(270, 550)
+custom_minimum_size = Vector2(285, 470)
 anchors_preset = -1
-anchor_right = 0.234
-anchor_bottom = 0.849
-offset_right = -269.568
-offset_bottom = -550.152
+anchor_right = 0.247
+anchor_bottom = 0.725
+offset_right = 0.455994
+offset_bottom = 0.199982
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
@@ -36,7 +36,7 @@ layout_mode = 2
 theme_override_constants/separation = 10
 
 [node name="AddSlotNameEdit" type="LineEdit" parent="MainContainer/AddSlotContainer"]
-custom_minimum_size = Vector2(227, 0)
+custom_minimum_size = Vector2(240, 0)
 layout_mode = 2
 theme = ExtResource("1_soxgw")
 placeholder_text = "Add Slot"
@@ -49,12 +49,12 @@ icon = ExtResource("3_572tw")
 icon_alignment = 1
 
 [node name="SlotsScrollBackground" type="ColorRect" parent="MainContainer"]
-custom_minimum_size = Vector2(0, 200)
+custom_minimum_size = Vector2(0, 381)
 layout_mode = 2
 color = Color(1, 1, 1, 0.0392157)
 
 [node name="SlotsScrollMarginContainer" type="MarginContainer" parent="MainContainer/SlotsScrollBackground"]
-custom_minimum_size = Vector2(260, 200)
+custom_minimum_size = Vector2(273, 200)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -70,7 +70,7 @@ theme_override_constants/margin_bottom = 5
 layout_mode = 2
 
 [node name="SlotsContainer" type="VBoxContainer" parent="MainContainer/SlotsScrollBackground/SlotsScrollMarginContainer/SlotsScrollContainer"]
-custom_minimum_size = Vector2(200, 150)
+custom_minimum_size = Vector2(263, 150)
 layout_mode = 2
 theme_override_constants/separation = 10
 

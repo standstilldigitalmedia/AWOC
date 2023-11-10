@@ -6,12 +6,12 @@
 [ext_resource type="Texture2D" uid="uid://ck44qw1l0nk63" path="res://addons/AWOC/Images/Folder.svg" id="3_tivfw"]
 
 [node name="Meshes" type="MarginContainer" node_paths=PackedStringArray("mesh_object_file_path_label", "load_mesh_dialog", "add_meshes_container", "mesh_list_container", "mesh_list_background")]
-custom_minimum_size = Vector2(160, 550)
+custom_minimum_size = Vector2(260, 400)
 anchors_preset = -1
 anchor_right = 0.226
-anchor_bottom = 0.849
+anchor_bottom = 0.633
 offset_right = -0.35202
-offset_bottom = -0.152039
+offset_bottom = -0.184021
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
@@ -25,7 +25,7 @@ mesh_list_container = NodePath("MainContainer/MeshListBackground/MeshListMarginC
 mesh_list_background = NodePath("MainContainer/MeshListBackground")
 
 [node name="MainContainer" type="VBoxContainer" parent="."]
-custom_minimum_size = Vector2(250, 540)
+custom_minimum_size = Vector2(250, 400)
 layout_mode = 2
 
 [node name="HeadLabel" type="Label" parent="MainContainer"]
@@ -38,10 +38,12 @@ horizontal_alignment = 1
 layout_mode = 2
 
 [node name="MeshObjectFilePathLabel" type="Label" parent="MainContainer/AddMeshesContainer"]
-custom_minimum_size = Vector2(220, 26)
+custom_minimum_size = Vector2(245, 26)
 layout_mode = 2
 theme = ExtResource("2_pbxfp")
 text = "Mesh file path: "
+clip_text = true
+text_overrun_behavior = 1
 
 [node name="MeshObjectFilePathButton" type="Button" parent="MainContainer/AddMeshesContainer"]
 custom_minimum_size = Vector2(26, 26)
@@ -51,12 +53,12 @@ icon = ExtResource("3_tivfw")
 icon_alignment = 1
 
 [node name="MeshListBackground" type="ColorRect" parent="MainContainer"]
-custom_minimum_size = Vector2(250, 150)
+custom_minimum_size = Vector2(275, 400)
 layout_mode = 2
 color = Color(1, 1, 1, 0.0784314)
 
 [node name="MeshListMarginContainer" type="MarginContainer" parent="MainContainer/MeshListBackground"]
-custom_minimum_size = Vector2(250, 150)
+custom_minimum_size = Vector2(275, 400)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -69,11 +71,11 @@ theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
 [node name="MeshListScrollContainer" type="ScrollContainer" parent="MainContainer/MeshListBackground/MeshListMarginContainer"]
-custom_minimum_size = Vector2(240, 140)
+custom_minimum_size = Vector2(265, 390)
 layout_mode = 2
 
 [node name="MeshListContainer" type="VBoxContainer" parent="MainContainer/MeshListBackground/MeshListMarginContainer/MeshListScrollContainer"]
-custom_minimum_size = Vector2(240, 0)
+custom_minimum_size = Vector2(265, 0)
 layout_mode = 2
 theme_override_constants/separation = 10
 

@@ -10,12 +10,12 @@
 [ext_resource type="Texture2D" uid="uid://cnuepoi4ynvoy" path="res://addons/AWOC/Images/Add.svg" id="6_qjy0d"]
 
 [node name="SlotContainer" type="VBoxContainer" node_paths=PackedStringArray("slot_controls_container", "hide_slot_container", "slot_button", "slot_name_edit", "confirm_save_dialog", "confirm_delete_dialog", "show_button", "hide_button", "hide_slot_select", "hide_slot_scroll_container")]
-custom_minimum_size = Vector2(250, 0)
+custom_minimum_size = Vector2(235, 0)
 anchors_preset = -1
-anchor_right = 0.217
-anchor_bottom = 0.035
-offset_right = 0.0160065
-offset_bottom = 170.32
+anchor_right = 0.205
+anchor_bottom = 0.313
+offset_right = -0.160019
+offset_bottom = 0.17598
 theme_override_constants/separation = 10
 script = ExtResource("1_l5p75")
 slot_controls_container = NodePath("SlotControlsContainer")
@@ -36,11 +36,10 @@ theme = ExtResource("1_1ydoh")
 toggle_mode = true
 
 [node name="SlotControlsContainer" type="HBoxContainer" parent="."]
-visible = false
 layout_mode = 2
 
 [node name="SlotNameEdit" type="LineEdit" parent="SlotControlsContainer"]
-custom_minimum_size = Vector2(160, 0)
+custom_minimum_size = Vector2(175, 0)
 layout_mode = 2
 theme = ExtResource("1_1ydoh")
 
@@ -74,7 +73,6 @@ icon = ExtResource("5_07mim")
 icon_alignment = 1
 
 [node name="HideSlotsContainer" type="ColorRect" parent="."]
-visible = false
 custom_minimum_size = Vector2(0, 160)
 layout_mode = 2
 color = Color(1, 1, 1, 0.0784314)
@@ -82,7 +80,7 @@ color = Color(1, 1, 1, 0.0784314)
 [node name="HideSlotsOuterContainer" type="MarginContainer" parent="HideSlotsContainer"]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.98
+anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -102,7 +100,7 @@ horizontal_alignment = 1
 layout_mode = 2
 
 [node name="HideSlotSelect" type="OptionButton" parent="HideSlotsContainer/HideSlotsOuterContainer/HideSlotsInnerContainer/HideSlotSelectSlot"]
-custom_minimum_size = Vector2(207, 0)
+custom_minimum_size = Vector2(198, 0)
 layout_mode = 2
 theme = ExtResource("1_1ydoh")
 
@@ -119,16 +117,16 @@ layout_mode = 2
 color = Color(1, 1, 1, 0.117647)
 
 [node name="HideSlotsScrollContainer" type="ScrollContainer" parent="HideSlotsContainer/HideSlotsOuterContainer/HideSlotsInnerContainer/HideSlotsScrollBackground"]
-custom_minimum_size = Vector2(230, 100)
+custom_minimum_size = Vector2(226, 100)
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.958
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 0.0799866
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="HideSlotsMarginContainer" type="MarginContainer" parent="HideSlotsContainer/HideSlotsOuterContainer/HideSlotsInnerContainer/HideSlotsScrollBackground/HideSlotsScrollContainer"]
+custom_minimum_size = Vector2(226, 100)
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
