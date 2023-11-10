@@ -4,10 +4,11 @@ class_name AWOCRes extends Resource
 @export var awoc_name: String
 @export var slots_dictionary: Dictionary
 @export var source_mesh_list: Dictionary
-@export var source_avatar_uid: int
 @export var source_skeleton: Skeleton3D
+@export var source_avatar_file: Resource
+@export var source_avatar: Node3D
 
-func recursive_get_skeleton(source_obj: Node):
+func recursive_get_skeleton(source_obj: Node3D):
 	if source_obj.is_class("Skeleton3D"):
 		return source_obj
 	for child in source_obj.get_children():
@@ -80,28 +81,19 @@ func deserialize_mesh(mesh_array: Array, skeleton: Skeleton3D):
 func load_source_avatar():
 	if source_skeleton != null:
 		source_skeleton.queue_free()
-	
-	if source_avatar_uid != null:
-		var source_avatar_file = load(ResourceUID.get_id_path(source_avatar_uid))
-		var source_avatar_obj = source_avatar_file.instantiate()
-		source_skeleton = recursive_get_skeleton(source_avatar_obj)
+	if source_avatar != null:
+		source_avatar.queue_free()
+	if source_avatar_file != null:
+		var source_avatar = source_avatar_file.instantiate()
+		source_skeleton = recursive_get_skeleton(source_avatar)
 		source_mesh_list = {}
 		for source_mesh in source_skeleton.get_children():
 			if source_mesh.is_class("MeshInstance3D"):
 				source_mesh_list[source_mesh.name] = source_mesh
 	
 func init_source_avatar(path: String):
-	if source_skeleton != null:
-		source_skeleton.queue_free()
-	
-	source_avatar_uid = ResourceLoader.get_resource_uid(path)
-	var source_avatar_file = load(path)
-	var source_avatar_obj = source_avatar_file.instantiate()
-	source_skeleton = recursive_get_skeleton(source_avatar_obj)
-	source_mesh_list = {}
-	for source_mesh in source_skeleton.get_children():
-		if source_mesh.is_class("MeshInstance3D"):
-			source_mesh_list[source_mesh.name] = source_mesh
+	source_avatar_file = load(path)
+	load_source_avatar()
 	
 func create_awoc_avatar(mesh_list: Array):
 	var base_awoc: Node3D = Node3D.new()

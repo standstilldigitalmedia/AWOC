@@ -48,6 +48,9 @@ func set_slot_name(slot_name: String):
 	
 func _on_slot_button_toggled(button_pressed):
 	slot_controls_container.visible = button_pressed
+	hide_slot_container.visible = false
+	show_button.visible = true
+	hide_button.visible = false
 
 func _ready():
 	show_controls(false)

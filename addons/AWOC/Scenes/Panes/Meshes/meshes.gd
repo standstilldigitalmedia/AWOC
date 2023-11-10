@@ -20,7 +20,7 @@ func hide_mesh(mesh_name: String):
 	
 func populate_mesh_list_container():
 	if awoc_editor != null:
-		if awoc_editor.awoc_obj.source_avatar_uid < 1:
+		if awoc_editor.awoc_obj.source_avatar_file == null:
 			add_meshes_container.visible = true
 			mesh_list_background.visible = false
 			return
