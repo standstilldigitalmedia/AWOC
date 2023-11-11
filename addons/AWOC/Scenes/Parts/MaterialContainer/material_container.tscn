@@ -1,0 +1,168 @@
+[gd_scene load_steps=8 format=3 uid="uid://blxcbsm5n8drd"]
+
+[ext_resource type="Theme" uid="uid://drffev6w87ljh" path="res://addons/AWOC/Themes/main_theme.tres" id="1_3t3l0"]
+[ext_resource type="Script" path="res://addons/AWOC/Scenes/Parts/MaterialContainer/material_container.gd" id="1_ucn7h"]
+[ext_resource type="Texture2D" uid="uid://dewa5wjv0dbel" path="res://addons/AWOC/Images/Save.svg" id="2_piqun"]
+[ext_resource type="Texture2D" uid="uid://cg741telb0c24" path="res://addons/AWOC/Images/Remove.svg" id="3_s6hkp"]
+[ext_resource type="Texture2D" uid="uid://bajmsg6jpht1s" path="res://addons/AWOC/Images/GuiVisibilityHidden.svg" id="4_gb7kg"]
+[ext_resource type="Texture2D" uid="uid://dp60fbkc3xia" path="res://addons/AWOC/Images/GuiVisibilityVisible.svg" id="5_n25rh"]
+[ext_resource type="Texture2D" uid="uid://ck44qw1l0nk63" path="res://addons/AWOC/Images/Folder.svg" id="7_5x5h2"]
+
+[node name="MaterialContainer" type="VBoxContainer" node_paths=PackedStringArray("material_button", "material_controls_container", "material_properties_container", "material_name_edit", "show_button", "hide_button", "confirm_save_dialog", "confirm_delete_dialog", "albedo_file_dialog", "albedo_texture_rect", "albedo_label")]
+custom_minimum_size = Vector2(265, 0)
+anchors_preset = -1
+anchor_right = 0.23
+anchor_bottom = 0.546
+offset_right = -264.96
+offset_bottom = -353.808
+script = ExtResource("1_ucn7h")
+material_button = NodePath("MaterialButton")
+material_controls_container = NodePath("MaterialControlsContainer")
+material_properties_container = NodePath("MaterialPropertiesContainer")
+material_name_edit = NodePath("MaterialControlsContainer/MaterialNameEdit")
+show_button = NodePath("MaterialControlsContainer/ShowButton")
+hide_button = NodePath("MaterialControlsContainer/HideButton")
+confirm_save_dialog = NodePath("ConfirmSaveDialog")
+confirm_delete_dialog = NodePath("ConfirmDeleteDialog")
+albedo_file_dialog = NodePath("AlbedoFileDialog")
+albedo_texture_rect = NodePath("MaterialPropertiesContainer/MaterialPropertiesMarginContainer/VBoxContainer/HBoxContainer/AlbedoTextureRect")
+albedo_label = NodePath("MaterialPropertiesContainer/MaterialPropertiesMarginContainer/VBoxContainer/HBoxContainer/AlbedoTextureRect/AlbedoLabel")
+
+[node name="MaterialButton" type="Button" parent="."]
+layout_mode = 2
+theme = ExtResource("1_3t3l0")
+toggle_mode = true
+text = "Some Material"
+
+[node name="MaterialControlsContainer" type="HBoxContainer" parent="."]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="MaterialNameEdit" type="LineEdit" parent="MaterialControlsContainer"]
+custom_minimum_size = Vector2(181, 0)
+layout_mode = 2
+theme = ExtResource("1_3t3l0")
+
+[node name="SaveButton" type="Button" parent="MaterialControlsContainer"]
+custom_minimum_size = Vector2(23, 0)
+layout_mode = 2
+theme = ExtResource("1_3t3l0")
+icon = ExtResource("2_piqun")
+icon_alignment = 1
+
+[node name="DeleteButton" type="Button" parent="MaterialControlsContainer"]
+custom_minimum_size = Vector2(23, 0)
+layout_mode = 2
+theme = ExtResource("1_3t3l0")
+icon = ExtResource("3_s6hkp")
+icon_alignment = 1
+
+[node name="ShowButton" type="Button" parent="MaterialControlsContainer"]
+custom_minimum_size = Vector2(23, 0)
+layout_mode = 2
+theme = ExtResource("1_3t3l0")
+icon = ExtResource("4_gb7kg")
+icon_alignment = 1
+
+[node name="HideButton" type="Button" parent="MaterialControlsContainer"]
+visible = false
+custom_minimum_size = Vector2(23, 0)
+layout_mode = 2
+theme = ExtResource("1_3t3l0")
+icon = ExtResource("5_n25rh")
+icon_alignment = 1
+
+[node name="MaterialPropertiesContainer" type="ColorRect" parent="."]
+visible = false
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+color = Color(1, 1, 1, 0.0392157)
+
+[node name="MaterialPropertiesMarginContainer" type="MarginContainer" parent="MaterialPropertiesContainer"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.996
+anchor_bottom = 0.367
+offset_right = -223.94
+offset_bottom = -70.1
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MaterialPropertiesContainer/MaterialPropertiesMarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MaterialPropertiesContainer/MaterialPropertiesMarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="AlbedoTextureRect" type="TextureRect" parent="MaterialPropertiesContainer/MaterialPropertiesMarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+expand_mode = 1
+
+[node name="AlbedoLabel" type="Label" parent="MaterialPropertiesContainer/MaterialPropertiesMarginContainer/VBoxContainer/HBoxContainer/AlbedoTextureRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.03
+anchor_top = 0.37
+anchor_right = 1.03
+anchor_bottom = 0.63
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_3t3l0")
+text = "No Image"
+
+[node name="Label" type="Label" parent="MaterialPropertiesContainer/MaterialPropertiesMarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_3t3l0")
+text = "Albedo Image:"
+
+[node name="FileButtonContainer" type="ColorRect" parent="MaterialPropertiesContainer/MaterialPropertiesMarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+color = Color(1, 1, 1, 0)
+
+[node name="AlbedoFileButton" type="Button" parent="MaterialPropertiesContainer/MaterialPropertiesMarginContainer/VBoxContainer/HBoxContainer/FileButtonContainer"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.343
+anchor_top = 0.385
+anchor_right = 1.0
+anchor_bottom = 0.615
+offset_left = -0.00500107
+grow_horizontal = 0
+grow_vertical = 2
+theme = ExtResource("1_3t3l0")
+icon = ExtResource("7_5x5h2")
+icon_alignment = 1
+
+[node name="ConfirmSaveDialog" type="ConfirmationDialog" parent="."]
+initial_position = 2
+size = Vector2i(250, 150)
+theme = ExtResource("1_3t3l0")
+
+[node name="ConfirmDeleteDialog" type="ConfirmationDialog" parent="."]
+initial_position = 2
+size = Vector2i(250, 150)
+theme = ExtResource("1_3t3l0")
+
+[node name="AlbedoFileDialog" type="FileDialog" parent="."]
+title = "Open a File"
+initial_position = 2
+size = Vector2i(400, 300)
+theme = ExtResource("1_3t3l0")
+ok_button_text = "Open"
+file_mode = 0
+filters = PackedStringArray("*.png ; Portable Network Graphic")
+
+[connection signal="toggled" from="MaterialButton" to="." method="_on_material_button_toggled"]
+[connection signal="pressed" from="MaterialControlsContainer/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="MaterialControlsContainer/DeleteButton" to="." method="_on_delete_button_pressed"]
+[connection signal="pressed" from="MaterialControlsContainer/ShowButton" to="." method="_on_show_button_pressed"]
+[connection signal="pressed" from="MaterialControlsContainer/HideButton" to="." method="_on_hide_button_pressed"]
+[connection signal="pressed" from="MaterialPropertiesContainer/MaterialPropertiesMarginContainer/VBoxContainer/HBoxContainer/FileButtonContainer/AlbedoFileButton" to="." method="_on_albedo_file_button_pressed"]
+[connection signal="confirmed" from="ConfirmSaveDialog" to="." method="_on_confirm_save_dialog_confirmed"]
+[connection signal="confirmed" from="ConfirmDeleteDialog" to="." method="_on_confirm_delete_dialog_confirmed"]
+[connection signal="file_selected" from="AlbedoFileDialog" to="." method="_on_albedo_file_dialog_file_selected"]

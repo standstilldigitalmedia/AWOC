@@ -7,6 +7,7 @@ class_name AWOCRes extends Resource
 @export var source_skeleton: Skeleton3D
 @export var source_avatar_file: Resource
 @export var source_avatar: Node3D
+@export var materials_dictionary: Dictionary
 
 func recursive_get_skeleton(source_obj: Node3D):
 	if source_obj.is_class("Skeleton3D"):

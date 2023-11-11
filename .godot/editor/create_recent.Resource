@@ -1,1 +1,2 @@
+Resource
 StandardMaterial3D

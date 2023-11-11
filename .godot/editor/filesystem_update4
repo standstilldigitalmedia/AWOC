@@ -1,6 +1,9 @@
+res://addons/AWOC/Scenes/Parts/MaterialContainer/material_container.gd
+res://sdfdsfsdf.res
 res://addons/AWOC/Scenes/AWOCEditor/awoc_editor.tscn
 res://addons/AWOC/Themes/main_theme.tres
 res://addons/AWOC/Scenes/AWOCEditor/new_standard_material_3d.tres
+res://addons/AWOC/Resources/AWOCOverlayRes/awoc_overlay_res.gd
 res://addons/AWOC/Scenes/Panes/Welcome/welcome.tscn
 res://addons/AWOC/Scenes/Panes/Animations/animations.tscn
 res://addons/AWOC/Scenes/Panes/Materials/materials.tscn
@@ -12,5 +15,4 @@ res://addons/AWOC/Scenes/Parts/SlotContainer/slot_container.tscn
 res://addons/AWOC/Scenes/Parts/HideSlotContainer/hide_slot_container.tscn
 res://addons/AWOC/Scenes/Panes/Preview/preview.tscn
 res://addons/AWOC/Scenes/Parts/MeshContainer/mesh_container.tscn
-res://ghfhfghfh.res
-res://sdfgsfsdf.res
+res://addons/AWOC/Scenes/Parts/MaterialContainer/material_container.tscn

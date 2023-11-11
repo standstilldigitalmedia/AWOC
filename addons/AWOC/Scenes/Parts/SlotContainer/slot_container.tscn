@@ -36,6 +36,7 @@ theme = ExtResource("1_1ydoh")
 toggle_mode = true
 
 [node name="SlotControlsContainer" type="HBoxContainer" parent="."]
+visible = false
 layout_mode = 2
 
 [node name="SlotNameEdit" type="LineEdit" parent="SlotControlsContainer"]
@@ -73,6 +74,7 @@ icon = ExtResource("5_07mim")
 icon_alignment = 1
 
 [node name="HideSlotsContainer" type="ColorRect" parent="."]
+visible = false
 custom_minimum_size = Vector2(0, 160)
 layout_mode = 2
 color = Color(1, 1, 1, 0.0784314)

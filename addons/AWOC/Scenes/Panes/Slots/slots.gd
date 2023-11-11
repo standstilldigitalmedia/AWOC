@@ -23,7 +23,7 @@ func populate_slots_container():
 
 func _on_add_slot_button_pressed():
 	var new_slot_name: String = add_slot_name_edit.get_text()
-	if new_slot_name != null and new_slot_name.length() > 1 and awoc_editor.awoc_obj != null:
+	if new_slot_name != null and new_slot_name.length() > 3 and awoc_editor.awoc_obj != null:
 		awoc_editor.awoc_obj.slots_dictionary[new_slot_name] = []
 		awoc_editor.save_current_awoc()
 		populate_slots_container()
