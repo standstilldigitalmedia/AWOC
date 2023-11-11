@@ -1,21 +1,18 @@
 [gd_scene load_steps=5 format=3 uid="uid://bu3ogqavigfh8"]
 
+[ext_resource type="Script" path="res://addons/AWOC/Scenes/Parts/MeshContainer/MeshContainer.cs" id="1_otjtt"]
 [ext_resource type="Theme" uid="uid://drffev6w87ljh" path="res://addons/AWOC/Themes/main_theme.tres" id="1_pgpnn"]
-[ext_resource type="Script" path="res://addons/AWOC/Scenes/Parts/MeshContainer/mesh_container.gd" id="1_ule3x"]
 [ext_resource type="Texture2D" uid="uid://bajmsg6jpht1s" path="res://addons/AWOC/Images/GuiVisibilityHidden.svg" id="3_a08x3"]
 [ext_resource type="Texture2D" uid="uid://dp60fbkc3xia" path="res://addons/AWOC/Images/GuiVisibilityVisible.svg" id="4_b0gln"]
 
-[node name="MeshContainer" type="HBoxContainer" node_paths=PackedStringArray("mesh_label", "hide_button", "show_button")]
+[node name="MeshContainer" type="HBoxContainer"]
 custom_minimum_size = Vector2(265, 0)
 anchors_preset = -1
 anchor_right = 0.23
 anchor_bottom = 0.04
 offset_right = -264.96
 offset_bottom = -25.92
-script = ExtResource("1_ule3x")
-mesh_label = NodePath("MeshNameLabel")
-hide_button = NodePath("HideButton")
-show_button = NodePath("ShowButton")
+script = ExtResource("1_otjtt")
 
 [node name="MeshNameLabel" type="Label" parent="."]
 custom_minimum_size = Vector2(235, 26)

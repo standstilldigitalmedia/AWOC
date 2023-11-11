@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://b3i7oj7g4e2vn"]
+
+[ext_resource type="Theme" uid="uid://drffev6w87ljh" path="res://addons/AWOC/Themes/main_theme.tres" id="1_7u07g"]
+[ext_resource type="Script" path="res://addons/AWOC/Scenes/CenterPanes/Animations/Animations.cs" id="1_ru0d0"]
+
+[node name="Animations" type="MarginContainer"]
+custom_minimum_size = Vector2(260, 550)
+anchors_preset = -1
+anchor_right = 0.226
+anchor_bottom = 0.849
+offset_right = -260.352
+offset_bottom = -550.152
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+script = ExtResource("1_ru0d0")
+
+[node name="MainContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="HeadLabel" type="Label" parent="MainContainer"]
+layout_mode = 2
+theme = ExtResource("1_7u07g")
+text = "Animations"
+horizontal_alignment = 1

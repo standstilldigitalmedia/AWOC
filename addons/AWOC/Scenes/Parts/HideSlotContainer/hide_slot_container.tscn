@@ -1,19 +1,17 @@
 [gd_scene load_steps=4 format=3 uid="uid://b4lrc2ct3tv6g"]
 
-[ext_resource type="Script" path="res://addons/AWOC/Scenes/Parts/HideSlotContainer/hide_slot_container.gd" id="1_51lfe"]
 [ext_resource type="Theme" uid="uid://drffev6w87ljh" path="res://addons/AWOC/Themes/main_theme.tres" id="1_phowc"]
+[ext_resource type="Script" path="res://addons/AWOC/Scenes/Parts/HideSlotContainer/HideSlotContainer.cs" id="1_xr1s3"]
 [ext_resource type="Texture2D" uid="uid://cg741telb0c24" path="res://addons/AWOC/Images/Remove.svg" id="2_a6pii"]
 
-[node name="HideSlotContainer" type="VBoxContainer" node_paths=PackedStringArray("confirm_delete_dialog", "hide_slot_label")]
+[node name="HideSlotContainer" type="VBoxContainer"]
 custom_minimum_size = Vector2(220, 0)
 anchors_preset = -1
 anchor_right = 0.191
 anchor_bottom = 0.04
 offset_right = -0.0320129
 offset_bottom = 0.079998
-script = ExtResource("1_51lfe")
-confirm_delete_dialog = NodePath("HideSlotInnerContainer/ConfirmDeleteHideSlotDialog")
-hide_slot_label = NodePath("HideSlotInnerContainer/HideSlotLabel")
+script = ExtResource("1_xr1s3")
 
 [node name="HideSlotInnerContainer" type="HBoxContainer" parent="."]
 layout_mode = 2

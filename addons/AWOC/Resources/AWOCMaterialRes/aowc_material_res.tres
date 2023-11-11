@@ -1,6 +1,0 @@
-[gd_resource type="Resource" script_class="AWOCMaterialRes" load_steps=2 format=3 uid="uid://t4v0v35455en"]
-
-[ext_resource type="Script" path="res://addons/AWOC/Resources/AWOCMaterialRes/awoc_material_res.gd" id="1_xr357"]
-
-[resource]
-script = ExtResource("1_xr357")

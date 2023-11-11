@@ -1,6 +1,0 @@
-[gd_resource type="Resource" script_class="AWOCOverlayRes" load_steps=2 format=3 uid="uid://ba1iybtpvx2to"]
-
-[ext_resource type="Script" path="res://addons/AWOC/Resources/AWOCOverlayRes/awoc_overlay_res.gd" id="1_2jod4"]
-
-[resource]
-script = ExtResource("1_2jod4")

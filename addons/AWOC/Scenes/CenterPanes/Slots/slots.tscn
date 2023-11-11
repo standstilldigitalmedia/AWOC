@@ -1,0 +1,73 @@
+[gd_scene load_steps=4 format=3 uid="uid://bong6fghk860t"]
+
+[ext_resource type="Theme" uid="uid://drffev6w87ljh" path="res://addons/AWOC/Themes/main_theme.tres" id="1_5fad0"]
+[ext_resource type="Script" path="res://addons/AWOC/Scenes/CenterPanes/Slots/Slots.cs" id="1_awpkw"]
+[ext_resource type="Texture2D" uid="uid://cnuepoi4ynvoy" path="res://addons/AWOC/Images/Add.svg" id="2_ngbxm"]
+
+[node name="Slots" type="MarginContainer"]
+custom_minimum_size = Vector2(285, 470)
+anchors_preset = -1
+anchor_right = 0.247
+anchor_bottom = 0.725
+offset_right = 0.455994
+offset_bottom = 0.199982
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+script = ExtResource("1_awpkw")
+
+[node name="MainContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="HeadLabel" type="Label" parent="MainContainer"]
+layout_mode = 2
+theme = ExtResource("1_5fad0")
+text = "Slots"
+horizontal_alignment = 1
+
+[node name="AddSlotContainer" type="HBoxContainer" parent="MainContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="AddSlotNameEdit" type="LineEdit" parent="MainContainer/AddSlotContainer"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+theme = ExtResource("1_5fad0")
+placeholder_text = "Add Slot"
+
+[node name="AddSlotButton" type="Button" parent="MainContainer/AddSlotContainer"]
+custom_minimum_size = Vector2(23, 0)
+layout_mode = 2
+theme = ExtResource("1_5fad0")
+icon = ExtResource("2_ngbxm")
+icon_alignment = 1
+
+[node name="SlotsScrollBackground" type="ColorRect" parent="MainContainer"]
+custom_minimum_size = Vector2(0, 381)
+layout_mode = 2
+color = Color(1, 1, 1, 0.0392157)
+
+[node name="SlotsScrollMarginContainer" type="MarginContainer" parent="MainContainer/SlotsScrollBackground"]
+custom_minimum_size = Vector2(273, 200)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="SlotsScrollContainer" type="ScrollContainer" parent="MainContainer/SlotsScrollBackground/SlotsScrollMarginContainer"]
+layout_mode = 2
+
+[node name="SlotsContainer" type="VBoxContainer" parent="MainContainer/SlotsScrollBackground/SlotsScrollMarginContainer/SlotsScrollContainer"]
+custom_minimum_size = Vector2(263, 150)
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[connection signal="pressed" from="MainContainer/AddSlotContainer/AddSlotButton" to="." method="_on_add_slot_button_pressed"]

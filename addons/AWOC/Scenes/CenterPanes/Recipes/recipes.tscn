@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://crx8ve13vi50r"]
+
+[ext_resource type="Theme" uid="uid://drffev6w87ljh" path="res://addons/AWOC/Themes/main_theme.tres" id="1_1ukal"]
+[ext_resource type="Script" path="res://addons/AWOC/Scenes/CenterPanes/Recipes/Recipes.cs" id="1_cq5jd"]
+
+[node name="Recipes" type="MarginContainer"]
+custom_minimum_size = Vector2(260, 550)
+anchors_preset = -1
+anchor_right = 0.226
+anchor_bottom = 0.849
+offset_right = -260.352
+offset_bottom = -550.152
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+script = ExtResource("1_cq5jd")
+
+[node name="MainContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="HeadLabel" type="Label" parent="MainContainer"]
+layout_mode = 2
+theme = ExtResource("1_1ukal")
+text = "Recipes"
+horizontal_alignment = 1

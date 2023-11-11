@@ -1,0 +1,17 @@
+/home/chad/Repos/AWOC/.godot/mono/temp/bin/Debug/AWOC.deps.json
+/home/chad/Repos/AWOC/.godot/mono/temp/bin/Debug/AWOC.runtimeconfig.json
+/home/chad/Repos/AWOC/.godot/mono/temp/bin/Debug/AWOC.dll
+/home/chad/Repos/AWOC/.godot/mono/temp/bin/Debug/AWOC.pdb
+/home/chad/Repos/AWOC/.godot/mono/temp/bin/Debug/GodotSharp.dll
+/home/chad/Repos/AWOC/.godot/mono/temp/bin/Debug/GodotSharpEditor.dll
+/home/chad/Repos/AWOC/.godot/mono/temp/obj/Debug/AWOC.csproj.AssemblyReference.cache
+/home/chad/Repos/AWOC/.godot/mono/temp/obj/Debug/AWOC.GeneratedMSBuildEditorConfig.editorconfig
+/home/chad/Repos/AWOC/.godot/mono/temp/obj/Debug/AWOC.AssemblyInfoInputs.cache
+/home/chad/Repos/AWOC/.godot/mono/temp/obj/Debug/AWOC.AssemblyInfo.cs
+/home/chad/Repos/AWOC/.godot/mono/temp/obj/Debug/AWOC.csproj.CoreCompileInputs.cache
+/home/chad/Repos/AWOC/.godot/mono/temp/obj/Debug/AWOC.csproj.CopyComplete
+/home/chad/Repos/AWOC/.godot/mono/temp/obj/Debug/AWOC.dll
+/home/chad/Repos/AWOC/.godot/mono/temp/obj/Debug/refint/AWOC.dll
+/home/chad/Repos/AWOC/.godot/mono/temp/obj/Debug/AWOC.pdb
+/home/chad/Repos/AWOC/.godot/mono/temp/obj/Debug/AWOC.genruntimeconfig.cache
+/home/chad/Repos/AWOC/.godot/mono/temp/obj/Debug/ref/AWOC.dll

@@ -1,0 +1,67 @@
+[gd_scene load_steps=3 format=3 uid="uid://hd74w6jps4nh"]
+
+[ext_resource type="Theme" uid="uid://drffev6w87ljh" path="res://addons/AWOC/Themes/main_theme.tres" id="1_71ca1"]
+[ext_resource type="Script" path="res://addons/AWOC/Scenes/CenterPanes/Welcome/Welcome.cs" id="1_njsrb"]
+
+[node name="Welcome" type="MarginContainer" node_paths=PackedStringArray("newAWOCDialog", "loadAWOCDialog")]
+custom_minimum_size = Vector2(270, 550)
+anchors_preset = -1
+anchor_right = 0.234
+anchor_bottom = 0.849
+offset_right = -269.568
+offset_bottom = -550.152
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+script = ExtResource("1_njsrb")
+newAWOCDialog = NodePath("MainContainer/NewAWOCDialog")
+loadAWOCDialog = NodePath("MainContainer/LoadAWOCDialog")
+
+[node name="MainContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="HeadLabel" type="Label" parent="MainContainer"]
+layout_mode = 2
+theme = ExtResource("1_71ca1")
+text = "Welcome"
+horizontal_alignment = 1
+
+[node name="CenterContainer" type="CenterContainer" parent="MainContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainContainer/CenterContainer"]
+custom_minimum_size = Vector2(150, 23)
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="NewAWOCButton" type="Button" parent="MainContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_71ca1")
+text = "New AWOC"
+
+[node name="LoadAWOCButton" type="Button" parent="MainContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_71ca1")
+text = "Load AWOC"
+
+[node name="NewAWOCDialog" type="FileDialog" parent="MainContainer"]
+title = "New AWOC"
+initial_position = 2
+size = Vector2i(400, 300)
+theme = ExtResource("1_71ca1")
+filters = PackedStringArray("*.res ; Resource")
+
+[node name="LoadAWOCDialog" type="FileDialog" parent="MainContainer"]
+title = "Open a File"
+initial_position = 2
+size = Vector2i(400, 300)
+theme = ExtResource("1_71ca1")
+ok_button_text = "Open"
+file_mode = 0
+filters = PackedStringArray("*.res ; Resource")
+
+[connection signal="pressed" from="MainContainer/CenterContainer/VBoxContainer/NewAWOCButton" to="." method="_on_new_awoc_button_pressed"]
+[connection signal="pressed" from="MainContainer/CenterContainer/VBoxContainer/LoadAWOCButton" to="." method="_on_load_awoc_button_pressed"]
+[connection signal="file_selected" from="MainContainer/NewAWOCDialog" to="." method="_on_new_awoc_dialog_file_selected"]
+[connection signal="file_selected" from="MainContainer/LoadAWOCDialog" to="." method="_on_load_awoc_dialog_file_selected"]

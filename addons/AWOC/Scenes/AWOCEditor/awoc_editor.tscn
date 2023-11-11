@@ -1,40 +1,40 @@
-[gd_scene load_steps=11 format=3 uid="uid://4n0ogsy4pqel"]
+[gd_scene load_steps=10 format=3 uid="uid://4n0ogsy4pqel"]
 
-[ext_resource type="Script" path="res://addons/AWOC/Scenes/AWOCEditor/awoc_editor.gd" id="1_6qsjr"]
+[ext_resource type="Script" path="res://addons/AWOC/Scenes/AWOCEditor/AWOCEditor.cs" id="1_exr2x"]
 [ext_resource type="Theme" uid="uid://drffev6w87ljh" path="res://addons/AWOC/Themes/main_theme.tres" id="1_okiqg"]
-[ext_resource type="PackedScene" uid="uid://hd74w6jps4nh" path="res://addons/AWOC/Scenes/Panes/Welcome/welcome.tscn" id="2_x3mdm"]
-[ext_resource type="PackedScene" uid="uid://bong6fghk860t" path="res://addons/AWOC/Scenes/Panes/Slots/slots.tscn" id="3_ip6yh"]
-[ext_resource type="PackedScene" uid="uid://b5cm2d4tq4hyk" path="res://addons/AWOC/Scenes/Panes/Meshes/meshes.tscn" id="4_sv0sp"]
-[ext_resource type="PackedScene" uid="uid://b3i7oj7g4e2vn" path="res://addons/AWOC/Scenes/Panes/Animations/animations.tscn" id="5_7c24x"]
-[ext_resource type="PackedScene" uid="uid://bhjt3xvy74vk5" path="res://addons/AWOC/Scenes/Panes/Materials/materials.tscn" id="6_p3xkf"]
-[ext_resource type="PackedScene" uid="uid://crx8ve13vi50r" path="res://addons/AWOC/Scenes/Panes/Recipes/recipes.tscn" id="7_i0vxi"]
-[ext_resource type="PackedScene" uid="uid://0v5fv7esn0bs" path="res://addons/AWOC/Scenes/Panes/Wardrobes/wardrobes.tscn" id="8_jdhs1"]
-[ext_resource type="PackedScene" uid="uid://c1gvj38yelvvs" path="res://addons/AWOC/Scenes/Panes/Preview/preview.tscn" id="9_45o3s"]
+[ext_resource type="PackedScene" uid="uid://hd74w6jps4nh" path="res://addons/AWOC/Scenes/CenterPanes/Welcome/welcome.tscn" id="2_cdvw1"]
+[ext_resource type="PackedScene" uid="uid://bong6fghk860t" path="res://addons/AWOC/Scenes/CenterPanes/Slots/slots.tscn" id="3_tuh10"]
+[ext_resource type="PackedScene" uid="uid://b5cm2d4tq4hyk" path="res://addons/AWOC/Scenes/CenterPanes/Meshes/meshes.tscn" id="4_l0xl4"]
+[ext_resource type="PackedScene" uid="uid://bhjt3xvy74vk5" path="res://addons/AWOC/Scenes/CenterPanes/Materials/materials.tscn" id="5_nbcsa"]
+[ext_resource type="PackedScene" uid="uid://crx8ve13vi50r" path="res://addons/AWOC/Scenes/CenterPanes/Recipes/recipes.tscn" id="6_do6oh"]
+[ext_resource type="PackedScene" uid="uid://0v5fv7esn0bs" path="res://addons/AWOC/Scenes/CenterPanes/Wardrobes/wardrobes.tscn" id="7_0tyte"]
+[ext_resource type="PackedScene" uid="uid://b3i7oj7g4e2vn" path="res://addons/AWOC/Scenes/CenterPanes/Animations/animations.tscn" id="8_v3sas"]
 
-[node name="AWOCEditor" type="Control" node_paths=PackedStringArray("slots_button", "meshes_button", "animations_button", "materials_button", "recipes_button", "wardrobes_button", "right_pane", "main_container")]
+[node name="AWOCEditor" type="Control" node_paths=PackedStringArray("slotsButton", "meshesButton", "materialsButton", "recipesButton", "wardrobesButton", "animationsButton", "rightPane", "mainContainer")]
 custom_minimum_size = Vector2(320, 600)
 layout_mode = 3
 anchor_right = 0.278
 anchor_bottom = 0.926
-offset_right = -280.256
-offset_bottom = -560.048
-script = ExtResource("1_6qsjr")
-welcome_pane = ExtResource("2_x3mdm")
-slots_pane = ExtResource("3_ip6yh")
-meshes_pane = ExtResource("4_sv0sp")
-animations_pane = ExtResource("5_7c24x")
-materials_pane = ExtResource("6_p3xkf")
-recipes_pane = ExtResource("7_i0vxi")
-wardrobes_pane = ExtResource("8_jdhs1")
-preview_pane = ExtResource("9_45o3s")
-slots_button = NodePath("MainScrollContainer/MainBackground/MainMarginContainer/MainContainer/AWOCMainContainer/AWOCBottomContainer/LeftNavigation/SlotsButton")
-meshes_button = NodePath("MainScrollContainer/MainBackground/MainMarginContainer/MainContainer/AWOCMainContainer/AWOCBottomContainer/LeftNavigation/MeshesButton")
-animations_button = NodePath("MainScrollContainer/MainBackground/MainMarginContainer/MainContainer/AWOCMainContainer/AWOCBottomContainer/LeftNavigation/AnimationsButton")
-materials_button = NodePath("MainScrollContainer/MainBackground/MainMarginContainer/MainContainer/AWOCMainContainer/AWOCBottomContainer/LeftNavigation/MaterialsButton")
-recipes_button = NodePath("MainScrollContainer/MainBackground/MainMarginContainer/MainContainer/AWOCMainContainer/AWOCBottomContainer/LeftNavigation/RecipesButton")
-wardrobes_button = NodePath("MainScrollContainer/MainBackground/MainMarginContainer/MainContainer/AWOCMainContainer/AWOCBottomContainer/LeftNavigation/WardrobesButton")
-right_pane = NodePath("MainScrollContainer/MainBackground/MainMarginContainer/MainContainer/AWOCMainContainer/AWOCBottomContainer/RightPaneBackground/RightPaneScrollContainer/RightPane")
-main_container = NodePath("MainScrollContainer/MainBackground/MainMarginContainer/MainContainer")
+offset_right = 479.744
+offset_bottom = -0.0479736
+script = ExtResource("1_exr2x")
+welcomePane = ExtResource("2_cdvw1")
+slotsPane = ExtResource("3_tuh10")
+meshesPane = ExtResource("4_l0xl4")
+materialsPane = ExtResource("5_nbcsa")
+recipesPane = ExtResource("6_do6oh")
+wardrobesPane = ExtResource("7_0tyte")
+animationsPane = ExtResource("8_v3sas")
+meshPreviewPane = ExtResource("4_l0xl4")
+materialPreviewPane = ExtResource("5_nbcsa")
+slotsButton = NodePath("MainScrollContainer/MainBackground/MainMarginContainer/MainContainer/AWOCMainContainer/AWOCBottomContainer/LeftNavigation/SlotsButton")
+meshesButton = NodePath("MainScrollContainer/MainBackground/MainMarginContainer/MainContainer/AWOCMainContainer/AWOCBottomContainer/LeftNavigation/MeshesButton")
+materialsButton = NodePath("MainScrollContainer/MainBackground/MainMarginContainer/MainContainer/AWOCMainContainer/AWOCBottomContainer/LeftNavigation/MaterialsButton")
+recipesButton = NodePath("MainScrollContainer/MainBackground/MainMarginContainer/MainContainer/AWOCMainContainer/AWOCBottomContainer/LeftNavigation/RecipesButton")
+wardrobesButton = NodePath("MainScrollContainer/MainBackground/MainMarginContainer/MainContainer/AWOCMainContainer/AWOCBottomContainer/LeftNavigation/WardrobesButton")
+animationsButton = NodePath("MainScrollContainer/MainBackground/MainMarginContainer/MainContainer/AWOCMainContainer/AWOCBottomContainer/LeftNavigation/AnimationsButton")
+rightPane = NodePath("MainScrollContainer/MainBackground/MainMarginContainer/MainContainer/AWOCMainContainer/AWOCBottomContainer/RightPaneBackground/RightPaneScrollContainer/RightPane")
+mainContainer = NodePath("MainScrollContainer/MainBackground/MainMarginContainer/MainContainer")
 
 [node name="MainScrollContainer" type="ScrollContainer" parent="."]
 custom_minimum_size = Vector2(250, 600)

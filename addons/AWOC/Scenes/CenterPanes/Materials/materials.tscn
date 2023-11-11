@@ -1,0 +1,73 @@
+[gd_scene load_steps=4 format=3 uid="uid://bhjt3xvy74vk5"]
+
+[ext_resource type="Script" path="res://addons/AWOC/Scenes/CenterPanes/Materials/Materials.cs" id="1_re4iv"]
+[ext_resource type="Theme" uid="uid://drffev6w87ljh" path="res://addons/AWOC/Themes/main_theme.tres" id="1_v47p5"]
+[ext_resource type="Texture2D" uid="uid://cnuepoi4ynvoy" path="res://addons/AWOC/Images/Add.svg" id="2_t56uc"]
+
+[node name="Materials" type="MarginContainer"]
+custom_minimum_size = Vector2(285, 470)
+anchors_preset = -1
+anchor_right = 0.247
+anchor_bottom = 0.849
+offset_right = -7.54404
+offset_bottom = -150.152
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+script = ExtResource("1_re4iv")
+
+[node name="MainContainer" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(275, 460)
+layout_mode = 2
+
+[node name="HeadLabel" type="Label" parent="MainContainer"]
+layout_mode = 2
+theme = ExtResource("1_v47p5")
+text = "Materials"
+horizontal_alignment = 1
+
+[node name="AddMaterialContainer" type="HBoxContainer" parent="MainContainer"]
+custom_minimum_size = Vector2(275, 23)
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="AddMaterialNameEdit" type="LineEdit" parent="MainContainer/AddMaterialContainer"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+theme = ExtResource("1_v47p5")
+
+[node name="AddMaterialButton" type="Button" parent="MainContainer/AddMaterialContainer"]
+custom_minimum_size = Vector2(23, 0)
+layout_mode = 2
+theme = ExtResource("1_v47p5")
+icon = ExtResource("2_t56uc")
+icon_alignment = 1
+
+[node name="MaterialsContainerBackground" type="ColorRect" parent="MainContainer"]
+custom_minimum_size = Vector2(275, 380)
+layout_mode = 2
+color = Color(1, 1, 1, 0.0392157)
+
+[node name="MaterialsMarginContainer" type="MarginContainer" parent="MainContainer/MaterialsContainerBackground"]
+custom_minimum_size = Vector2(275, 380)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="MaterialsScrollContainer" type="ScrollContainer" parent="MainContainer/MaterialsContainerBackground/MaterialsMarginContainer"]
+custom_minimum_size = Vector2(265, 370)
+layout_mode = 2
+
+[node name="MaterialsMainContainer" type="VBoxContainer" parent="MainContainer/MaterialsContainerBackground/MaterialsMarginContainer/MaterialsScrollContainer"]
+custom_minimum_size = Vector2(261, 225)
+layout_mode = 2
+
+[connection signal="pressed" from="MainContainer/AddMaterialContainer/AddMaterialButton" to="." method="_on_add_material_button_pressed"]

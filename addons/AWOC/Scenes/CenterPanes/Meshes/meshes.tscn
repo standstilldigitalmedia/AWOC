@@ -1,0 +1,85 @@
+[gd_scene load_steps=4 format=3 uid="uid://b5cm2d4tq4hyk"]
+
+[ext_resource type="Script" path="res://addons/AWOC/Scenes/CenterPanes/Meshes/Meshes.cs" id="1_ikoib"]
+[ext_resource type="Theme" uid="uid://drffev6w87ljh" path="res://addons/AWOC/Themes/main_theme.tres" id="1_imimv"]
+[ext_resource type="Texture2D" uid="uid://ck44qw1l0nk63" path="res://addons/AWOC/Images/Folder.svg" id="2_yqfv2"]
+
+[node name="Meshes" type="MarginContainer"]
+custom_minimum_size = Vector2(260, 400)
+anchors_preset = -1
+anchor_right = 0.226
+anchor_bottom = 0.633
+offset_right = -0.35202
+offset_bottom = -0.184021
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+script = ExtResource("1_ikoib")
+
+[node name="MainContainer" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(250, 400)
+layout_mode = 2
+
+[node name="HeadLabel" type="Label" parent="MainContainer"]
+layout_mode = 2
+theme = ExtResource("1_imimv")
+text = "Meshes"
+horizontal_alignment = 1
+
+[node name="AddMeshesContainer" type="HBoxContainer" parent="MainContainer"]
+layout_mode = 2
+
+[node name="MeshObjectFilePathLabel" type="Label" parent="MainContainer/AddMeshesContainer"]
+custom_minimum_size = Vector2(245, 26)
+layout_mode = 2
+theme = ExtResource("1_imimv")
+text = "Mesh file path: "
+clip_text = true
+text_overrun_behavior = 1
+
+[node name="MeshObjectFilePathButton" type="Button" parent="MainContainer/AddMeshesContainer"]
+custom_minimum_size = Vector2(26, 26)
+layout_mode = 2
+theme = ExtResource("1_imimv")
+icon = ExtResource("2_yqfv2")
+icon_alignment = 1
+
+[node name="MeshListBackground" type="ColorRect" parent="MainContainer"]
+custom_minimum_size = Vector2(275, 400)
+layout_mode = 2
+color = Color(1, 1, 1, 0.0784314)
+
+[node name="MeshListMarginContainer" type="MarginContainer" parent="MainContainer/MeshListBackground"]
+custom_minimum_size = Vector2(275, 400)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="MeshListScrollContainer" type="ScrollContainer" parent="MainContainer/MeshListBackground/MeshListMarginContainer"]
+custom_minimum_size = Vector2(265, 390)
+layout_mode = 2
+
+[node name="MeshListContainer" type="VBoxContainer" parent="MainContainer/MeshListBackground/MeshListMarginContainer/MeshListScrollContainer"]
+custom_minimum_size = Vector2(265, 0)
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LoadMeshDialog" type="FileDialog" parent="MainContainer"]
+title = "Open a File"
+initial_position = 2
+size = Vector2i(400, 300)
+theme = ExtResource("1_imimv")
+ok_button_text = "Open"
+file_mode = 0
+filters = PackedStringArray("*.glb ; GL Transmission Format Binary file")
+
+[connection signal="pressed" from="MainContainer/AddMeshesContainer/MeshObjectFilePathButton" to="." method="_on_mesh_object_file_path_button_pressed"]
+[connection signal="file_selected" from="MainContainer/LoadMeshDialog" to="." method="_on_load_mesh_dialog_file_selected"]

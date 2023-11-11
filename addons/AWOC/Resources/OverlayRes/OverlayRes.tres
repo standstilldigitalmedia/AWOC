@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://caixc6226og16"]
+
+[ext_resource type="Script" path="res://addons/AWOC/Resources/OverlayRes/OverlayRes.cs" id="1_fnrox"]
+
+[resource]
+script = ExtResource("1_fnrox")
+overlayName = ""
+overlayImageArray = null
+overlayType = 0
+overlayStrength = 0.0

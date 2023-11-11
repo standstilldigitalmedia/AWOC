@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=3 uid="uid://bp2412f73o7lj"]
+
+[ext_resource type="Script" path="res://addons/AWOC/Scenes/PreviewPanes/MaterialPreview/MaterialPreview.cs" id="1_rqnkn"]
+
+[node name="MaterialPreview" type="VBoxContainer"]
+anchors_preset = -1
+anchor_right = 0.26
+anchor_bottom = 0.463
+offset_right = -299.52
+offset_bottom = -300.024
+script = ExtResource("1_rqnkn")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+layout_mode = 2
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(300, 300)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.44638)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.356801)

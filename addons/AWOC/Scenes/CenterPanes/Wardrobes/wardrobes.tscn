@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://0v5fv7esn0bs"]
+
+[ext_resource type="Theme" uid="uid://drffev6w87ljh" path="res://addons/AWOC/Themes/main_theme.tres" id="1_e1mqf"]
+[ext_resource type="Script" path="res://addons/AWOC/Scenes/CenterPanes/Wardrobes/Wardrobes.cs" id="1_pqcxr"]
+
+[node name="Wardrobes" type="MarginContainer"]
+custom_minimum_size = Vector2(270, 550)
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+script = ExtResource("1_pqcxr")
+
+[node name="MainContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="HeadLabel" type="Label" parent="MainContainer"]
+layout_mode = 2
+theme = ExtResource("1_e1mqf")
+text = "Wardrobes"
+horizontal_alignment = 1
