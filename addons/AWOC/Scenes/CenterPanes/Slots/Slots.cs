@@ -1,53 +1,60 @@
 using Godot;
-using System;
+using Godot.Collections;
 
 namespace AWOC
 {
 	[Tool]
 	public partial class Slots : BaseCenterPane
 	{
-		// Called when the node enters the scene tree for the first time.
-		public override void _Ready()
+		[Export] PackedScene slotContainer;
+		[Export] LineEdit addSlotNameEdit;
+		[Export] VBoxContainer slotsScrollContainer; 
+
+		void PopulateSlotsContainer()
 		{
+			if(awocEditor != null && awocEditor.awocObj != null)
+			{
+				if(awocEditor.awocObj.slotsDictionary == null)
+				{
+					awocEditor.awocObj.slotsDictionary = new Dictionary<string,Dictionary<string,string>>();
+					return;
+				}
+
+				foreach(SlotContainer child in slotsScrollContainer.GetChildren())
+				{
+					child.QueueFree();
+				}
+					
+				var keys = awocEditor.awocObj.slotsDictionary.Keys;
+				foreach(string slot in keys)
+				{
+					SlotContainer container = slotContainer.Instantiate<SlotContainer>();
+					container.awocEditor = awocEditor;
+					container.SetSlotName(slot);
+					slotsScrollContainer.AddChild(container);
+				}
+			}
 		}
 
-		// Called every frame. 'delta' is the elapsed time since the previous frame.
-		public override void _Process(double delta)
+		void SetSlotName1(string slotName, Node slotObj)
 		{
+			//slotObj.SetSlotName(slotName);
+		}
+
+		void _on_add_slot_button_pressed()
+		{
+			string newSlotName = addSlotNameEdit.Text;
+			if(newSlotName != null && newSlotName.Length > 3 && awocEditor.awocObj != null)
+			{
+				awocEditor.awocObj.slotsDictionary[newSlotName] = new Dictionary<string, string>();
+				awocEditor.SaveCurrentAWOC();
+				PopulateSlotsContainer();
+			}
+		}
+
+		public override void _Ready()
+		{
+			PopulateSlotsContainer();
 		}
 	}
 }
-
-/*@tool
-extends AWOCBasePane
-
-@export var slot_container: PackedScene
-@export var add_slot_name_edit: LineEdit
-@export var slots_scroll_container: VBoxContainer
-
-func set_slot_name(slot_name: String, slot_obj: Node):
-	slot_obj.set_slot_name(slot_name)
-
-func populate_slots_container():
-	if awoc_editor != null and awoc_editor.awoc_obj != null:
-		if awoc_editor.awoc_obj.slots_dictionary == null:
-			awoc_editor.awoc_obj.slots_dictionary = {}
-			return
-		for child in slots_scroll_container.get_children():
-			child.queue_free()
-		for slot in awoc_editor.awoc_obj.slots_dictionary:
-			var container = slot_container.instantiate()
-			container.awoc_editor = awoc_editor
-			container.set_slot_name(slot)
-			slots_scroll_container.add_child(container)
-
-func _on_add_slot_button_pressed():
-	var new_slot_name: String = add_slot_name_edit.get_text()
-	if new_slot_name != null and new_slot_name.length() > 3 and awoc_editor.awoc_obj != null:
-		awoc_editor.awoc_obj.slots_dictionary[new_slot_name] = []
-		awoc_editor.save_current_awoc()
-		populate_slots_container()
-		
-func _ready():
-	populate_slots_container()*/
-

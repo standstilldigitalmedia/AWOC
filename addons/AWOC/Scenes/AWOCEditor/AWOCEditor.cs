@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 namespace AWOC
 {
@@ -66,7 +65,7 @@ namespace AWOC
 				currentPreviewNode.QueueFree();
 			}
 			currentPreviewNode = previewPane.Instantiate<BasePreviewPane>();
-			currentPreviewNode.AWOCEditor = this;
+			currentPreviewNode.awocEditor = this;
 			mainContainer.AddChild(currentPreviewNode);
 		}
 
@@ -111,6 +110,42 @@ namespace AWOC
 			currentPane.awocEditor = this;
 			rightPane.AddChild(currentPane);
 		}
+
+		void _on_slots_button_pressed()
+		{
+			LoadPane(slotsPane);
+
+		}
+	
+		void _on_meshes_button_pressed()
+		{
+			LoadPane(meshesPane);
+		}
+
+		void _on_materials_button_pressed()
+		{
+			LoadPane(materialsPane);
+		}
+	
+		void _on_animations_button_pressed()
+		{
+			LoadPane(animationsPane);
+		}
+	
+		void _on_recipes_button_pressed()
+		{
+			LoadPane(recipesPane);
+		}
+	
+		void _on_wardrobes_button_pressed()
+		{
+			LoadPane(wardrobesPane);
+		}
+	
+		void _on_reset_button_pressed()
+		{
+			LoadPane(welcomePane);
+		}
 		
 		// Called when the node enters the scene tree for the first time.
 		public override void _Ready()
@@ -132,27 +167,6 @@ func preview_awoc_meshes(mesh_list: Array):
 	if awoc_obj != null and current_preview_node != null:
 		var new_subject: Node3D = awoc_obj.create_awoc_avatar(mesh_list)
 		current_preview_node.set_new_subject(new_subject)
-	
-func _on_slots_button_pressed():
-	load_pane(slots_pane)
 
-func _on_meshes_button_pressed():
-	load_pane(meshes_pane)
-
-func _on_materials_button_pressed():
-	load_pane(materials_pane)
-
-func _on_animations_button_pressed():
-	load_pane(animations_pane)
-	
-func _on_recipes_button_pressed():
-	load_pane(recipes_pane)
-
-func _on_wardrobes_button_pressed():
-	load_pane(wardrobes_pane)
-
-func _on_reset_button_pressed():
-	disable_left_nav(true)
-	load_pane(welcome_pane)
 */
 

@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://addons/AWOC/Scenes/Parts/HideSlotContainer/HideSlotContainer.cs" id="1_xr1s3"]
 [ext_resource type="Texture2D" uid="uid://cg741telb0c24" path="res://addons/AWOC/Images/Remove.svg" id="2_a6pii"]
 
-[node name="HideSlotContainer" type="VBoxContainer"]
+[node name="HideSlotContainer" type="VBoxContainer" node_paths=PackedStringArray("confirmDeleteDialog", "hideSlotLabel")]
 custom_minimum_size = Vector2(220, 0)
 anchors_preset = -1
 anchor_right = 0.191
@@ -12,6 +12,8 @@ anchor_bottom = 0.04
 offset_right = -0.0320129
 offset_bottom = 0.079998
 script = ExtResource("1_xr1s3")
+confirmDeleteDialog = NodePath("HideSlotInnerContainer/ConfirmDeleteHideSlotDialog")
+hideSlotLabel = NodePath("HideSlotInnerContainer/HideSlotLabel")
 
 [node name="HideSlotInnerContainer" type="HBoxContainer" parent="."]
 layout_mode = 2

@@ -1,10 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://bong6fghk860t"]
+[gd_scene load_steps=5 format=3 uid="uid://bong6fghk860t"]
 
 [ext_resource type="Theme" uid="uid://drffev6w87ljh" path="res://addons/AWOC/Themes/main_theme.tres" id="1_5fad0"]
 [ext_resource type="Script" path="res://addons/AWOC/Scenes/CenterPanes/Slots/Slots.cs" id="1_awpkw"]
+[ext_resource type="PackedScene" uid="uid://b0uv8gg3et8fp" path="res://addons/AWOC/Scenes/Parts/SlotContainer/slot_container.tscn" id="2_gyhqq"]
 [ext_resource type="Texture2D" uid="uid://cnuepoi4ynvoy" path="res://addons/AWOC/Images/Add.svg" id="2_ngbxm"]
 
-[node name="Slots" type="MarginContainer"]
+[node name="Slots" type="MarginContainer" node_paths=PackedStringArray("addSlotNameEdit", "slotsScrollContainer")]
 custom_minimum_size = Vector2(285, 470)
 anchors_preset = -1
 anchor_right = 0.247
@@ -16,6 +17,9 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 script = ExtResource("1_awpkw")
+slotContainer = ExtResource("2_gyhqq")
+addSlotNameEdit = NodePath("MainContainer/AddSlotContainer/AddSlotNameEdit")
+slotsScrollContainer = NodePath("MainContainer/SlotsScrollBackground/SlotsScrollMarginContainer/SlotsScrollContainer/SlotsContainer")
 
 [node name="MainContainer" type="VBoxContainer" parent="."]
 layout_mode = 2

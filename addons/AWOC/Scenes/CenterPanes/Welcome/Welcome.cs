@@ -9,6 +9,18 @@ namespace AWOC
 		[Export] FileDialog newAWOCDialog;
 		[Export] FileDialog loadAWOCDialog;
 
+		void _on_load_awoc_dialog_file_selected(string path)
+		{
+			Resource tempAWOC = GD.Load(path);
+			if(tempAWOC is AWOCRes)
+			{
+				awocEditor.awocPath = path;
+				awocEditor.awocObj = (AWOCRes)tempAWOC;
+				//tempAWOC.LoadSourceAvatar();
+				awocEditor.LoadPane(awocEditor.slotsPane);
+			}
+		}
+
 		void _on_new_awoc_dialog_file_selected(string path)
 		{
             awocEditor.awocObj = new AWOCRes(GetFileNameFromPath(path));
@@ -17,6 +29,17 @@ namespace AWOC
 			awocEditor.LoadPane(awocEditor.slotsPane);
 		}
 
+		void _on_new_awoc_button_pressed()
+		{
+			newAWOCDialog.Visible = true;
+		}
+
+		void _on_load_awoc_button_pressed()
+		{
+			loadAWOCDialog.Visible = true;
+		}
+	
+
 		public override void _Ready()
 		{
 			InitFileDialog(loadAWOCDialog);
@@ -24,33 +47,3 @@ namespace AWOC
 		}
 	}
 }
-	/*
-
-		
-
-		public override void _Process(double delta)
-		{
-		}
-
-		
-	}
-}
-
-
-/*
-func 
-
-func _on_load_awoc_dialog_file_selected(path: String):
-	var temp_awoc: Resource = load(path)
-	if temp_awoc is AWOCRes:
-		awoc_editor.awoc_path = path
-		awoc_editor.awoc_obj = temp_awoc
-		temp_awoc.load_source_avatar()
-		awoc_editor.load_pane(awoc_editor.slots_pane)
-
-func _on_new_awoc_button_pressed():
-	new_awoc_dialog.visible = true
-
-func _on_load_awoc_button_pressed():
-	load_awoc_dialog.visible = true*/
-
