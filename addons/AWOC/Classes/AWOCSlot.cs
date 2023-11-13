@@ -1,8 +1,10 @@
 using Godot;
+using System;
 
 namespace AWOC
 {
-	public partial class AWOCSlot : Resource
+	[Tool]
+	public partial class AWOCSlot: Resource
 	{
 		[Export] public string slotName;
 		[Export] public string[] hideSlots;
@@ -12,6 +14,31 @@ namespace AWOC
 		public AWOCSlot(string slotName)
 		{
 			this.slotName = slotName;
+		}
+
+		public override bool Equals(Object obj)
+		{			
+			if(GetHashCode() == obj.GetHashCode())
+				return true;
+			return false;
+		}
+
+		public override int GetHashCode()
+		{
+            string replaced = string.Empty;
+            slotName = slotName.ToUpper();
+            foreach (char c in slotName)
+            {
+                if (char.IsDigit(c))
+                    replaced += c;
+                else if (char.IsLetter(c))  
+                {
+                    int asc = (int)c - (int)'A' + 1;
+                    replaced += asc;
+                }
+            } 
+			Int32.TryParse(replaced, out int j);
+			return j;
 		}
 	}
 }

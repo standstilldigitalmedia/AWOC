@@ -10,11 +10,11 @@ namespace AWOC
 
 		void _on_load_awoc_dialog_file_selected(string path)
 		{
-			Resource tempAWOC = GD.Load(path);
+			AWOCRes tempAWOC = (AWOCRes)GD.Load(path);
 			if(tempAWOC is AWOCRes)
 			{
-				awocEditor.awocPath = path;
-				awocEditor.awocObj = (AWOCRes)tempAWOC;
+				tempAWOC.awocPath = path;
+				awocEditor.awocObj = tempAWOC;
 				//tempAWOC.LoadSourceAvatar();
 				awocEditor.LoadPane(awocEditor.slotsPane);
 			}
@@ -22,9 +22,11 @@ namespace AWOC
 
 		void _on_new_awoc_dialog_file_selected(string path)
 		{
-            awocEditor.awocObj = new AWOCRes(GetFileNameFromPath(path));
-            awocEditor.awocPath = path;
-			awocEditor.SaveCurrentAWOC();
+            awocEditor.awocObj = new AWOCRes(GetFileNameFromPath(path), path)
+            {
+                awocPath = path
+            };
+            awocEditor.awocObj.SaveAWOC();
 			awocEditor.LoadPane(awocEditor.slotsPane);
 		}
 

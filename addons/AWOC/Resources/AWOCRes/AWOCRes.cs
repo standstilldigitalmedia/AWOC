@@ -1,6 +1,5 @@
 using Godot;
 using System.Collections.Generic;
-//using Godot.Collections;
 
 namespace AWOC
 {
@@ -37,14 +36,20 @@ namespace AWOC
 		[Export] Resource sourceAvatarFile;
 		[Export] Node3D sourceAvatar;
 		//[Export] AWOCMaterial[] materials;
+		[Export] public string awocPath;
 
 		public AWOCRes(){}
 
-		public AWOCRes(string awocName)
+		public AWOCRes(string awocName, string awocPath)
 		{
 			this.awocName = awocName;
+			this.awocPath = awocPath;
 		}
 
+		public void SaveAWOC()
+		{
+			ResourceSaver.Save(this, awocPath);
+		}
 		Skeleton3D RecursiveGetSkeleton(Node3D soureceObj)
 		{
 			if(soureceObj.IsClass("Skeleton3D"))

@@ -1,6 +1,5 @@
 using Godot;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace AWOC
 {
@@ -31,24 +30,27 @@ namespace AWOC
 			dialog.AddFilter("*.res", "Resource");
 			dialog.CurrentDir = "/";
 		}
-
-		public string[] RemoveStringFromArray(string removeString, string[] sourceArray)
+		
+		public T[] RemoveElementFromArray<T>(T elementToRemove, T[] sourceArray)
 		{
-			if(sourceArray != null && removeString != null)
+			if(sourceArray != null && elementToRemove != null)
 			{
-				List<string> newList = new List<string>();
+				int sourceArrayLength = sourceArray.Length -1;
+				if(sourceArrayLength <= 0)
+					return null;
+				List<T> newList = new List<T>();
 				bool deleted = false;
-				foreach(string nameString in sourceArray)
+				foreach(T element in sourceArray)
 				{
-					if(nameString != removeString)
-						newList.Append(nameString);
+					if(!element.Equals(elementToRemove))
+						newList.Add(element);
 					else
 						deleted = true;
 				}
 				if(deleted)
 				{
-					string[] newArray = new string[sourceArray.Length -1];
-					for(int a = 0; a < newArray.Length; a++)
+					T[] newArray = new T[sourceArrayLength];
+					for(int a = 0; a < sourceArrayLength; a++)
 					{
 						newArray[a] = newList[a];
 					}
@@ -58,20 +60,25 @@ namespace AWOC
 			return null;
 		}
 
-		public string[] AddStringToArray(string addString, string[] sourceArray)
-		{
+		public T[] AddElementToArray<T>(T elementToAdd, T[] sourceArray)
+		{	
+			if(elementToAdd == null)
+			{
+				return null;
+			}
+
 			if(sourceArray == null || sourceArray.Length < 1)
 			{
-				string[] returnArray = new string[1];
-				returnArray[0] = addString;
+				T[] returnArray = new T[1];
+				returnArray[0] = elementToAdd;
 				return returnArray;
 			}
-			string[] newArray = new string[sourceArray.Length + 1];
+			T[] newArray = new T[sourceArray.Length + 1];
 			for(int a = 0; a < sourceArray.Length; a++)
 			{
 				newArray[a] = sourceArray[a];
 			}
-			newArray[newArray.Length -1] = addString;
+			newArray[newArray.Length -1] = elementToAdd;
 			return newArray;
 		}
 	}

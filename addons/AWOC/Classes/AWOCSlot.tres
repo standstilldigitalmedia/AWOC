@@ -1,0 +1,8 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bpxnbauxl7btf"]
+
+[ext_resource type="Script" path="res://addons/AWOC/Classes/AWOCSlot.cs" id="1_uegf5"]
+
+[resource]
+script = ExtResource("1_uegf5")
+slotName = ""
+hideSlots = PackedStringArray()

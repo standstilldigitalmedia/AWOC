@@ -5,7 +5,7 @@
 [ext_resource type="Theme" uid="uid://drffev6w87ljh" path="res://addons/AWOC/Themes/main_theme.tres" id="2_kp14s"]
 [ext_resource type="Texture2D" uid="uid://cnuepoi4ynvoy" path="res://addons/AWOC/Images/Add.svg" id="3_qhkw5"]
 
-[node name="Slots" type="MarginContainer" node_paths=PackedStringArray("addSlotNameEdit", "slotsScrollContainer")]
+[node name="Slots" type="MarginContainer" node_paths=PackedStringArray("addSlotNameEdit", "slotsScrollContainer", "confirmDuplicateSlotDialog")]
 custom_minimum_size = Vector2(285, 470)
 anchors_preset = -1
 anchor_right = 0.247
@@ -20,6 +20,7 @@ script = ExtResource("1_ua26e")
 slotContainer = ExtResource("2_5co8c")
 addSlotNameEdit = NodePath("MainContainer/AddSlotContainer/AddSlotNameEdit")
 slotsScrollContainer = NodePath("MainContainer/SlotsScrollBackground/SlotsScrollMarginContainer/SlotsScrollContainer/SlotsContainer")
+confirmDuplicateSlotDialog = NodePath("MainContainer/ConfirmationDialog")
 
 [node name="MainContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -74,4 +75,10 @@ custom_minimum_size = Vector2(263, 150)
 layout_mode = 2
 theme_override_constants/separation = 10
 
+[node name="ConfirmationDialog" type="ConfirmationDialog" parent="MainContainer"]
+initial_position = 2
+size = Vector2i(250, 150)
+theme = ExtResource("2_kp14s")
+
 [connection signal="pressed" from="MainContainer/AddSlotContainer/AddSlotButton" to="." method="_on_add_slot_button_pressed"]
+[connection signal="confirmed" from="MainContainer/ConfirmationDialog" to="." method="_on_confirmation_dialog_confirmed"]

@@ -1,16 +1,15 @@
 using Godot;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace AWOC
 {
 	[Tool]
 	public partial class SlotContainer : VBoxContainer
 	{
-		[Signal] public delegate void RenameSlotEventHandler(string oldSlotName, string newSlotName);
-		[Signal] public delegate void DeleteSlotEventHandler(string slotName);
+		[Signal] public delegate void RenameSlotEventHandler(AWOCSlot oldSlot, string newSlotName);
+		[Signal] public delegate void DeleteSlotEventHandler(AWOCSlot slotToDelete);
 		[Signal] public delegate void DeleteHideSlotEventHandler(string slotName, string hideSlotName);
-		[Signal] public delegate void AddHideSlotEventHandler(string slotName, string hideSlotName);
+		[Signal] public delegate void AddHideSlotEventHandler(AWOCSlot slotToAddTo, string hideSlotName);
 		
 		[Export] HBoxContainer slotControlsContainer; //the container that holds the slotNameEdit, save button, delete button, and show and hide buttons
 		[Export] ColorRect hideSlotContainer; //the container that holds the hideSlotControls. It is hidden or shown when the show and hide buttons are pressed
@@ -24,8 +23,9 @@ namespace AWOC
 		[Export] VBoxContainer hideSlotScrollContainer; //the container that holds all the hide slot controls
 		[Export] PackedScene hideSlotContainerScene; //the scene to instantiate for each hide slot and parent to hideSlotScrollContainer
 
-		string slotName; //the name of the slot that this SlotContainer manages
+		AWOCSlot awocSlot; //the name of the slot that this SlotContainer manages
 		Dictionary<string,string> slotNameDictionary;
+		List<string> hideSlotList;
 
 		/// <summary>
 		/// Loops through all the keys in awocEditor.awocObj.slotsDictionary and adds them as options to the OptionButton named hideSlotSelect
@@ -39,14 +39,24 @@ namespace AWOC
 				//clear all of the previous options before adding more
 				hideSlotSelect.Clear();
 				var keys = slotNameDictionary.Keys;
-
+				bool itemAdded = false;
+				bool hideSlotFound = false;
 				foreach(string slot in keys)
 				{
-					if(slot != slotName)
+					foreach(string hideSlot in hideSlotList)
+					{
+						if(hideSlot == slot)
+							hideSlotFound = true;
+					}
+					if(!hideSlotFound && slot != awocSlot.slotName)
 					{
 						hideSlotSelect.AddItem(slot);
+						itemAdded = true;
 					}
+					
 				}
+				if(itemAdded)
+					hideSlotSelect.Select(0);
 			}
 		}
 
@@ -57,7 +67,7 @@ namespace AWOC
 		/// <param name="none">none</param>
 		/// <returns>void</returns>
 
-		void PopulateHideSlotContainer(string[] hideSlotList)
+		void PopulateHideSlotContainer()
 		{
 			if(hideSlotList != null)
 			{
@@ -86,24 +96,26 @@ namespace AWOC
 		/// </summary>
 		/// <param name="slotName">The name to be displayed in the label text, the slotNameEdit text, and to be assigned to slotName</param>
 		/// <returns>void</returns>
-		public void SetSlotName(string slotName)
+		public void SetSlotName(AWOCSlot awocSlot)
 		{
-			this.slotName = slotName;
-			slotButton.Text = slotName;
-			slotNameEdit.Text = slotName;
+			this.awocSlot = awocSlot;
+			slotButton.Text = awocSlot.slotName;
+			slotNameEdit.Text = awocSlot.slotName;
 		}
 
-		public void InitSlotContainer(string slotName, Dictionary<string, string> sourceSlotNameDictionary, string[] hideSlotArray)
+		public void InitSlotContainer(AWOCSlot awocSlot, Dictionary<string, string> sourceSlotNameDictionary, string[] hideSlotArray)
 		{
-			SetSlotName(slotName);
+			SetSlotName(awocSlot);
 			slotNameDictionary = sourceSlotNameDictionary;
-			var keys = sourceSlotNameDictionary.Keys;
-			foreach(string sName in keys)
-			{
-				slotNameDictionary[sName] = sName;
-			}
+			hideSlotList = new List<string>();
+
+			if(hideSlotArray != null)
+				foreach(string slot in hideSlotArray)
+					if(awocSlot.slotName != slot)
+						hideSlotList.Add(slot);
+			
 			PopulateHideSlotSelect();
-			PopulateHideSlotContainer(hideSlotArray);
+			PopulateHideSlotContainer();
 		}
 
 		/// <summary>
@@ -172,8 +184,8 @@ namespace AWOC
 		/// <returns>void</returns>
 		void _on_save_button_pressed()
 		{
-			confirmSaveDialog.Title = "Rename " + slotName + "?";
-			confirmSaveDialog.DialogText = "Are you sure you wish to rename " + slotName + "? This can not be undone.";
+			confirmSaveDialog.Title = "Rename " + awocSlot.slotName + "?";
+			confirmSaveDialog.DialogText = "Are you sure you wish to rename " + awocSlot.slotName + "? This can not be undone.";
 			confirmSaveDialog.Visible = true;
 		}
 
@@ -184,8 +196,8 @@ namespace AWOC
 		/// <returns>void</returns>
 		void _on_delete_button_pressed()
 		{
-			confirmDeleteDialog.Title = "Delete " + slotName + "?";
-			confirmDeleteDialog.DialogText = "Are you sure you wish to delete " + slotName + "? This can not be undone.";
+			confirmDeleteDialog.Title = "Delete " + awocSlot.slotName + "?";
+			confirmDeleteDialog.DialogText = "Are you sure you wish to delete " + awocSlot.slotName + "? This can not be undone.";
 			confirmDeleteDialog.Visible = true;
 		}
 			
@@ -196,38 +208,37 @@ namespace AWOC
 		/// <returns>void</returns>
 		void _on_confirm_delete_dialog_confirmed()
 		{
-			EmitSignal(SignalName.DeleteSlot,slotName);
+			EmitSignal(SignalName.DeleteSlot,awocSlot);
 			QueueFree();
 		}
 
 		void _on_confrim_save_dialog_confirmed()
 		{
-			EmitSignal(SignalName.RenameSlot,slotName,slotNameEdit.Text);
-			SetSlotName(slotNameEdit.Text);
+			EmitSignal(SignalName.RenameSlot,awocSlot,slotNameEdit.Text);
+			awocSlot.slotName = slotNameEdit.Text;
+			SetSlotName(awocSlot);
 		}
 
 		void OnDeleteHideSlot(string deleteSlotName)
 		{
-			slotNameDictionary[deleteSlotName] = deleteSlotName;
+			if(!slotNameDictionary.ContainsKey(deleteSlotName))
+				slotNameDictionary.Add(deleteSlotName, deleteSlotName);
+
+			hideSlotList.Remove(deleteSlotName);
 			PopulateHideSlotSelect();
-			EmitSignal(SignalName.DeleteHideSlot,slotName,deleteSlotName);
+
+			EmitSignal(SignalName.DeleteHideSlot,awocSlot.slotName,deleteSlotName);
 		}
 	
 		void _on_add_hide_slot_button_pressed()
 		{
 			string selectedSlot = hideSlotSelect.GetItemText(hideSlotSelect.GetSelectedId());
-			slotNameDictionary.Remove(selectedSlot);
-			var keys = slotNameDictionary.Keys;
-			string[] newHideSlotArray = new string[slotNameDictionary.Count];
-			int counter = 0;
-			foreach(string hideSlotName in keys)
-			{
-				newHideSlotArray[counter] = hideSlotName;
-				counter++;
-			}
-			PopulateHideSlotContainer(newHideSlotArray);
+			hideSlotList.Add(selectedSlot);
+			if(slotNameDictionary.ContainsKey(selectedSlot))
+				slotNameDictionary.Remove(selectedSlot);
+			PopulateHideSlotContainer();
 			PopulateHideSlotSelect();
-			EmitSignal(SignalName.AddHideSlot,slotName,selectedSlot);
+			EmitSignal(SignalName.AddHideSlot,awocSlot,selectedSlot);
 		}
 	}
 }

@@ -1,7 +1,5 @@
 using Godot;
 using System.Collections.Generic;
-using System.Linq;
-//using Godot.Collections;
 
 namespace AWOC
 {
@@ -11,86 +9,52 @@ namespace AWOC
 		[Export] PackedScene slotContainer;
 		[Export] LineEdit addSlotNameEdit;
 		[Export] VBoxContainer slotsScrollContainer;
+		[Export] ConfirmationDialog confirmDuplicateSlotDialog;
 
 		void _on_add_slot_button_pressed()
-		{
-			string newSlotName = addSlotNameEdit.Text;
-			addSlotNameEdit.Text = "";
-            AWOCSlot newSlot = new AWOCSlot(newSlotName);
-            if (awocObj.slots == null || awocObj.slots.Length < 1)
+		{ 
+			if(addSlotNameEdit.Text.Length > 3)
 			{
-				AWOCSlot[] returnArray = new AWOCSlot[1];
-				returnArray[0] = newSlot;
-				awocObj.slots = returnArray;
-				awocEditor.SaveCurrentAWOC();
+				if(awocObj != null && awocObj.slots != null && awocObj.slots.Length > 0)
+				{
+					foreach(AWOCSlot slot in awocObj.slots)
+					{
+						if(slot.slotName == addSlotNameEdit.Text)
+						{
+							confirmDuplicateSlotDialog.Title = "Overwrite " + slot.slotName + "?";
+							confirmDuplicateSlotDialog.DialogText = "A slot with this name already exists. Would you like to overwrite it?";
+							confirmDuplicateSlotDialog.Visible = true;
+							return;
+						}
+					}
+				}
+				
+				AWOCSlot newSlot = new AWOCSlot(addSlotNameEdit.Text);
+				addSlotNameEdit.Text = "";
+				awocObj.slots = AddElementToArray(newSlot, awocObj.slots);
+				awocObj.SaveAWOC();
+				//ResourceSaver.Save(newSlot, awocEditor.awocPath);
 				PopulateSlotsContainer();
-				return;
 			}
-			AWOCSlot[] newArray = new AWOCSlot[awocObj.slots.Length + 1];
-			for(int a = 0; a < awocObj.slots.Length; a++)
-				newArray[a] = awocObj.slots[a];
-			newArray[newArray.Length -1] = newSlot;
-			awocObj.slots = newArray;
-			awocEditor.SaveCurrentAWOC();
-			PopulateSlotsContainer();
 		}
 
-		void OnRenameSlot(string oldSlotName, string newSlotName)
+		void OnRenameSlot(AWOCSlot oldSlot, string newSlotName)
 		{
-			GD.Print(oldSlotName + " " + newSlotName);
 			foreach(AWOCSlot slot in awocObj.slots)
 			{
-				if(slot.slotName == oldSlotName)
+				if(slot.slotName == oldSlot.slotName)
 				{
 					slot.slotName = newSlotName;
-					awocEditor.SaveCurrentAWOC();
+					awocObj.SaveAWOC();
 					return;
 				}
 			}
 		}
 
-		void OnDeleteSlot(string slotName)
+		void OnDeleteSlot(AWOCSlot slotToDelete)
 		{
-			GD.Print("slot to delete " + slotName);
-			int slotsLength = awocObj.slots.Length;
-			GD.Print("slotsLength " + slotsLength);
-			if(slotsLength <= 1)
-			{
-				GD.Print("set slots to null");
-				awocObj.slots = null;
-				awocEditor.SaveCurrentAWOC();
-				return;
-			}
-			List<AWOCSlot> newList = new List<AWOCSlot>();
-			bool deleted = false;
-			foreach(AWOCSlot slot in awocObj.slots)
-			{
-				if(slot.slotName != slotName)
-				{
-					GD.Print("first loop " + slot.slotName);
-					newList.Append(slot);
-				}
-				else
-				{
-					deleted = true;
-					GD.Print("deleted");
-				}
-					
-			}
-			if(deleted)
-			{
-				int newSlotsLength = slotsLength - 1;
-				GD.Print("new slots length " + newSlotsLength);
-				AWOCSlot[] newArray = new AWOCSlot[newSlotsLength];
-				for(int a = 0; a < newArray.Length -1; a++)
-				{
-					GD.Print(a + " " + newArray[a] + " " + newList[a]);
-					newArray[a] = newList[a];
-				}
-				GD.Print(Json.Stringify(newArray));
-				awocObj.slots = newArray;
-				awocEditor.SaveCurrentAWOC();
-			}
+			awocObj.slots = RemoveElementFromArray(slotToDelete, awocObj.slots);
+			awocObj.SaveAWOC();
 		}
 
 		void OnDeleteHideSlot(string slotName, string hideSlotName)
@@ -99,24 +63,17 @@ namespace AWOC
 			{
 				if(slot.slotName == slotName)
 				{
-					slot.hideSlots = RemoveStringFromArray(slotName, slot.hideSlots);
-					awocEditor.SaveCurrentAWOC();
+					slot.hideSlots = RemoveElementFromArray(slotName, slot.hideSlots);
+					awocObj.SaveAWOC();
 					return;
 				}
 			}
 		}
 
-		void OnAddHideSlot(string slotName, string hideSlotName)
+		void OnAddHideSlot(AWOCSlot slotToAddTo, string hideSlotName)
 		{
-			foreach(AWOCSlot slot in awocObj.slots)
-			{
-				if(slot.slotName == slotName)
-				{
-					slot.hideSlots = AddStringToArray(slotName, slot.hideSlots);
-					awocEditor.SaveCurrentAWOC();
-					return;
-				}
-			}
+			slotToAddTo.hideSlots = AddElementToArray(hideSlotName, slotToAddTo.hideSlots);
+			awocObj.SaveAWOC();
 		}
 
 		void PopulateSlotsContainer()
@@ -132,10 +89,9 @@ namespace AWOC
 					Dictionary<string,string> slotNameDictionary = new Dictionary<string, string>();
 					foreach(AWOCSlot innerSlot in awocObj.slots)
 					{
-						GD.Print(innerSlot.slotName);
 						slotNameDictionary.Add(innerSlot.slotName,innerSlot.slotName);
 					}
-					container.InitSlotContainer(slot.slotName, slotNameDictionary, slot.hideSlots);
+					container.InitSlotContainer(slot, slotNameDictionary, slot.hideSlots);
 					container.RenameSlot += OnRenameSlot;
 					container.DeleteSlot += OnDeleteSlot;
 					container.DeleteHideSlot += OnDeleteHideSlot;
@@ -144,12 +100,24 @@ namespace AWOC
 				}
 			}
 		}
-
 		public override void InitPane(AWOCEditor awocEditor)
 		{
 			this.awocEditor = awocEditor;
 			awocObj = awocEditor.awocObj;
 			PopulateSlotsContainer();
+		}
+
+		void _on_confirmation_dialog_confirmed()
+		{
+			foreach(AWOCSlot slot in awocObj.slots)
+			{
+				if(slot.slotName == addSlotNameEdit.Text)
+				{
+					slot.hideSlots = null;
+					awocObj.SaveAWOC();
+					return;
+				}
+			}
 		}
 	}
 }

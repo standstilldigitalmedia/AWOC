@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Godot;
 
 namespace AWOC
@@ -41,19 +40,6 @@ namespace AWOC
 		[Export] public AWOCRes awocObj;
 		public BaseCenterPane currentPane;
 		public BasePreviewPane currentPreviewNode;
-
-		public string awocPath;
-
-		/// <summary>
-		/// Saves the current AWOC to disk at awocPath
-		/// awocPath is set when the AWOC is loaded
-		/// </summary>
-		/// <param name="none">none</param>
-		/// <returns>void</returns>
-		public void SaveCurrentAWOC()
-		{
-			ResourceSaver.Save(awocObj, awocPath);
-		}
 
 		/// <summary>
 		/// Frees the currentPreviewNode and then adds the previewPane specified
