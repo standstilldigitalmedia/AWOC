@@ -4,12 +4,12 @@ using System.Collections.Generic;
 namespace AWOC
 {
 	[Tool]
-	public partial class SlotContainer : VBoxContainer
+	public partial class SlotContainer : PaneBase
 	{
-		[Signal] public delegate void RenameSlotEventHandler(AWOCSlot oldSlot, string newSlotName);
-		[Signal] public delegate void DeleteSlotEventHandler(AWOCSlot slotToDelete);
-		[Signal] public delegate void DeleteHideSlotEventHandler(string slotName, string hideSlotName);
-		[Signal] public delegate void AddHideSlotEventHandler(AWOCSlot slotToAddTo, string hideSlotName);
+		[Signal] public delegate void RenameSlotEventHandler(AWOCSlot oldSlot, string newSlotName); //In response to the save button being pressed, this signal is emitted for SlotsPane to handle
+		[Signal] public delegate void DeleteSlotEventHandler(AWOCSlot slotToDelete);//In response to the delete button being pressed, this signal is emitted for SlotsPane to handle
+		[Signal] public delegate void DeleteHideSlotEventHandler(string slotName, string hideSlotName);//In response to the delete button on a hide slot being pressed, this signal is emitted for SlotsPane to handle
+		[Signal] public delegate void AddHideSlotEventHandler(AWOCSlot slotToAddTo, string hideSlotName);//In response to the AddHideSlotButton being pressed, this signal is emitted for SlotsPane to handle
 		
 		[Export] HBoxContainer slotControlsContainer; //the container that holds the slotNameEdit, save button, delete button, and show and hide buttons
 		[Export] ColorRect hideSlotContainer; //the container that holds the hideSlotControls. It is hidden or shown when the show and hide buttons are pressed
@@ -23,9 +23,10 @@ namespace AWOC
 		[Export] VBoxContainer hideSlotScrollContainer; //the container that holds all the hide slot controls
 		[Export] PackedScene hideSlotContainerScene; //the scene to instantiate for each hide slot and parent to hideSlotScrollContainer
 
-		AWOCSlot awocSlot; //the name of the slot that this SlotContainer manages
-		Dictionary<string,string> slotNameDictionary;
-		List<string> hideSlotList;
+		AWOCSlot awocSlot; //The AWOCSlot this container managages
+		Dictionary<string,string> avaliableSlotsToHide;//
+		//List<string> allSlotsList;
+		string[] hideSlotsArray;
 
 		/// <summary>
 		/// Loops through all the keys in awocEditor.awocObj.slotsDictionary and adds them as options to the OptionButton named hideSlotSelect
@@ -34,26 +35,20 @@ namespace AWOC
 		/// <returns>void</returns>
 		void PopulateHideSlotSelect()
 		{
-			if(slotNameDictionary != null)
+			if(avaliableSlotsToHide != null)
 			{
 				//clear all of the previous options before adding more
 				hideSlotSelect.Clear();
-				var keys = slotNameDictionary.Keys;
+				var keys = avaliableSlotsToHide.Keys;
 				bool itemAdded = false;
-				bool hideSlotFound = false;
 				foreach(string slot in keys)
 				{
-					foreach(string hideSlot in hideSlotList)
-					{
-						if(hideSlot == slot)
-							hideSlotFound = true;
-					}
-					if(!hideSlotFound && slot != awocSlot.slotName)
+					GD.Print(slot);
+					if(slot != awocSlot.slotName)
 					{
 						hideSlotSelect.AddItem(slot);
 						itemAdded = true;
 					}
-					
 				}
 				if(itemAdded)
 					hideSlotSelect.Select(0);
@@ -69,7 +64,7 @@ namespace AWOC
 
 		void PopulateHideSlotContainer()
 		{
-			if(hideSlotList != null)
+			if(hideSlotsArray != null)
 			{
 				//get rid of all of HideSlotScrollContainer's children before adding more
 				foreach(HideSlotContainer child in hideSlotScrollContainer.GetChildren())
@@ -77,7 +72,7 @@ namespace AWOC
 					child.QueueFree();
 				}
 
-				foreach(string hideSlot in hideSlotList)
+				foreach(string hideSlot in hideSlotsArray)
 				{
 					//instantiate a new HideSlotContainer
 					HideSlotContainer newHideSlot = hideSlotContainerScene.Instantiate<HideSlotContainer>();
@@ -103,17 +98,32 @@ namespace AWOC
 			slotNameEdit.Text = awocSlot.slotName;
 		}
 
-		public void InitSlotContainer(AWOCSlot awocSlot, Dictionary<string, string> sourceSlotNameDictionary, string[] hideSlotArray)
+		public void InitSlotContainer(AWOCSlot awocSlot, Dictionary<string, string> avaliableSlotsToHide, string[] hideSlotArray)
 		{
-			SetSlotName(awocSlot);
-			slotNameDictionary = sourceSlotNameDictionary;
-			hideSlotList = new List<string>();
+			this.avaliableSlotsToHide = avaliableSlotsToHide;
+			this.hideSlotsArray = hideSlotArray;
+			if(avaliableSlotsToHide != null && hideSlotsArray != null)
+			{
+				Dictionary<string,string>.KeyCollection keys = avaliableSlotsToHide.Keys;
+				foreach(string avaliableSlot in keys)
+				{
+					foreach(string hideSlot in hideSlotArray)
+					{
+						if(avaliableSlot == hideSlot)
+							avaliableSlotsToHide.Remove(hideSlot);
+					}
+				}
+			}
+			//allSlotsList = new List<string>();
 
-			if(hideSlotArray != null)
-				foreach(string slot in hideSlotArray)
-					if(awocSlot.slotName != slot)
-						hideSlotList.Add(slot);
+			/*if(avaliableSlotsToHide != null)
+			{
+				Dictionary<string, string>.KeyCollection keys = avaliableSlotsToHide.Keys;
+				foreach(string slot in keys)
+					allSlotsList.Append(slot);
+			}*/
 			
+			SetSlotName(awocSlot);			
 			PopulateHideSlotSelect();
 			PopulateHideSlotContainer();
 		}
@@ -221,10 +231,10 @@ namespace AWOC
 
 		void OnDeleteHideSlot(string deleteSlotName)
 		{
-			if(!slotNameDictionary.ContainsKey(deleteSlotName))
-				slotNameDictionary.Add(deleteSlotName, deleteSlotName);
+			if(!avaliableSlotsToHide.ContainsKey(deleteSlotName))
+				avaliableSlotsToHide.Add(deleteSlotName, deleteSlotName);
 
-			hideSlotList.Remove(deleteSlotName);
+			hideSlotsArray = RemoveElementFromArray(deleteSlotName, hideSlotsArray);
 			PopulateHideSlotSelect();
 
 			EmitSignal(SignalName.DeleteHideSlot,awocSlot.slotName,deleteSlotName);
@@ -233,9 +243,9 @@ namespace AWOC
 		void _on_add_hide_slot_button_pressed()
 		{
 			string selectedSlot = hideSlotSelect.GetItemText(hideSlotSelect.GetSelectedId());
-			hideSlotList.Add(selectedSlot);
-			if(slotNameDictionary.ContainsKey(selectedSlot))
-				slotNameDictionary.Remove(selectedSlot);
+			hideSlotsArray = AddElementToArray(selectedSlot,hideSlotsArray);
+			if(avaliableSlotsToHide.ContainsKey(selectedSlot))
+				avaliableSlotsToHide.Remove(selectedSlot);
 			PopulateHideSlotContainer();
 			PopulateHideSlotSelect();
 			EmitSignal(SignalName.AddHideSlot,awocSlot,selectedSlot);

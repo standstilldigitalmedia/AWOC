@@ -25,6 +25,7 @@ res://addons/AWOC/Scenes/CenterPanes/Animations/AnimationsPane.cs
 res://addons/AWOC/Scenes/CenterPanes/BaseCenterPane.cs
 res://addons/AWOC/Scenes/CenterPanes/Materials/MaterialsPane.cs
 res://addons/AWOC/Scenes/CenterPanes/Meshes/MeshesPane.cs
+res://addons/AWOC/Scenes/CenterPanes/PaneBase.cs
 res://addons/AWOC/Scenes/CenterPanes/Recipes/RecipesPane.cs
 res://addons/AWOC/Scenes/CenterPanes/Slots/SlotsPane.cs
 res://addons/AWOC/Scenes/CenterPanes/Wardrobes/WardrobesPane.cs
@@ -36,4 +37,3 @@ res://addons/AWOC/Scenes/Parts/SlotContainer/SlotContainer.cs
 res://addons/AWOC/Scenes/PreviewPanes/BasePreviewPane.cs
 res://addons/AWOC/Scenes/PreviewPanes/MaterialPreview/MaterialPreview.cs
 res://addons/AWOC/Scenes/PreviewPanes/MeshPreview/MeshPreview.cs
-res://asdasdasd.res
