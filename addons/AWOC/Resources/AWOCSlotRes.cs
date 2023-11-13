@@ -4,14 +4,14 @@ using System;
 namespace AWOC
 {
 	[Tool]
-	public partial class AWOCSlot: Resource
+	public partial class AWOCSlotRes : Resource
 	{
 		[Export] public string slotName;
 		[Export] public string[] hideSlots;
 
-		public AWOCSlot(){}
+		public AWOCSlotRes(){}
 
-		public AWOCSlot(string slotName)
+		public AWOCSlotRes(string slotName)
 		{
 			this.slotName = slotName;
 		}

@@ -1,12 +1,12 @@
 [gd_scene load_steps=8 format=3 uid="uid://blxcbsm5n8drd"]
 
-[ext_resource type="Theme" uid="uid://drffev6w87ljh" path="res://addons/AWOC/Themes/main_theme.tres" id="1_3t3l0"]
-[ext_resource type="Script" path="res://addons/AWOC/Scenes/Parts/MaterialContainer/MaterialContainer.cs" id="1_c23my"]
-[ext_resource type="Texture2D" uid="uid://dewa5wjv0dbel" path="res://addons/AWOC/Images/Save.svg" id="2_piqun"]
-[ext_resource type="Texture2D" uid="uid://cg741telb0c24" path="res://addons/AWOC/Images/Remove.svg" id="3_s6hkp"]
-[ext_resource type="Texture2D" uid="uid://bajmsg6jpht1s" path="res://addons/AWOC/Images/GuiVisibilityHidden.svg" id="4_gb7kg"]
-[ext_resource type="Texture2D" uid="uid://dp60fbkc3xia" path="res://addons/AWOC/Images/GuiVisibilityVisible.svg" id="5_n25rh"]
-[ext_resource type="Texture2D" uid="uid://ck44qw1l0nk63" path="res://addons/AWOC/Images/Folder.svg" id="7_5x5h2"]
+[ext_resource type="Script" path="res://addons/AWOC/Scenes/Parts/MaterialContainer/MaterialContainer.cs" id="1_rnc1n"]
+[ext_resource type="Theme" uid="uid://drffev6w87ljh" path="res://addons/AWOC/Themes/main_theme.tres" id="2_exn7t"]
+[ext_resource type="Texture2D" uid="uid://dewa5wjv0dbel" path="res://addons/AWOC/Images/Save.svg" id="3_4yqbj"]
+[ext_resource type="Texture2D" uid="uid://cg741telb0c24" path="res://addons/AWOC/Images/Remove.svg" id="4_owogr"]
+[ext_resource type="Texture2D" uid="uid://bajmsg6jpht1s" path="res://addons/AWOC/Images/GuiVisibilityHidden.svg" id="5_55bnw"]
+[ext_resource type="Texture2D" uid="uid://dp60fbkc3xia" path="res://addons/AWOC/Images/GuiVisibilityVisible.svg" id="6_6ioe0"]
+[ext_resource type="Texture2D" uid="uid://ck44qw1l0nk63" path="res://addons/AWOC/Images/Folder.svg" id="7_has8g"]
 
 [node name="MaterialContainer" type="VBoxContainer"]
 custom_minimum_size = Vector2(265, 0)
@@ -15,11 +15,11 @@ anchor_right = 0.23
 anchor_bottom = 0.546
 offset_right = -264.96
 offset_bottom = -353.808
-script = ExtResource("1_c23my")
+script = ExtResource("1_rnc1n")
 
 [node name="MaterialButton" type="Button" parent="."]
 layout_mode = 2
-theme = ExtResource("1_3t3l0")
+theme = ExtResource("2_exn7t")
 toggle_mode = true
 text = "Some Material"
 
@@ -31,35 +31,35 @@ theme_override_constants/separation = 5
 [node name="MaterialNameEdit" type="LineEdit" parent="MaterialControlsContainer"]
 custom_minimum_size = Vector2(181, 0)
 layout_mode = 2
-theme = ExtResource("1_3t3l0")
+theme = ExtResource("2_exn7t")
 
 [node name="SaveButton" type="Button" parent="MaterialControlsContainer"]
 custom_minimum_size = Vector2(23, 0)
 layout_mode = 2
-theme = ExtResource("1_3t3l0")
-icon = ExtResource("2_piqun")
+theme = ExtResource("2_exn7t")
+icon = ExtResource("3_4yqbj")
 icon_alignment = 1
 
 [node name="DeleteButton" type="Button" parent="MaterialControlsContainer"]
 custom_minimum_size = Vector2(23, 0)
 layout_mode = 2
-theme = ExtResource("1_3t3l0")
-icon = ExtResource("3_s6hkp")
+theme = ExtResource("2_exn7t")
+icon = ExtResource("4_owogr")
 icon_alignment = 1
 
 [node name="ShowButton" type="Button" parent="MaterialControlsContainer"]
 custom_minimum_size = Vector2(23, 0)
 layout_mode = 2
-theme = ExtResource("1_3t3l0")
-icon = ExtResource("4_gb7kg")
+theme = ExtResource("2_exn7t")
+icon = ExtResource("5_55bnw")
 icon_alignment = 1
 
 [node name="HideButton" type="Button" parent="MaterialControlsContainer"]
 visible = false
 custom_minimum_size = Vector2(23, 0)
 layout_mode = 2
-theme = ExtResource("1_3t3l0")
-icon = ExtResource("5_n25rh")
+theme = ExtResource("2_exn7t")
+icon = ExtResource("6_6ioe0")
 icon_alignment = 1
 
 [node name="MaterialPropertiesContainer" type="ColorRect" parent="."]
@@ -100,12 +100,12 @@ anchor_right = 1.03
 anchor_bottom = 0.63
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_3t3l0")
+theme = ExtResource("2_exn7t")
 text = "No Image"
 
 [node name="Label" type="Label" parent="MaterialPropertiesContainer/MaterialPropertiesMarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-theme = ExtResource("1_3t3l0")
+theme = ExtResource("2_exn7t")
 text = "Albedo Image:"
 
 [node name="FileButtonContainer" type="ColorRect" parent="MaterialPropertiesContainer/MaterialPropertiesMarginContainer/VBoxContainer/HBoxContainer"]
@@ -123,25 +123,25 @@ anchor_bottom = 0.615
 offset_left = -0.00500107
 grow_horizontal = 0
 grow_vertical = 2
-theme = ExtResource("1_3t3l0")
-icon = ExtResource("7_5x5h2")
+theme = ExtResource("2_exn7t")
+icon = ExtResource("7_has8g")
 icon_alignment = 1
 
 [node name="ConfirmSaveDialog" type="ConfirmationDialog" parent="."]
 initial_position = 2
 size = Vector2i(250, 150)
-theme = ExtResource("1_3t3l0")
+theme = ExtResource("2_exn7t")
 
 [node name="ConfirmDeleteDialog" type="ConfirmationDialog" parent="."]
 initial_position = 2
 size = Vector2i(250, 150)
-theme = ExtResource("1_3t3l0")
+theme = ExtResource("2_exn7t")
 
 [node name="AlbedoFileDialog" type="FileDialog" parent="."]
 title = "Open a File"
 initial_position = 2
 size = Vector2i(400, 300)
-theme = ExtResource("1_3t3l0")
+theme = ExtResource("2_exn7t")
 ok_button_text = "Open"
 file_mode = 0
 filters = PackedStringArray("*.jpg ; Portable Network Graphic")

@@ -1,7 +1,0 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://cy0ay25kwvriy"]
-
-[ext_resource type="Script" path="res://addons/AWOC/Resources/MaterialRes/MaterialRes.cs" id="1_cpeg6"]
-
-[resource]
-script = ExtResource("1_cpeg6")
-material_name = ""

@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://bong6fghk860t"]
 
 [ext_resource type="Script" path="res://addons/AWOC/Scenes/CenterPanes/Slots/SlotsPane.cs" id="1_ua26e"]
-[ext_resource type="PackedScene" uid="uid://b0uv8gg3et8fp" path="res://addons/AWOC/Scenes/Parts/SlotContainer/slot_container.tscn" id="2_5co8c"]
 [ext_resource type="Theme" uid="uid://drffev6w87ljh" path="res://addons/AWOC/Themes/main_theme.tres" id="2_kp14s"]
+[ext_resource type="PackedScene" uid="uid://b0uv8gg3et8fp" path="res://addons/AWOC/Scenes/Parts/SlotContainer/SlotContainer.tscn" id="2_xar3b"]
 [ext_resource type="Texture2D" uid="uid://cnuepoi4ynvoy" path="res://addons/AWOC/Images/Add.svg" id="3_qhkw5"]
 
 [node name="Slots" type="MarginContainer" node_paths=PackedStringArray("addSlotNameEdit", "slotsScrollContainer", "confirmDuplicateSlotDialog")]
@@ -17,7 +17,7 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 script = ExtResource("1_ua26e")
-slotContainer = ExtResource("2_5co8c")
+slotContainer = ExtResource("2_xar3b")
 addSlotNameEdit = NodePath("MainContainer/AddSlotContainer/AddSlotNameEdit")
 slotsScrollContainer = NodePath("MainContainer/SlotsScrollBackground/SlotsScrollMarginContainer/SlotsScrollContainer/SlotsContainer")
 confirmDuplicateSlotDialog = NodePath("MainContainer/ConfirmationDialog")

@@ -1,16 +1,16 @@
 [gd_scene load_steps=12 format=3 uid="uid://bu5gyikns8wae"]
 
-[ext_resource type="Theme" uid="uid://drffev6w87ljh" path="res://addons/AWOC/Themes/main_theme.tres" id="1_rh07b"]
-[ext_resource type="Script" path="res://addons/AWOC/Scenes/PreviewPanes/MeshPreview/MeshPreview.cs" id="1_tqr2q"]
-[ext_resource type="Texture2D" uid="uid://5a4bi2dff8dk" path="res://addons/AWOC/Images/RotateLeft.svg" id="2_bhx3t"]
-[ext_resource type="Texture2D" uid="uid://b38kjo75amqwy" path="res://addons/AWOC/Images/ArrowUp.svg" id="3_5i6ux"]
-[ext_resource type="Texture2D" uid="uid://ddrmclnfoer4s" path="res://addons/AWOC/Images/RotateRight.svg" id="4_3ggu6"]
-[ext_resource type="Texture2D" uid="uid://c4dbqhgevxie6" path="res://addons/AWOC/Images/ArrowLeft.svg" id="5_gdi58"]
-[ext_resource type="Texture2D" uid="uid://dy8yvja4x1nsr" path="res://addons/AWOC/Images/CenterView.svg" id="6_1cmka"]
-[ext_resource type="Texture2D" uid="uid://t35u6qnqssdk" path="res://addons/AWOC/Images/ArrowRight.svg" id="7_h1sls"]
-[ext_resource type="Texture2D" uid="uid://cnuepoi4ynvoy" path="res://addons/AWOC/Images/Add.svg" id="8_vifni"]
-[ext_resource type="Texture2D" uid="uid://dpfqlxlqoeppx" path="res://addons/AWOC/Images/ArrowDown.svg" id="9_56ku6"]
-[ext_resource type="Texture2D" uid="uid://ctyltspjtpj25" path="res://addons/AWOC/Images/CurveConstant.svg" id="10_kxgbs"]
+[ext_resource type="Script" path="res://addons/AWOC/Scenes/PreviewPanes/MeshPreview/MeshPreview.cs" id="1_bfs1l"]
+[ext_resource type="Theme" uid="uid://drffev6w87ljh" path="res://addons/AWOC/Themes/main_theme.tres" id="2_8hdg0"]
+[ext_resource type="Texture2D" uid="uid://5a4bi2dff8dk" path="res://addons/AWOC/Images/RotateLeft.svg" id="3_8lumh"]
+[ext_resource type="Texture2D" uid="uid://b38kjo75amqwy" path="res://addons/AWOC/Images/ArrowUp.svg" id="4_ywkxd"]
+[ext_resource type="Texture2D" uid="uid://ddrmclnfoer4s" path="res://addons/AWOC/Images/RotateRight.svg" id="5_h2ypo"]
+[ext_resource type="Texture2D" uid="uid://c4dbqhgevxie6" path="res://addons/AWOC/Images/ArrowLeft.svg" id="6_1rnnj"]
+[ext_resource type="Texture2D" uid="uid://dy8yvja4x1nsr" path="res://addons/AWOC/Images/CenterView.svg" id="7_hi7oy"]
+[ext_resource type="Texture2D" uid="uid://t35u6qnqssdk" path="res://addons/AWOC/Images/ArrowRight.svg" id="8_bpy4p"]
+[ext_resource type="Texture2D" uid="uid://cnuepoi4ynvoy" path="res://addons/AWOC/Images/Add.svg" id="9_eiqmh"]
+[ext_resource type="Texture2D" uid="uid://dpfqlxlqoeppx" path="res://addons/AWOC/Images/ArrowDown.svg" id="10_4cgaa"]
+[ext_resource type="Texture2D" uid="uid://ctyltspjtpj25" path="res://addons/AWOC/Images/CurveConstant.svg" id="11_gq7ou"]
 
 [node name="MeshPreview" type="VBoxContainer"]
 anchors_preset = -1
@@ -18,7 +18,7 @@ anchor_right = 0.26
 anchor_bottom = 0.606
 offset_right = -299.52
 offset_bottom = -392.688
-script = ExtResource("1_tqr2q")
+script = ExtResource("1_bfs1l")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 layout_mode = 2
@@ -44,72 +44,72 @@ columns = 3
 [node name="RotateLeft" type="Button" parent="CenterContainer/GridContainer"]
 custom_minimum_size = Vector2(23, 23)
 layout_mode = 2
-theme = ExtResource("1_rh07b")
-icon = ExtResource("2_bhx3t")
+theme = ExtResource("2_8hdg0")
+icon = ExtResource("3_8lumh")
 icon_alignment = 1
 expand_icon = true
 
 [node name="Up" type="Button" parent="CenterContainer/GridContainer"]
 custom_minimum_size = Vector2(23, 23)
 layout_mode = 2
-theme = ExtResource("1_rh07b")
-icon = ExtResource("3_5i6ux")
+theme = ExtResource("2_8hdg0")
+icon = ExtResource("4_ywkxd")
 icon_alignment = 1
 expand_icon = true
 
 [node name="RotateRight" type="Button" parent="CenterContainer/GridContainer"]
 custom_minimum_size = Vector2(23, 23)
 layout_mode = 2
-theme = ExtResource("1_rh07b")
-icon = ExtResource("4_3ggu6")
+theme = ExtResource("2_8hdg0")
+icon = ExtResource("5_h2ypo")
 icon_alignment = 1
 expand_icon = true
 
 [node name="Left" type="Button" parent="CenterContainer/GridContainer"]
 custom_minimum_size = Vector2(23, 23)
 layout_mode = 2
-theme = ExtResource("1_rh07b")
-icon = ExtResource("5_gdi58")
+theme = ExtResource("2_8hdg0")
+icon = ExtResource("6_1rnnj")
 icon_alignment = 1
 expand_icon = true
 
 [node name="Center" type="Button" parent="CenterContainer/GridContainer"]
 custom_minimum_size = Vector2(23, 23)
 layout_mode = 2
-theme = ExtResource("1_rh07b")
-icon = ExtResource("6_1cmka")
+theme = ExtResource("2_8hdg0")
+icon = ExtResource("7_hi7oy")
 icon_alignment = 1
 expand_icon = true
 
 [node name="Right" type="Button" parent="CenterContainer/GridContainer"]
 custom_minimum_size = Vector2(23, 23)
 layout_mode = 2
-theme = ExtResource("1_rh07b")
-icon = ExtResource("7_h1sls")
+theme = ExtResource("2_8hdg0")
+icon = ExtResource("8_bpy4p")
 icon_alignment = 1
 expand_icon = true
 
 [node name="ZoomIn" type="Button" parent="CenterContainer/GridContainer"]
 custom_minimum_size = Vector2(23, 23)
 layout_mode = 2
-theme = ExtResource("1_rh07b")
-icon = ExtResource("8_vifni")
+theme = ExtResource("2_8hdg0")
+icon = ExtResource("9_eiqmh")
 icon_alignment = 1
 expand_icon = true
 
 [node name="Down" type="Button" parent="CenterContainer/GridContainer"]
 custom_minimum_size = Vector2(23, 23)
 layout_mode = 2
-theme = ExtResource("1_rh07b")
-icon = ExtResource("9_56ku6")
+theme = ExtResource("2_8hdg0")
+icon = ExtResource("10_4cgaa")
 icon_alignment = 1
 expand_icon = true
 
 [node name="ZoomOut" type="Button" parent="CenterContainer/GridContainer"]
 custom_minimum_size = Vector2(23, 23)
 layout_mode = 2
-theme = ExtResource("1_rh07b")
-icon = ExtResource("10_kxgbs")
+theme = ExtResource("2_8hdg0")
+icon = ExtResource("11_gq7ou")
 icon_alignment = 1
 expand_icon = true
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bp2412f73o7lj"]
 
-[ext_resource type="Script" path="res://addons/AWOC/Scenes/PreviewPanes/MaterialPreview/MaterialPreview.cs" id="1_rqnkn"]
+[ext_resource type="Script" path="res://addons/AWOC/Scenes/PreviewPanes/MaterialPreview/MaterialPreview.cs" id="1_kg2ul"]
 
 [node name="MaterialPreview" type="VBoxContainer"]
 anchors_preset = -1
@@ -8,7 +8,7 @@ anchor_right = 0.26
 anchor_bottom = 0.463
 offset_right = -299.52
 offset_bottom = -300.024
-script = ExtResource("1_rqnkn")
+script = ExtResource("1_kg2ul")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 layout_mode = 2

@@ -17,7 +17,7 @@ namespace AWOC
 			{
 				if(awocObj != null && awocObj.slots != null && awocObj.slots.Length > 0)
 				{
-					foreach(AWOCSlot slot in awocObj.slots)
+					foreach(AWOCSlotRes slot in awocObj.slots)
 					{
 						if(slot.slotName == addSlotNameEdit.Text)
 						{
@@ -29,7 +29,7 @@ namespace AWOC
 					}
 				}
 				
-				AWOCSlot newSlot = new AWOCSlot(addSlotNameEdit.Text);
+				AWOCSlotRes newSlot = new AWOCSlotRes(addSlotNameEdit.Text);
 				addSlotNameEdit.Text = "";
 				awocObj.slots = AddElementToArray(newSlot, awocObj.slots);
 				awocObj.SaveAWOC();
@@ -38,9 +38,9 @@ namespace AWOC
 			}
 		}
 
-		void OnRenameSlot(AWOCSlot oldSlot, string newSlotName)
+		void OnRenameSlot(AWOCSlotRes oldSlot, string newSlotName)
 		{
-			foreach(AWOCSlot slot in awocObj.slots)
+			foreach(AWOCSlotRes slot in awocObj.slots)
 			{
 				if(slot.slotName == oldSlot.slotName)
 				{
@@ -51,7 +51,7 @@ namespace AWOC
 			}
 		}
 
-		void OnDeleteSlot(AWOCSlot slotToDelete)
+		void OnDeleteSlot(AWOCSlotRes slotToDelete)
 		{
 			awocObj.slots = RemoveElementFromArray(slotToDelete, awocObj.slots);
 			awocObj.SaveAWOC();
@@ -59,7 +59,7 @@ namespace AWOC
 
 		void OnDeleteHideSlot(string slotName, string hideSlotName)
 		{
-			foreach(AWOCSlot slot in awocObj.slots)
+			foreach(AWOCSlotRes slot in awocObj.slots)
 			{
 				if(slot.slotName == slotName)
 				{
@@ -70,7 +70,7 @@ namespace AWOC
 			}
 		}
 
-		void OnAddHideSlot(AWOCSlot slotToAddTo, string hideSlotName)
+		void OnAddHideSlot(AWOCSlotRes slotToAddTo, string hideSlotName)
 		{
 			slotToAddTo.hideSlots = AddElementToArray(hideSlotName, slotToAddTo.hideSlots);
 			awocObj.SaveAWOC();
@@ -83,11 +83,11 @@ namespace AWOC
 				foreach(SlotContainer child in slotsScrollContainer.GetChildren())
 					child.QueueFree();
 
-				foreach(AWOCSlot slot in awocObj.slots)
+				foreach(AWOCSlotRes slot in awocObj.slots)
 				{
 					SlotContainer container = slotContainer.Instantiate<SlotContainer>();
 					Dictionary<string,string> slotNameDictionary = new Dictionary<string, string>();
-					foreach(AWOCSlot innerSlot in awocObj.slots)
+					foreach(AWOCSlotRes innerSlot in awocObj.slots)
 					{
 						slotNameDictionary.Add(innerSlot.slotName,innerSlot.slotName);
 					}
@@ -109,7 +109,7 @@ namespace AWOC
 
 		void _on_confirmation_dialog_confirmed()
 		{
-			foreach(AWOCSlot slot in awocObj.slots)
+			foreach(AWOCSlotRes slot in awocObj.slots)
 			{
 				if(slot.slotName == addSlotNameEdit.Text)
 				{

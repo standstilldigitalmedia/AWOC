@@ -1,14 +1,14 @@
 [gd_scene load_steps=10 format=3 uid="uid://4n0ogsy4pqel"]
 
-[ext_resource type="Script" path="res://addons/AWOC/Scenes/AWOCEditor/AWOCEditor.cs" id="1_exr2x"]
-[ext_resource type="Theme" uid="uid://drffev6w87ljh" path="res://addons/AWOC/Themes/main_theme.tres" id="1_okiqg"]
-[ext_resource type="PackedScene" uid="uid://hd74w6jps4nh" path="res://addons/AWOC/Scenes/CenterPanes/Welcome/WelcomePane.tscn" id="2_p1f0o"]
-[ext_resource type="PackedScene" uid="uid://bong6fghk860t" path="res://addons/AWOC/Scenes/CenterPanes/Slots/SlotsPane.tscn" id="3_oictr"]
-[ext_resource type="PackedScene" uid="uid://b5cm2d4tq4hyk" path="res://addons/AWOC/Scenes/CenterPanes/Meshes/MeshesPane.tscn" id="4_1julh"]
-[ext_resource type="PackedScene" uid="uid://bhjt3xvy74vk5" path="res://addons/AWOC/Scenes/CenterPanes/Materials/MaterialsPane.tscn" id="5_jivug"]
-[ext_resource type="PackedScene" uid="uid://crx8ve13vi50r" path="res://addons/AWOC/Scenes/CenterPanes/Recipes/RecipesPane.tscn" id="6_322wl"]
-[ext_resource type="PackedScene" uid="uid://0v5fv7esn0bs" path="res://addons/AWOC/Scenes/CenterPanes/Wardrobes/WardrobesPane.tscn" id="7_23tu1"]
-[ext_resource type="PackedScene" uid="uid://b3i7oj7g4e2vn" path="res://addons/AWOC/Scenes/CenterPanes/Animations/AnimationsPane.tscn" id="8_e4rme"]
+[ext_resource type="Script" path="res://addons/AWOC/Scenes/AWOCEditor/AWOCEditor.cs" id="1_kwt7k"]
+[ext_resource type="PackedScene" uid="uid://hd74w6jps4nh" path="res://addons/AWOC/Scenes/CenterPanes/Welcome/WelcomePane.tscn" id="2_tvhh0"]
+[ext_resource type="PackedScene" uid="uid://bong6fghk860t" path="res://addons/AWOC/Scenes/CenterPanes/Slots/SlotsPane.tscn" id="3_v42xr"]
+[ext_resource type="PackedScene" uid="uid://b5cm2d4tq4hyk" path="res://addons/AWOC/Scenes/CenterPanes/Meshes/MeshesPane.tscn" id="4_0c5bu"]
+[ext_resource type="PackedScene" uid="uid://bhjt3xvy74vk5" path="res://addons/AWOC/Scenes/CenterPanes/Materials/MaterialsPane.tscn" id="5_2f7er"]
+[ext_resource type="PackedScene" uid="uid://crx8ve13vi50r" path="res://addons/AWOC/Scenes/CenterPanes/Recipes/RecipesPane.tscn" id="6_5cyrt"]
+[ext_resource type="PackedScene" uid="uid://0v5fv7esn0bs" path="res://addons/AWOC/Scenes/CenterPanes/Wardrobes/WardrobesPane.tscn" id="7_0x2a0"]
+[ext_resource type="PackedScene" uid="uid://b3i7oj7g4e2vn" path="res://addons/AWOC/Scenes/CenterPanes/Animations/AnimationsPane.tscn" id="8_6e3hn"]
+[ext_resource type="Theme" uid="uid://drffev6w87ljh" path="res://addons/AWOC/Themes/main_theme.tres" id="9_74ox4"]
 
 [node name="AWOCEditor" type="Control" node_paths=PackedStringArray("slotsButton", "meshesButton", "materialsButton", "recipesButton", "wardrobesButton", "animationsButton", "rightPane", "mainContainer")]
 custom_minimum_size = Vector2(320, 600)
@@ -17,16 +17,16 @@ anchor_right = 0.278
 anchor_bottom = 0.926
 offset_right = 479.744
 offset_bottom = -0.0479736
-script = ExtResource("1_exr2x")
-welcomePane = ExtResource("2_p1f0o")
-slotsPane = ExtResource("3_oictr")
-meshesPane = ExtResource("4_1julh")
-materialsPane = ExtResource("5_jivug")
-recipesPane = ExtResource("6_322wl")
-wardrobesPane = ExtResource("7_23tu1")
-animationsPane = ExtResource("8_e4rme")
-meshPreviewPane = ExtResource("4_1julh")
-materialPreviewPane = ExtResource("5_jivug")
+script = ExtResource("1_kwt7k")
+welcomePane = ExtResource("2_tvhh0")
+slotsPane = ExtResource("3_v42xr")
+meshesPane = ExtResource("4_0c5bu")
+materialsPane = ExtResource("5_2f7er")
+recipesPane = ExtResource("6_5cyrt")
+wardrobesPane = ExtResource("7_0x2a0")
+animationsPane = ExtResource("8_6e3hn")
+meshPreviewPane = ExtResource("4_0c5bu")
+materialPreviewPane = ExtResource("5_2f7er")
 slotsButton = NodePath("MainScrollContainer/MainBackground/MainMarginContainer/MainContainer/AWOCMainContainer/AWOCBottomContainer/LeftNavigation/SlotsButton")
 meshesButton = NodePath("MainScrollContainer/MainBackground/MainMarginContainer/MainContainer/AWOCMainContainer/AWOCBottomContainer/LeftNavigation/MeshesButton")
 materialsButton = NodePath("MainScrollContainer/MainBackground/MainMarginContainer/MainContainer/AWOCMainContainer/AWOCBottomContainer/LeftNavigation/MaterialsButton")
@@ -74,7 +74,7 @@ theme_override_constants/separation = 10
 
 [node name="WelcomeButton" type="Button" parent="MainScrollContainer/MainBackground/MainMarginContainer/MainContainer/AWOCMainContainer"]
 layout_mode = 2
-theme = ExtResource("1_okiqg")
+theme = ExtResource("9_74ox4")
 text = "AWOC"
 
 [node name="AWOCBottomContainer" type="HBoxContainer" parent="MainScrollContainer/MainBackground/MainMarginContainer/MainContainer/AWOCMainContainer"]
@@ -87,37 +87,37 @@ theme_override_constants/separation = 11
 
 [node name="SlotsButton" type="Button" parent="MainScrollContainer/MainBackground/MainMarginContainer/MainContainer/AWOCMainContainer/AWOCBottomContainer/LeftNavigation"]
 layout_mode = 2
-theme = ExtResource("1_okiqg")
+theme = ExtResource("9_74ox4")
 disabled = true
 text = "Slots"
 
 [node name="MeshesButton" type="Button" parent="MainScrollContainer/MainBackground/MainMarginContainer/MainContainer/AWOCMainContainer/AWOCBottomContainer/LeftNavigation"]
 layout_mode = 2
-theme = ExtResource("1_okiqg")
+theme = ExtResource("9_74ox4")
 disabled = true
 text = "Meshes"
 
 [node name="MaterialsButton" type="Button" parent="MainScrollContainer/MainBackground/MainMarginContainer/MainContainer/AWOCMainContainer/AWOCBottomContainer/LeftNavigation"]
 layout_mode = 2
-theme = ExtResource("1_okiqg")
+theme = ExtResource("9_74ox4")
 disabled = true
 text = "Materials"
 
 [node name="RecipesButton" type="Button" parent="MainScrollContainer/MainBackground/MainMarginContainer/MainContainer/AWOCMainContainer/AWOCBottomContainer/LeftNavigation"]
 layout_mode = 2
-theme = ExtResource("1_okiqg")
+theme = ExtResource("9_74ox4")
 disabled = true
 text = "Recipes"
 
 [node name="WardrobesButton" type="Button" parent="MainScrollContainer/MainBackground/MainMarginContainer/MainContainer/AWOCMainContainer/AWOCBottomContainer/LeftNavigation"]
 layout_mode = 2
-theme = ExtResource("1_okiqg")
+theme = ExtResource("9_74ox4")
 disabled = true
 text = "Wardrobes"
 
 [node name="AnimationsButton" type="Button" parent="MainScrollContainer/MainBackground/MainMarginContainer/MainContainer/AWOCMainContainer/AWOCBottomContainer/LeftNavigation"]
 layout_mode = 2
-theme = ExtResource("1_okiqg")
+theme = ExtResource("9_74ox4")
 disabled = true
 text = "Animations"
 

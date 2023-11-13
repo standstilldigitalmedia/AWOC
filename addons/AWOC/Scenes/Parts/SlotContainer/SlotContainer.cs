@@ -6,10 +6,10 @@ namespace AWOC
 	[Tool]
 	public partial class SlotContainer : PaneBase
 	{
-		[Signal] public delegate void RenameSlotEventHandler(AWOCSlot oldSlot, string newSlotName); //In response to the save button being pressed, this signal is emitted for SlotsPane to handle
-		[Signal] public delegate void DeleteSlotEventHandler(AWOCSlot slotToDelete);//In response to the delete button being pressed, this signal is emitted for SlotsPane to handle
+		[Signal] public delegate void RenameSlotEventHandler(AWOCSlotRes oldSlot, string newSlotName); //In response to the save button being pressed, this signal is emitted for SlotsPane to handle
+		[Signal] public delegate void DeleteSlotEventHandler(AWOCSlotRes slotToDelete);//In response to the delete button being pressed, this signal is emitted for SlotsPane to handle
 		[Signal] public delegate void DeleteHideSlotEventHandler(string slotName, string hideSlotName);//In response to the delete button on a hide slot being pressed, this signal is emitted for SlotsPane to handle
-		[Signal] public delegate void AddHideSlotEventHandler(AWOCSlot slotToAddTo, string hideSlotName);//In response to the AddHideSlotButton being pressed, this signal is emitted for SlotsPane to handle
+		[Signal] public delegate void AddHideSlotEventHandler(AWOCSlotRes slotToAddTo, string hideSlotName);//In response to the AddHideSlotButton being pressed, this signal is emitted for SlotsPane to handle
 		
 		[Export] HBoxContainer slotControlsContainer; //the container that holds the slotNameEdit, save button, delete button, and show and hide buttons
 		[Export] ColorRect hideSlotContainer; //the container that holds the hideSlotControls. It is hidden or shown when the show and hide buttons are pressed
@@ -23,7 +23,7 @@ namespace AWOC
 		[Export] VBoxContainer hideSlotScrollContainer; //the container that holds all the hide slot controls
 		[Export] PackedScene hideSlotContainerScene; //the scene to instantiate for each hide slot and parent to hideSlotScrollContainer
 
-		AWOCSlot awocSlot; //The AWOCSlot this container managages
+		AWOCSlotRes awocSlot; //The AWOCSlot this container managages
 		Dictionary<string,string> avaliableSlotsToHide;//
 		//List<string> allSlotsList;
 		string[] hideSlotsArray;
@@ -43,7 +43,6 @@ namespace AWOC
 				bool itemAdded = false;
 				foreach(string slot in keys)
 				{
-					GD.Print(slot);
 					if(slot != awocSlot.slotName)
 					{
 						hideSlotSelect.AddItem(slot);
@@ -91,14 +90,14 @@ namespace AWOC
 		/// </summary>
 		/// <param name="slotName">The name to be displayed in the label text, the slotNameEdit text, and to be assigned to slotName</param>
 		/// <returns>void</returns>
-		public void SetSlotName(AWOCSlot awocSlot)
+		public void SetSlotName(AWOCSlotRes awocSlot)
 		{
 			this.awocSlot = awocSlot;
 			slotButton.Text = awocSlot.slotName;
 			slotNameEdit.Text = awocSlot.slotName;
 		}
 
-		public void InitSlotContainer(AWOCSlot awocSlot, Dictionary<string, string> avaliableSlotsToHide, string[] hideSlotArray)
+		public void InitSlotContainer(AWOCSlotRes awocSlot, Dictionary<string, string> avaliableSlotsToHide, string[] hideSlotArray)
 		{
 			this.avaliableSlotsToHide = avaliableSlotsToHide;
 			this.hideSlotsArray = hideSlotArray;

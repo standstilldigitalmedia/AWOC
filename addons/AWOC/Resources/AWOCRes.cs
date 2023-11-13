@@ -30,7 +30,7 @@ namespace AWOC
 	public partial class AWOCRes : Resource
 	{
 		[Export] string awocName;
-		[Export] public AWOCSlot[] slots;
+		[Export] public AWOCSlotRes[] slots;
 		Dictionary<string, MeshInstance3D> sourceMeshList;
 		Skeleton3D sourceSkeleton;
 		[Export] Resource sourceAvatarFile;
