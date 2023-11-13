@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://crx8ve13vi50r"]
+[gd_scene load_steps=3 format=3 uid="uid://b3i7oj7g4e2vn"]
 
-[ext_resource type="Theme" uid="uid://drffev6w87ljh" path="res://addons/AWOC/Themes/main_theme.tres" id="1_1ukal"]
-[ext_resource type="Script" path="res://addons/AWOC/Scenes/CenterPanes/Recipes/Recipes.cs" id="1_cq5jd"]
+[ext_resource type="Script" path="res://addons/AWOC/Scenes/CenterPanes/Animations/AnimationsPane.cs" id="1_2ehch"]
+[ext_resource type="Theme" uid="uid://drffev6w87ljh" path="res://addons/AWOC/Themes/main_theme.tres" id="2_j3lag"]
 
-[node name="Recipes" type="MarginContainer"]
+[node name="Animations" type="MarginContainer"]
 custom_minimum_size = Vector2(260, 550)
 anchors_preset = -1
 anchor_right = 0.226
@@ -14,13 +14,13 @@ theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
-script = ExtResource("1_cq5jd")
+script = ExtResource("1_2ehch")
 
 [node name="MainContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
 
 [node name="HeadLabel" type="Label" parent="MainContainer"]
 layout_mode = 2
-theme = ExtResource("1_1ukal")
-text = "Recipes"
+theme = ExtResource("2_j3lag")
+text = "Animations"
 horizontal_alignment = 1

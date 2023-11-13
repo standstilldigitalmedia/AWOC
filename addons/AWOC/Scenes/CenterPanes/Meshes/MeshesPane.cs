@@ -4,16 +4,11 @@ using System;
 namespace AWOC
 {
 	[Tool]
-	public partial class Meshes : BaseCenterPane
+	public partial class MeshesPane : BaseCenterPane
 	{
-		// Called when the node enters the scene tree for the first time.
-		public override void _Ready()
+		public override void InitPane(AWOCEditor awocEditor)
 		{
-		}
-
-		// Called every frame. 'delta' is the elapsed time since the previous frame.
-		public override void _Process(double delta)
-		{
+			
 		}
 	}
 }

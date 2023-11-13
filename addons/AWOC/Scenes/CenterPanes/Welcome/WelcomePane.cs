@@ -1,10 +1,9 @@
 using Godot;
-using System;
 
 namespace AWOC
 {
 	[Tool]
-	public partial class Welcome : BaseCenterPane
+	public partial class WelcomePane : BaseCenterPane
 	{
 		[Export] FileDialog newAWOCDialog;
 		[Export] FileDialog loadAWOCDialog;
@@ -44,6 +43,11 @@ namespace AWOC
 		{
 			InitFileDialog(loadAWOCDialog);
 			InitFileDialog(newAWOCDialog);
+		}
+
+		public override void InitPane(AWOCEditor awocEditor)
+		{
+			
 		}
 	}
 }

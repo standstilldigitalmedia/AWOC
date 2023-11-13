@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://bong6fghk860t"]
 
-[ext_resource type="Theme" uid="uid://drffev6w87ljh" path="res://addons/AWOC/Themes/main_theme.tres" id="1_5fad0"]
-[ext_resource type="Script" path="res://addons/AWOC/Scenes/CenterPanes/Slots/Slots.cs" id="1_awpkw"]
-[ext_resource type="PackedScene" uid="uid://b0uv8gg3et8fp" path="res://addons/AWOC/Scenes/Parts/SlotContainer/slot_container.tscn" id="2_gyhqq"]
-[ext_resource type="Texture2D" uid="uid://cnuepoi4ynvoy" path="res://addons/AWOC/Images/Add.svg" id="2_ngbxm"]
+[ext_resource type="Script" path="res://addons/AWOC/Scenes/CenterPanes/Slots/SlotsPane.cs" id="1_ua26e"]
+[ext_resource type="PackedScene" uid="uid://b0uv8gg3et8fp" path="res://addons/AWOC/Scenes/Parts/SlotContainer/slot_container.tscn" id="2_5co8c"]
+[ext_resource type="Theme" uid="uid://drffev6w87ljh" path="res://addons/AWOC/Themes/main_theme.tres" id="2_kp14s"]
+[ext_resource type="Texture2D" uid="uid://cnuepoi4ynvoy" path="res://addons/AWOC/Images/Add.svg" id="3_qhkw5"]
 
 [node name="Slots" type="MarginContainer" node_paths=PackedStringArray("addSlotNameEdit", "slotsScrollContainer")]
 custom_minimum_size = Vector2(285, 470)
@@ -16,8 +16,8 @@ theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
-script = ExtResource("1_awpkw")
-slotContainer = ExtResource("2_gyhqq")
+script = ExtResource("1_ua26e")
+slotContainer = ExtResource("2_5co8c")
 addSlotNameEdit = NodePath("MainContainer/AddSlotContainer/AddSlotNameEdit")
 slotsScrollContainer = NodePath("MainContainer/SlotsScrollBackground/SlotsScrollMarginContainer/SlotsScrollContainer/SlotsContainer")
 
@@ -27,7 +27,7 @@ theme_override_constants/separation = 15
 
 [node name="HeadLabel" type="Label" parent="MainContainer"]
 layout_mode = 2
-theme = ExtResource("1_5fad0")
+theme = ExtResource("2_kp14s")
 text = "Slots"
 horizontal_alignment = 1
 
@@ -38,14 +38,14 @@ theme_override_constants/separation = 10
 [node name="AddSlotNameEdit" type="LineEdit" parent="MainContainer/AddSlotContainer"]
 custom_minimum_size = Vector2(240, 0)
 layout_mode = 2
-theme = ExtResource("1_5fad0")
+theme = ExtResource("2_kp14s")
 placeholder_text = "Add Slot"
 
 [node name="AddSlotButton" type="Button" parent="MainContainer/AddSlotContainer"]
 custom_minimum_size = Vector2(23, 0)
 layout_mode = 2
-theme = ExtResource("1_5fad0")
-icon = ExtResource("2_ngbxm")
+theme = ExtResource("2_kp14s")
+icon = ExtResource("3_qhkw5")
 icon_alignment = 1
 
 [node name="SlotsScrollBackground" type="ColorRect" parent="MainContainer"]

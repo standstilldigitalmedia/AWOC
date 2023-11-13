@@ -1,6 +1,6 @@
 using Godot;
-//using System.Collections.Generic;
-using Godot.Collections;
+using System.Collections.Generic;
+//using Godot.Collections;
 
 namespace AWOC
 {
@@ -30,13 +30,13 @@ namespace AWOC
 	[Tool]
 	public partial class AWOCRes : Resource
 	{
-		[Export] public string awocName;
-		[Export] public Dictionary<string, Dictionary<string, string>> slotsDictionary;
-		[Export] Dictionary<string, MeshInstance3D> sourceMeshList;
+		[Export] string awocName;
+		[Export] public AWOCSlot[] slots;
+		Dictionary<string, MeshInstance3D> sourceMeshList;
 		Skeleton3D sourceSkeleton;
 		[Export] Resource sourceAvatarFile;
 		[Export] Node3D sourceAvatar;
-		[Export] Dictionary<string,MaterialRes> materialsDictionary;
+		//[Export] AWOCMaterial[] materials;
 
 		public AWOCRes(){}
 

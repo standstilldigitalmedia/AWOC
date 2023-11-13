@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://b5cm2d4tq4hyk"]
 
-[ext_resource type="Script" path="res://addons/AWOC/Scenes/CenterPanes/Meshes/Meshes.cs" id="1_ikoib"]
-[ext_resource type="Theme" uid="uid://drffev6w87ljh" path="res://addons/AWOC/Themes/main_theme.tres" id="1_imimv"]
-[ext_resource type="Texture2D" uid="uid://ck44qw1l0nk63" path="res://addons/AWOC/Images/Folder.svg" id="2_yqfv2"]
+[ext_resource type="Script" path="res://addons/AWOC/Scenes/CenterPanes/Meshes/MeshesPane.cs" id="1_0ay6c"]
+[ext_resource type="Theme" uid="uid://drffev6w87ljh" path="res://addons/AWOC/Themes/main_theme.tres" id="2_uaf4o"]
+[ext_resource type="Texture2D" uid="uid://ck44qw1l0nk63" path="res://addons/AWOC/Images/Folder.svg" id="3_gjt58"]
 
 [node name="Meshes" type="MarginContainer"]
 custom_minimum_size = Vector2(260, 400)
@@ -15,7 +15,7 @@ theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
-script = ExtResource("1_ikoib")
+script = ExtResource("1_0ay6c")
 
 [node name="MainContainer" type="VBoxContainer" parent="."]
 custom_minimum_size = Vector2(250, 400)
@@ -23,7 +23,7 @@ layout_mode = 2
 
 [node name="HeadLabel" type="Label" parent="MainContainer"]
 layout_mode = 2
-theme = ExtResource("1_imimv")
+theme = ExtResource("2_uaf4o")
 text = "Meshes"
 horizontal_alignment = 1
 
@@ -33,7 +33,7 @@ layout_mode = 2
 [node name="MeshObjectFilePathLabel" type="Label" parent="MainContainer/AddMeshesContainer"]
 custom_minimum_size = Vector2(245, 26)
 layout_mode = 2
-theme = ExtResource("1_imimv")
+theme = ExtResource("2_uaf4o")
 text = "Mesh file path: "
 clip_text = true
 text_overrun_behavior = 1
@@ -41,8 +41,8 @@ text_overrun_behavior = 1
 [node name="MeshObjectFilePathButton" type="Button" parent="MainContainer/AddMeshesContainer"]
 custom_minimum_size = Vector2(26, 26)
 layout_mode = 2
-theme = ExtResource("1_imimv")
-icon = ExtResource("2_yqfv2")
+theme = ExtResource("2_uaf4o")
+icon = ExtResource("3_gjt58")
 icon_alignment = 1
 
 [node name="MeshListBackground" type="ColorRect" parent="MainContainer"]
@@ -76,7 +76,7 @@ theme_override_constants/separation = 10
 title = "Open a File"
 initial_position = 2
 size = Vector2i(400, 300)
-theme = ExtResource("1_imimv")
+theme = ExtResource("2_uaf4o")
 ok_button_text = "Open"
 file_mode = 0
 filters = PackedStringArray("*.glb ; GL Transmission Format Binary file")

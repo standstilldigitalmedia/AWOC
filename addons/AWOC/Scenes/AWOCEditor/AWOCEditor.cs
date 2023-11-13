@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Godot;
 
 namespace AWOC
@@ -129,6 +130,7 @@ namespace AWOC
 
 			//now that all the old stuff has been freed, the new pane can be instantiated and parented to the right pane	
 			currentPane = pane.Instantiate<BaseCenterPane>();
+			currentPane.InitPane(this);
 			currentPane.awocEditor = this;
 			rightPane.AddChild(currentPane);
 		}

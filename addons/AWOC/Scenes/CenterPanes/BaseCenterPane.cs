@@ -1,13 +1,16 @@
 using Godot;
-using Godot.NativeInterop;
-using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AWOC
 {
 	[Tool]
-	public partial class BaseCenterPane: Control
+	public abstract partial class BaseCenterPane: Control
 	{
         [Export] public AWOCEditor awocEditor;
+		[Export] public AWOCRes awocObj;
+
+		public abstract void InitPane(AWOCEditor awocEditor);
 
 		public string GetFileNameFromPath(string path)
 		{
@@ -27,6 +30,49 @@ namespace AWOC
 			dialog.ClearFilters();
 			dialog.AddFilter("*.res", "Resource");
 			dialog.CurrentDir = "/";
+		}
+
+		public string[] RemoveStringFromArray(string removeString, string[] sourceArray)
+		{
+			if(sourceArray != null && removeString != null)
+			{
+				List<string> newList = new List<string>();
+				bool deleted = false;
+				foreach(string nameString in sourceArray)
+				{
+					if(nameString != removeString)
+						newList.Append(nameString);
+					else
+						deleted = true;
+				}
+				if(deleted)
+				{
+					string[] newArray = new string[sourceArray.Length -1];
+					for(int a = 0; a < newArray.Length; a++)
+					{
+						newArray[a] = newList[a];
+					}
+					return newArray;
+				}
+			}
+			return null;
+		}
+
+		public string[] AddStringToArray(string addString, string[] sourceArray)
+		{
+			if(sourceArray == null || sourceArray.Length < 1)
+			{
+				string[] returnArray = new string[1];
+				returnArray[0] = addString;
+				return returnArray;
+			}
+			string[] newArray = new string[sourceArray.Length + 1];
+			for(int a = 0; a < sourceArray.Length; a++)
+			{
+				newArray[a] = sourceArray[a];
+			}
+			newArray[newArray.Length -1] = addString;
+			return newArray;
 		}
 	}
 }

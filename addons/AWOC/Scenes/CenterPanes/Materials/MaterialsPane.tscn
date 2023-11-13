@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://bhjt3xvy74vk5"]
 
-[ext_resource type="Script" path="res://addons/AWOC/Scenes/CenterPanes/Materials/Materials.cs" id="1_re4iv"]
-[ext_resource type="Theme" uid="uid://drffev6w87ljh" path="res://addons/AWOC/Themes/main_theme.tres" id="1_v47p5"]
-[ext_resource type="Texture2D" uid="uid://cnuepoi4ynvoy" path="res://addons/AWOC/Images/Add.svg" id="2_t56uc"]
+[ext_resource type="Script" path="res://addons/AWOC/Scenes/CenterPanes/Materials/MaterialsPane.cs" id="1_rfkrm"]
+[ext_resource type="Theme" uid="uid://drffev6w87ljh" path="res://addons/AWOC/Themes/main_theme.tres" id="2_x0sj5"]
+[ext_resource type="Texture2D" uid="uid://cnuepoi4ynvoy" path="res://addons/AWOC/Images/Add.svg" id="3_rj67k"]
 
 [node name="Materials" type="MarginContainer"]
 custom_minimum_size = Vector2(285, 470)
@@ -15,7 +15,7 @@ theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
-script = ExtResource("1_re4iv")
+script = ExtResource("1_rfkrm")
 
 [node name="MainContainer" type="VBoxContainer" parent="."]
 custom_minimum_size = Vector2(275, 460)
@@ -23,7 +23,7 @@ layout_mode = 2
 
 [node name="HeadLabel" type="Label" parent="MainContainer"]
 layout_mode = 2
-theme = ExtResource("1_v47p5")
+theme = ExtResource("2_x0sj5")
 text = "Materials"
 horizontal_alignment = 1
 
@@ -35,13 +35,13 @@ theme_override_constants/separation = 10
 [node name="AddMaterialNameEdit" type="LineEdit" parent="MainContainer/AddMaterialContainer"]
 custom_minimum_size = Vector2(240, 0)
 layout_mode = 2
-theme = ExtResource("1_v47p5")
+theme = ExtResource("2_x0sj5")
 
 [node name="AddMaterialButton" type="Button" parent="MainContainer/AddMaterialContainer"]
 custom_minimum_size = Vector2(23, 0)
 layout_mode = 2
-theme = ExtResource("1_v47p5")
-icon = ExtResource("2_t56uc")
+theme = ExtResource("2_x0sj5")
+icon = ExtResource("3_rj67k")
 icon_alignment = 1
 
 [node name="MaterialsContainerBackground" type="ColorRect" parent="MainContainer"]

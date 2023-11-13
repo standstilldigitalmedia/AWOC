@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://hd74w6jps4nh"]
 
-[ext_resource type="Theme" uid="uid://drffev6w87ljh" path="res://addons/AWOC/Themes/main_theme.tres" id="1_71ca1"]
-[ext_resource type="Script" path="res://addons/AWOC/Scenes/CenterPanes/Welcome/Welcome.cs" id="1_njsrb"]
+[ext_resource type="Script" path="res://addons/AWOC/Scenes/CenterPanes/Welcome/WelcomePane.cs" id="1_l2gv7"]
+[ext_resource type="Theme" uid="uid://drffev6w87ljh" path="res://addons/AWOC/Themes/main_theme.tres" id="2_c5jlm"]
 
 [node name="Welcome" type="MarginContainer" node_paths=PackedStringArray("newAWOCDialog", "loadAWOCDialog")]
 custom_minimum_size = Vector2(270, 550)
@@ -14,7 +14,7 @@ theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
-script = ExtResource("1_njsrb")
+script = ExtResource("1_l2gv7")
 newAWOCDialog = NodePath("MainContainer/NewAWOCDialog")
 loadAWOCDialog = NodePath("MainContainer/LoadAWOCDialog")
 
@@ -23,7 +23,7 @@ layout_mode = 2
 
 [node name="HeadLabel" type="Label" parent="MainContainer"]
 layout_mode = 2
-theme = ExtResource("1_71ca1")
+theme = ExtResource("2_c5jlm")
 text = "Welcome"
 horizontal_alignment = 1
 
@@ -37,26 +37,26 @@ theme_override_constants/separation = 10
 
 [node name="NewAWOCButton" type="Button" parent="MainContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
-theme = ExtResource("1_71ca1")
+theme = ExtResource("2_c5jlm")
 text = "New AWOC"
 
 [node name="LoadAWOCButton" type="Button" parent="MainContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
-theme = ExtResource("1_71ca1")
+theme = ExtResource("2_c5jlm")
 text = "Load AWOC"
 
 [node name="NewAWOCDialog" type="FileDialog" parent="MainContainer"]
 title = "New AWOC"
 initial_position = 2
 size = Vector2i(400, 300)
-theme = ExtResource("1_71ca1")
+theme = ExtResource("2_c5jlm")
 filters = PackedStringArray("*.res ; Resource")
 
 [node name="LoadAWOCDialog" type="FileDialog" parent="MainContainer"]
 title = "Open a File"
 initial_position = 2
 size = Vector2i(400, 300)
-theme = ExtResource("1_71ca1")
+theme = ExtResource("2_c5jlm")
 ok_button_text = "Open"
 file_mode = 0
 filters = PackedStringArray("*.res ; Resource")

@@ -3,12 +3,11 @@ using Godot;
 namespace AWOC
 {
 	[Tool]
-	public partial class HideSlotContainer : BaseCenterPane
+	public partial class HideSlotContainer : VBoxContainer
 	{
+		[Signal] public delegate void DeleteEventHandler(string hideSlotName); //event is fired in response to the confirmDeleteDialog being confirmed
 		[Export] ConfirmationDialog confirmDeleteDialog; //displayed when the delete button is pressed. Confirms if this hide slot should be deleted
 		[Export] Label hideSlotLabel; //the label that shows the name of this hide slot
-
-		public string slotName;	//the name of the Slot this hideSlot belongs to
 		public string hideSlotName; //the name of the hide slot that this HideSlotContainer manages
 
 		/// <summary>
@@ -34,20 +33,19 @@ namespace AWOC
 		/// <returns>void</returns>
 		void _on_delete_hideslot_button_pressed()
 		{
-			confirmDeleteDialog.Title = "Delete " + slotName + "?";
-			confirmDeleteDialog.DialogText = "Are you sure you wish to delete " + slotName + "? This can not be undone.";
+			confirmDeleteDialog.Title = "Delete " + hideSlotName + "?";
+			confirmDeleteDialog.DialogText = "Are you sure you wish to delete " + hideSlotName + "? This can not be undone.";
 			confirmDeleteDialog.Visible = true;
 		}
 	
 		/// <summary>
-		/// Deletes this hide slot in response to the confirm button being clicked in confirmDeleteDialog
+		/// Emits the Delete signal and then frees itself
 		/// </summary>
 		/// <param name="none">none</param>
 		/// <returns>void</returns>
 		void _on_confirm_delete_hide_slot_dialog_confirmed()
 		{
-			awocEditor.awocObj.slotsDictionary[slotName].Remove(hideSlotName);
-			awocEditor.SaveCurrentAWOC();
+			EmitSignal(SignalName.Delete,hideSlotName);
 			QueueFree();
 		}
 	}
