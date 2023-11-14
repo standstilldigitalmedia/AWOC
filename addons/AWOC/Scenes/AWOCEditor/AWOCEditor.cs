@@ -38,7 +38,7 @@ namespace AWOC
 		[Export] HBoxContainer mainContainer;
 
 		[Export] public AWOCRes awocObj;
-		public BaseCenterPane currentPane;
+		public CenterPaneBase currentPane;
 		public BasePreviewPane currentPreviewNode;
 
 		/// <summary>
@@ -115,9 +115,8 @@ namespace AWOC
 			}
 
 			//now that all the old stuff has been freed, the new pane can be instantiated and parented to the right pane	
-			currentPane = pane.Instantiate<BaseCenterPane>();
+			currentPane = pane.Instantiate<CenterPaneBase>();
 			currentPane.InitPane(this);
-			currentPane.awocEditor = this;
 			rightPane.AddChild(currentPane);
 		}
 
@@ -197,14 +196,3 @@ namespace AWOC
 		}
 	}
 }
-
-/*
-
-func preview_awoc_meshes(mesh_list: Array):
-	load_preview(mesh_preview_pane)		
-	if awoc_obj != null and current_preview_node != null:
-		var new_subject: Node3D = awoc_obj.create_awoc_avatar(mesh_list)
-		current_preview_node.set_new_subject(new_subject)
-
-*/
-

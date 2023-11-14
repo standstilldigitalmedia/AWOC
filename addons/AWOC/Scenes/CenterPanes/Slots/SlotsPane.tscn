@@ -20,7 +20,7 @@ script = ExtResource("1_ua26e")
 slotContainer = ExtResource("2_xar3b")
 addSlotNameEdit = NodePath("MainContainer/AddSlotContainer/AddSlotNameEdit")
 slotsScrollContainer = NodePath("MainContainer/SlotsScrollBackground/SlotsScrollMarginContainer/SlotsScrollContainer/SlotsContainer")
-confirmDuplicateSlotDialog = NodePath("MainContainer/ConfirmationDialog")
+confirmDuplicateSlotDialog = NodePath("MainContainer/ConfirmDuplicateSlotDialog")
 
 [node name="MainContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -75,10 +75,10 @@ custom_minimum_size = Vector2(263, 150)
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="ConfirmationDialog" type="ConfirmationDialog" parent="MainContainer"]
+[node name="ConfirmDuplicateSlotDialog" type="ConfirmationDialog" parent="MainContainer"]
 initial_position = 2
 size = Vector2i(250, 150)
 theme = ExtResource("2_kp14s")
 
 [connection signal="pressed" from="MainContainer/AddSlotContainer/AddSlotButton" to="." method="_on_add_slot_button_pressed"]
-[connection signal="confirmed" from="MainContainer/ConfirmationDialog" to="." method="_on_confirmation_dialog_confirmed"]
+[connection signal="confirmed" from="MainContainer/ConfirmDuplicateSlotDialog" to="." method="_on_confirm_duplicate_slot_dialog_confirmed"]

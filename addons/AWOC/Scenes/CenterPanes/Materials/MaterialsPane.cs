@@ -3,7 +3,7 @@ using Godot;
 namespace AWOC
 {
 	[Tool]
-	public partial class MaterialsPane : BaseCenterPane
+	public partial class MaterialsPane : CenterPaneBase
 	{
 		public override void InitPane(AWOCEditor awocEditor)
 		{

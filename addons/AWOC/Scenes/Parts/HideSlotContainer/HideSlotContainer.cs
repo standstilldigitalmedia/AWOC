@@ -5,7 +5,7 @@ namespace AWOC
 	[Tool]
 	public partial class HideSlotContainer : VBoxContainer
 	{
-		[Signal] public delegate void DeleteEventHandler(string hideSlotName); //event is fired in response to the confirmDeleteDialog being confirmed
+		[Signal] public delegate void DeleteEventHandler(string hideSlotName); //In response to the ConfirmDeleteDialog being confirmed, this signal is emitted for SlotContainer to handle
 		[Export] ConfirmationDialog confirmDeleteDialog; //displayed when the delete button is pressed. Confirms if this hide slot should be deleted
 		[Export] Label hideSlotLabel; //the label that shows the name of this hide slot
 		public string hideSlotName; //the name of the hide slot that this HideSlotContainer manages
@@ -13,16 +13,12 @@ namespace AWOC
 		/// <summary>
 		/// Sets the name of this hide slot on both the hide slot label and in the property hideSlotName
 		/// </summary>
-		/// <param name="slotName">The name of the new hide slot</param>
+		/// <param name="hideSlotName">The name of the new hide slot</param>
 		/// <returns>void</returns>
-		public void SetHideSlotName(string slotName)
+		public void SetHideSlotName(string hideSlotName)
 		{
-			this.hideSlotName = slotName;
-			hideSlotLabel.Text = slotName;
-		}
-	
-		public override void _Ready()
-		{
+			this.hideSlotName = hideSlotName;
+			hideSlotLabel.Text = hideSlotName;
 			confirmDeleteDialog.Visible = false;
 		}
 

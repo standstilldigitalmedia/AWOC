@@ -26,8 +26,8 @@ namespace AWOC
 		public override int GetHashCode()
 		{
             string replaced = string.Empty;
-            slotName = slotName.ToUpper();
-            foreach (char c in slotName)
+            string slotNameUpper = slotName.ToUpper();
+            foreach (char c in slotNameUpper)
             {
                 if (char.IsDigit(c))
                     replaced += c;
