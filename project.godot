@@ -17,3 +17,7 @@ config/icon="res://icon.svg"
 [dotnet]
 
 project/assembly_name="AWOC"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/AWOC/plugin.cfg")

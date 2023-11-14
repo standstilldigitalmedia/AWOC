@@ -7,7 +7,7 @@ namespace AWOC
 	public partial class Plugin : EditorPlugin
 	{
 		Control _dock;
-		const string EDITOR_UI_SCENE_PATH = "res://addons/AWOC/Scenes/AWOCEditor/awoc_editor.tscn";
+		const string EDITOR_UI_SCENE_PATH = "res://addons/AWOC/Scenes/AWOCEditor/AWOCEditor.tscn";
 
 		public override void _EnterTree()
 		{
