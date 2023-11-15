@@ -54,7 +54,7 @@ namespace AWOC
             if(soureceObj.IsClass("Skeleton3D"))
                 return (Skeleton3D)soureceObj;
 
-            foreach(Node3D child in soureceObj.GetChildren())
+            foreach(Node child in soureceObj.GetChildren())
             {
                 Skeleton3D skele = RecursiveGetSkeleton(child);
                 if(skele != null)
@@ -129,7 +129,7 @@ namespace AWOC
             }
                 
             sourceMeshList = new Dictionary<string, MeshInstance3D>();
-            Node sourceAvatar = sourceAvatarRes.Instantiate();
+            Node3D sourceAvatar = sourceAvatarRes.Instantiate<Node3D>();
             sourceSkeleton = RecursiveGetSkeleton(sourceAvatar);
             foreach(var child in sourceSkeleton.GetChildren())
             {

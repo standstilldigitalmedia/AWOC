@@ -11,11 +11,11 @@
 [ext_resource type="Theme" uid="uid://drffev6w87ljh" path="res://addons/AWOC/Themes/main_theme.tres" id="9_74ox4"]
 
 [node name="AWOCEditor" type="Control" node_paths=PackedStringArray("slotsButton", "meshesButton", "materialsButton", "recipesButton", "wardrobesButton", "animationsButton", "rightPane", "mainContainer")]
-custom_minimum_size = Vector2(320, 600)
+custom_minimum_size = Vector2(700, 600)
 layout_mode = 3
-anchor_right = 0.694
+anchor_right = 0.608
 anchor_bottom = 0.926
-offset_right = 0.511963
+offset_right = -0.416016
 offset_bottom = -0.0479736
 script = ExtResource("1_kwt7k")
 welcomePane = ExtResource("2_tvhh0")
@@ -37,7 +37,7 @@ rightPane = NodePath("MainScrollContainer/MainBackground/MainMarginContainer/Mai
 mainContainer = NodePath("MainScrollContainer/MainBackground/MainMarginContainer/MainContainer")
 
 [node name="MainScrollContainer" type="ScrollContainer" parent="."]
-custom_minimum_size = Vector2(250, 600)
+custom_minimum_size = Vector2(700, 600)
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
