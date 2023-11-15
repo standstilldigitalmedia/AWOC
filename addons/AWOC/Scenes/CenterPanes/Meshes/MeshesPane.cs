@@ -19,9 +19,9 @@ namespace AWOC
 		void ShowMesh(string meshName, bool show)
 		{
 			if(show)
-				meshList = AddElementToArray(meshName, meshList);
+				meshList = AWOCHelper.AddElementToArray(meshName, meshList);
 			else
-				meshList = RemoveElementFromArray(meshName, meshList);
+				meshList = AWOCHelper.RemoveElementFromArray(meshName, meshList);
 
 			if(meshList == null)
 			{
@@ -69,7 +69,7 @@ namespace AWOC
 		void _on_load_mesh_dialog_file_selected(string path)
 		{
 			filePathLabel.Text = path;
-			awocObj.awocAvatarRes = new AWOCAvatarRes(GetFileNameFromPath(path), GD.Load<PackedScene>(path));
+			awocObj.awocAvatarRes = new AWOCAvatarRes(AWOCHelper.GetFileNameFromPath(path), GD.Load<PackedScene>(path));
 			//awocObj.init_source_avatar(path)
 			awocObj.SaveAWOC();
 			awocObj.awocAvatarRes.InitAvatar();

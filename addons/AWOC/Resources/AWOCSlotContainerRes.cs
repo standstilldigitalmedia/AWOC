@@ -3,23 +3,22 @@ using System;
 
 namespace AWOC
 {
-	[Tool]
-	public partial class AWOCSlotRes : Resource
-	{
-		[Export] public string slotName;
-		[Export] public string[] hideSlots;
+    public partial class AWOCSlotContainerRes : Resource
+    {
+        [Export] public string slotName;
+        [Export] public string[] hideSlots;
 
-		public AWOCSlotRes()
+        public AWOCSlotContainerRes()
 		{
 			slotName = "empty";
 		}
 
-		public AWOCSlotRes(string slotName)
+		public AWOCSlotContainerRes(string slotName)
 		{
 			this.slotName = slotName;
 		}
 
-		public override bool Equals(Object obj)
+        public override bool Equals(Object obj)
 		{			
 			if(GetHashCode() == obj.GetHashCode())
 				return true;
@@ -44,5 +43,5 @@ namespace AWOC
 			Int32.TryParse(replaced, out int j);
 			return j;
 		}
-	}
+    }
 }

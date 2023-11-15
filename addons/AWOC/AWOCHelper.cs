@@ -2,15 +2,14 @@ using Godot;
 
 namespace AWOC
 {
-	[Tool]
-	public abstract partial class PaneBase : Node
+	public static partial class AWOCHelper
 	{
 		/// <summary>
 		/// Splits an entire path until only the file name remains
 		/// </summary>
 		/// <param name="path">The path to be split</param>
 		/// <returns>void</returns>
-		public string GetFileNameFromPath(string path)
+		public static string GetFileNameFromPath(string path)
 		{
 			//split the path at forward slashes
 			string[] dirSplit = path.Split("/");
@@ -28,7 +27,7 @@ namespace AWOC
 		/// </summary>
 		/// <param name="dialog">The dialog to be initilized</param>
 		/// <returns>void</returns>
-		public void InitFileDialog(FileDialog dialog)
+		public static void InitFileDialog(FileDialog dialog)
 		{
 			dialog.Visible = false;
 			dialog.ClearFilters();
@@ -43,7 +42,7 @@ namespace AWOC
 		/// <param name="elementToRemove">The element to remove from the array</param>
 		/// <param name="sourceArray">The original array to be modified</param>
 		/// <returns>A new array that is a copy of sourceArray minus elementToRemove</returns>		
-		public T[] RemoveElementFromArray<T>(T elementToRemove, T[] sourceArray)
+		public static T[] RemoveElementFromArray<T>(T elementToRemove, T[] sourceArray)
 		{
 			if(sourceArray != null && elementToRemove != null)
 			{
@@ -74,7 +73,7 @@ namespace AWOC
 		/// <param name="elementToAdd">The element to add to the array</param>
 		/// <param name="sourceArray">The original array to be modified</param>
 		/// <returns>A new array that is a copy of sourceArray plus elementToRemove</returns>	
-		public T[] AddElementToArray<T>(T elementToAdd, T[] sourceArray)
+		public static T[] AddElementToArray<T>(T elementToAdd, T[] sourceArray)
 		{	
 			if(elementToAdd == null)
 			{
@@ -97,4 +96,3 @@ namespace AWOC
 		}
 	}
 }
-

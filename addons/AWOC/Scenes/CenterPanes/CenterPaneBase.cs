@@ -3,7 +3,7 @@ using Godot;
 namespace AWOC
 {
 	[Tool]
-	public abstract partial class CenterPaneBase: PaneBase
+	public abstract partial class CenterPaneBase: Node
 	{
         [Export] public AWOCEditor awocEditor;
 		[Export] public AWOCRes awocObj;

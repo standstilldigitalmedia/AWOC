@@ -9,7 +9,7 @@ namespace AWOC
 	{
 		[Export] string awocName;
 		[Export] public string awocPath;
-		[Export] public AWOCSlotRes[] slots;
+		[Export] public AWOCSlotsRes awocSlotsRes;
 		[Export] public AWOCAvatarRes awocAvatarRes;
 
 		public AWOCRes()

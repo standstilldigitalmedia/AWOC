@@ -36,7 +36,7 @@ namespace AWOC
 		/// <returns>void</returns>
 		void _on_new_awoc_dialog_file_selected(string path)
 		{
-            awocObj = new AWOCRes(GetFileNameFromPath(path), path)
+            awocObj = new AWOCRes(AWOCHelper.GetFileNameFromPath(path), path)
             {
                 awocPath = path
             };
@@ -73,8 +73,8 @@ namespace AWOC
 		public override void InitPane(AWOCEditor awocEditor)
 		{
 			this.awocEditor = awocEditor;
-			InitFileDialog(loadAWOCDialog);
-			InitFileDialog(newAWOCDialog);
+			AWOCHelper.InitFileDialog(loadAWOCDialog);
+			AWOCHelper.InitFileDialog(newAWOCDialog);
 		}
 	}
 }
