@@ -1,16 +1,21 @@
-[gd_scene load_steps=4 format=3 uid="uid://bu3ogqavigfh8"]
+[gd_scene load_steps=5 format=3 uid="uid://bu3ogqavigfh8"]
 
+[ext_resource type="Script" path="res://addons/AWOC/Scenes/Parts/MeshContainer/MeshContainer.cs" id="1_55dlw"]
 [ext_resource type="Theme" uid="uid://drffev6w87ljh" path="res://addons/AWOC/Themes/main_theme.tres" id="1_ir1cu"]
 [ext_resource type="Texture2D" uid="uid://bajmsg6jpht1s" path="res://addons/AWOC/Images/GuiVisibilityHidden.svg" id="2_hgkno"]
 [ext_resource type="Texture2D" uid="uid://dp60fbkc3xia" path="res://addons/AWOC/Images/GuiVisibilityVisible.svg" id="3_e2nmc"]
 
-[node name="MeshContainer" type="HBoxContainer"]
-custom_minimum_size = Vector2(265, 0)
+[node name="MeshContainer" type="HBoxContainer" node_paths=PackedStringArray("meshLabel", "showButton", "hideButton")]
+custom_minimum_size = Vector2(265, 26)
 anchors_preset = -1
 anchor_right = 0.23
 anchor_bottom = 0.04
 offset_right = -264.96
 offset_bottom = -25.92
+script = ExtResource("1_55dlw")
+meshLabel = NodePath("MeshNameLabel")
+showButton = NodePath("ShowButton")
+hideButton = NodePath("HideButton")
 
 [node name="MeshNameLabel" type="Label" parent="."]
 custom_minimum_size = Vector2(235, 26)

@@ -47,27 +47,12 @@ namespace AWOC
 		/// </summary>
 		/// <param name="previewPane">The preview pane to be added to the right side of the AWOC editor window</param>
 		/// <returns>void</returns>
-		void LoadPreview(PackedScene previewPane)
+		public void LoadPreview(BasePreviewPane previewPane)
 		{
-			if(currentPreviewNode != null)
-			{
-				currentPreviewNode.QueueFree();
-			}
-			currentPreviewNode = previewPane.Instantiate<BasePreviewPane>();
-			currentPreviewNode.awocEditor = this;
+			
+			currentPreviewNode = null;
+			currentPreviewNode = previewPane;
 			mainContainer.AddChild(currentPreviewNode);
-		}
-
-
-		/// <summary>
-		/// I need to do some work to the preview panes before this function does anything useful
-		/// </summary>
-		/// <param name="texture">The texture to be previewed in the preview pane</param>
-		/// <returns>void</returns>
-		void PreviewMaterial(Texture2D texture)
-		{
-			LoadPreview(materialPreviewPane);
-			//currentPreviewNode.SetPreviewTexture(texture);
 		}
 
 		/// <summary>
@@ -106,12 +91,14 @@ namespace AWOC
 			if(currentPreviewNode != null)
 			{
 				currentPreviewNode.QueueFree();
+				currentPreviewNode = null;
 			}
 
 			//if there is a pane showing in the middle of the AWOC editor window, free it before adding the new one
 			if(currentPane != null)
 			{
 				currentPane.QueueFree();
+				currentPane = null;
 			}
 
 			//now that all the old stuff has been freed, the new pane can be instantiated and parented to the right pane	

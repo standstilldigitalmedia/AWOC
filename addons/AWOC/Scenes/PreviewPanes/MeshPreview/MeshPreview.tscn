@@ -12,13 +12,15 @@
 [ext_resource type="Texture2D" uid="uid://dpfqlxlqoeppx" path="res://addons/AWOC/Images/ArrowDown.svg" id="10_4cgaa"]
 [ext_resource type="Texture2D" uid="uid://ctyltspjtpj25" path="res://addons/AWOC/Images/CurveConstant.svg" id="11_gq7ou"]
 
-[node name="MeshPreview" type="VBoxContainer"]
+[node name="MeshPreview" type="VBoxContainer" node_paths=PackedStringArray("viewport", "camera")]
 anchors_preset = -1
 anchor_right = 0.26
 anchor_bottom = 0.606
 offset_right = -299.52
 offset_bottom = -392.688
 script = ExtResource("1_bfs1l")
+viewport = NodePath("SubViewportContainer/SubViewport")
+camera = NodePath("SubViewportContainer/SubViewport/Camera3D")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 layout_mode = 2

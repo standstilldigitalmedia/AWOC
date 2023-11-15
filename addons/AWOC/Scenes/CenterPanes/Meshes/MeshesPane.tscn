@@ -1,21 +1,30 @@
-[gd_scene load_steps=4 format=3 uid="uid://b5cm2d4tq4hyk"]
+[gd_scene load_steps=6 format=3 uid="uid://b5cm2d4tq4hyk"]
 
 [ext_resource type="Script" path="res://addons/AWOC/Scenes/CenterPanes/Meshes/MeshesPane.cs" id="1_0ay6c"]
+[ext_resource type="PackedScene" uid="uid://bu3ogqavigfh8" path="res://addons/AWOC/Scenes/Parts/MeshContainer/MeshContainer.tscn" id="2_n4sjp"]
+[ext_resource type="PackedScene" uid="uid://bu5gyikns8wae" path="res://addons/AWOC/Scenes/PreviewPanes/MeshPreview/MeshPreview.tscn" id="2_r8inx"]
 [ext_resource type="Theme" uid="uid://drffev6w87ljh" path="res://addons/AWOC/Themes/main_theme.tres" id="2_uaf4o"]
 [ext_resource type="Texture2D" uid="uid://ck44qw1l0nk63" path="res://addons/AWOC/Images/Folder.svg" id="3_gjt58"]
 
-[node name="Meshes" type="MarginContainer"]
+[node name="Meshes" type="MarginContainer" node_paths=PackedStringArray("loadMeshDialog", "filePathLabel", "addMeshContainer", "meshListBackground", "meshListContainer")]
 custom_minimum_size = Vector2(260, 400)
 anchors_preset = -1
-anchor_right = 0.226
-anchor_bottom = 0.633
-offset_right = -0.35202
-offset_bottom = -0.184021
+anchor_right = 0.247
+anchor_bottom = 0.725
+offset_right = -24.544
+offset_bottom = -59.8
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 script = ExtResource("1_0ay6c")
+loadMeshDialog = NodePath("MainContainer/LoadMeshDialog")
+filePathLabel = NodePath("MainContainer/AddMeshesContainer/MeshObjectFilePathLabel")
+meshContainerScene = ExtResource("2_n4sjp")
+addMeshContainer = NodePath("MainContainer/AddMeshesContainer")
+meshListBackground = NodePath("MainContainer/MeshListBackground")
+meshListContainer = NodePath("MainContainer/MeshListBackground/MeshListMarginContainer/MeshListScrollContainer/MeshListContainer")
+meshPreviewScene = ExtResource("2_r8inx")
 
 [node name="MainContainer" type="VBoxContainer" parent="."]
 custom_minimum_size = Vector2(250, 400)

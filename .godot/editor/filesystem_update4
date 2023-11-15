@@ -13,9 +13,10 @@ res://addons/AWOC/Scenes/Parts/MeshContainer/MeshContainer.tscn
 res://addons/AWOC/Scenes/Parts/SlotContainer/SlotContainer.tscn
 res://addons/AWOC/Scenes/PreviewPanes/MaterialPreview/MaterialPreview.tscn
 res://addons/AWOC/Scenes/CenterPanes/Animations/AnimationsPane.tscn
+res://asdadasd.res
 res://addons/AWOC/Plugin.cs
+res://addons/AWOC/Resources/AWOCAvatarRes.cs
 res://addons/AWOC/Resources/AWOCMaterialRes.cs
-res://addons/AWOC/Resources/AWOCMeshRes.cs
 res://addons/AWOC/Resources/AWOCRes.cs
 res://addons/AWOC/Resources/AWOCSlotRes.cs
 res://addons/AWOC/Scenes/AWOCEditor/AWOCEditor.cs
@@ -35,3 +36,5 @@ res://addons/AWOC/Scenes/Parts/SlotContainer/SlotContainer.cs
 res://addons/AWOC/Scenes/PreviewPanes/BasePreviewPane.cs
 res://addons/AWOC/Scenes/PreviewPanes/MaterialPreview/MaterialPreview.cs
 res://addons/AWOC/Scenes/PreviewPanes/MeshPreview/MeshPreview.cs
+res://addons/temp.cs
+res://ghfjfgjjh.res

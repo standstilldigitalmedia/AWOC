@@ -13,9 +13,9 @@
 [node name="AWOCEditor" type="Control" node_paths=PackedStringArray("slotsButton", "meshesButton", "materialsButton", "recipesButton", "wardrobesButton", "animationsButton", "rightPane", "mainContainer")]
 custom_minimum_size = Vector2(320, 600)
 layout_mode = 3
-anchor_right = 0.278
+anchor_right = 0.694
 anchor_bottom = 0.926
-offset_right = 479.744
+offset_right = 0.511963
 offset_bottom = -0.0479736
 script = ExtResource("1_kwt7k")
 welcomePane = ExtResource("2_tvhh0")

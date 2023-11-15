@@ -9,7 +9,10 @@ namespace AWOC
 		[Export] public string slotName;
 		[Export] public string[] hideSlots;
 
-		public AWOCSlotRes(){}
+		public AWOCSlotRes()
+		{
+			slotName = "empty";
+		}
 
 		public AWOCSlotRes(string slotName)
 		{
@@ -26,8 +29,9 @@ namespace AWOC
 		public override int GetHashCode()
 		{
             string replaced = string.Empty;
-            string slotNameUpper = slotName.ToUpper();
-            foreach (char c in slotNameUpper)
+			string stringToHash = slotName + "SlotRes";
+            string stringToHashUpper = stringToHash.ToUpper();
+            foreach (char c in stringToHashUpper)
             {
                 if (char.IsDigit(c))
                     replaced += c;
