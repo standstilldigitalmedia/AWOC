@@ -1,7 +1,6 @@
 using Godot;
 using System.Collections.Generic;
 using System;
-using System.Linq;
 
 namespace AWOC
 {
@@ -30,7 +29,7 @@ namespace AWOC
     }
 
     [Tool]
-    public partial class AWOCAvatarRes : Resource
+    public partial class AvatarRes : Resource
     {
         [Export] string avatarName;
         [Export] PackedScene sourceAvatarRes;
@@ -38,15 +37,16 @@ namespace AWOC
         Skeleton3D destSkeleton;
         public Dictionary<string, MeshInstance3D> sourceMeshList;
 
-        public AWOCAvatarRes()
+        public AvatarRes()
         {
             avatarName = "empty";
         }
 
-        public AWOCAvatarRes(string avatarName, PackedScene sourceAvatar)
+        public AvatarRes(string avatarName, PackedScene sourceAvatar)
         {
             this.avatarName = avatarName;
             sourceAvatarRes = sourceAvatar;
+            InitAvatar();
         }
 
         Skeleton3D RecursiveGetSkeleton(Node soureceObj)
@@ -167,7 +167,14 @@ namespace AWOC
         public override int GetHashCode()
         {
             string replaced = string.Empty;
-            string stringToHash = avatarName + "AvatarRes";
+            string stringToHash = avatarName;
+            if(sourceMeshList != null)
+            {
+                Dictionary<string,MeshInstance3D>.KeyCollection keys = sourceMeshList.Keys;
+                foreach(string key in keys)
+                    stringToHash += key;
+            }
+            stringToHash += "AvatarRes";
             string stringToHashUpper = stringToHash.ToUpper();
             foreach (char c in stringToHashUpper)
             {
@@ -179,8 +186,14 @@ namespace AWOC
                     replaced += asc;
                 }
             } 
-            Int32.TryParse(replaced, out int j);
-            return j;
+            
+            if(int.TryParse(replaced, out int j))
+				return j;
+			else
+			{
+				GD.Print("TryParse failed in AWOCAvatarRes.GetHashCode()");
+				return 1;
+			}	
         }
     }
 }

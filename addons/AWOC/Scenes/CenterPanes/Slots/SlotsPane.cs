@@ -14,10 +14,10 @@ namespace AWOC
 																//slot if confirmed
 
 		/// <summary>
-		/// Fired in response to the save dialog in a SlotContainer emitting the RenameSlot signal, the slotName in
-		/// slotToRename is set to slotName and the awocObj is saved to disk.
+		/// Fired in response to the confirmSaveDialog in a SlotContainer emitting the RenameSlot signal, calls 
+		/// awocObj.awocSlotsRes.RenameSlot(slotToRename, slotName) and then saves the AWOC to disk.
 		/// </summary>
-		/// <param name="slotToRename">The slot that is being renamed</param>
+		/// <param name="slotToRename">The name of the slot to be renamed</param>
 		/// <param name="slotName">The new name of the slot</param>
 		/// <returns>void</returns>
 		void OnRenameSlot(string slotToRename, string slotName)
@@ -27,8 +27,8 @@ namespace AWOC
 		}
 
 		/// <summary>
-		/// Fired in response to the delete dialog in a SlotContainer emitting the DeleteSlot signal, the slot named
-		/// slotToDelete is removed from the slots array in awocObj and the awocObj is saved to disk.
+		/// Fired in response to the delete dialog in a SlotContainer emitting the DeleteSlot signal, calls
+		/// awocObj.awocSlotsRes.DeleteSlot(slotToDelete) and then saves the AWOC to disk
 		/// </summary>
 		/// <param name="slotToDelete">The name of the slot to be deleted</param>
 		/// <returns>void</returns>
@@ -39,8 +39,8 @@ namespace AWOC
 		}
 
 		/// <summary>
-		/// Fired in response to the delete dialog in a HideSlotContainer emitting the DeleteHideSlot signal, the hideSlot 
-		/// named hideSlotName is removed from the hideSlots array in the slotToDeleteFrom and the awocObj is saved 
+		/// Fired in response to the delete dialog in a HideSlotContainer emitting the DeleteHideSlot signal, calls 
+		/// awocObj.awocSlotsRes.DeleteHideSlot(slotToDeleteFrom,hideSlotName); and then saves the AWOC to disk
 		/// to disk.
 		/// </summary>
 		/// <param name="slotToDeleteFrom">The slot where the hideSlot to be deleted is</param>
@@ -53,9 +53,8 @@ namespace AWOC
 		}
 
 		/// <summary>
-		/// Fired in response to the addHideSlot button in a SlotContainer emitting the AddHideSlot signal, the hideSlot 
-		/// named hideSlotName is added to the hideSlots array in the slot slotToAddTo and the awocObj is saved 
-		/// to disk.
+		/// Fired in response to the addHideSlot button in a SlotContainer emitting the AddHideSlot signal, calls
+		/// awocObj.awocSlotsRes.AddHideSlot(slotToAddTo,hideSlotName) and then saves the AWOC to disk
 		/// </summary>
 		/// <param name="slotToAddTo">The slot where the hideSlot to be added is</param>
 		/// <param name="hideSlotName">The name of the hideSlot to be added</param>
@@ -67,9 +66,9 @@ namespace AWOC
 		}
 
 		/// <summary>
-		/// Fired in response to the addSlot button in a this pane being pressed, the name of each slot in awocObj
-		/// is checked to make sure there are no duplicates and a confirmDuplicateSlotDialog is displayed if a 
-		/// duplicate is found. If no duplicate is found, a new AWOCSlotRes is created and added to the awocObj.slots
+		/// Fired in response to the addSlot button in a this pane being pressed, if the name being added is
+		/// the same as another slot, a confirmDuplicateSlotDialog is displayed to confirm overwriting the existing slot.
+		/// If no duplicate is found, a new AWOCSlotRes is created and added to the awocObj.AWOCSlotsRes
 		/// array. The awoc is then saved and the slots container is repopulated.
 		/// </summary>
 		/// <param name="none">none</param>
@@ -94,8 +93,9 @@ namespace AWOC
 		}
 
 		/// <summary>
-		/// All of the children in slotsScrollContainer are freed before looping through each AWOCSlotRes in awocObj.slots
-		/// For each AWOCSlotRes, a dictionary containing the names of all the slots in awocObj.slots is created and used
+		/// All of the children in slotsScrollContainer are freed before looping through each AWOCSlotRes in 
+		/// awocObj.awocSlotsRes.slotContainers. For each AWOCSlotContainerRes, a dictionary containing the names 
+		/// of all the slots in awocObj.awocSlotsRes.slotContainers is created and used
 		/// to initilize a new SlotContainer. Listeners for all of the signals the new SlotConainer will emit are assigned
 		/// before adding the new SlotContainer as a child of slotsScrollContainer.
 		/// </summary>
@@ -110,10 +110,10 @@ namespace AWOC
 
 				if(awocObj.awocSlotsRes.slotContainers != null)
 				{
-					foreach(AWOCSlotContainerRes slotContainerRes in awocObj.awocSlotsRes.slotContainers)
+					foreach(SlotContainerRes slotContainerRes in awocObj.awocSlotsRes.slotContainers)
 					{
 						Dictionary<string,string> slotNameDictionary = new Dictionary<string, string>();
-						foreach(AWOCSlotContainerRes innerSlot in awocObj.awocSlotsRes.slotContainers)
+						foreach(SlotContainerRes innerSlot in awocObj.awocSlotsRes.slotContainers)
 						{
 							slotNameDictionary.Add(innerSlot.slotName,innerSlot.slotName);
 						}
@@ -130,8 +130,8 @@ namespace AWOC
 		}
 
 		/// <summary>
-		/// In response to the confirmDuplicateSlotDialog being confirmed, the slot with the same name as the text in 
-		/// addSlotNameEdit.Text has its hideSlots array set to null and awocObj is saved to disk.
+		/// In response to the confirmDuplicateSlotDialog being confirmed, calls
+		/// awocObj.awocSlotsRes.ResetSlot(addSlotNameEdit.Text) and awocObj is saved to disk.
 		/// </summary>
 		/// <param name="none">none</param>
 		/// <returns>void</returns>
@@ -142,7 +142,8 @@ namespace AWOC
 		}
 
 		/// <summary>
-		/// Overridden from CenterPaneBase, awocEditor and awocObj are set and SlotsContainer is populated 
+		/// Overridden from CenterPaneBase, awocEditor and awocObj are set. If awocObj.awocSlotsRes is null, a 
+		/// new AWOCSlotRes is created and assigned to awocObj.awocSlotsRes. Finally, SlotsContainer is populated. 
 		/// </summary>
 		/// <param name="awocEditor">The main controller for the AWOC editor window</param>
 		/// <returns>void</returns>
@@ -152,10 +153,8 @@ namespace AWOC
 			awocObj = awocEditor.awocObj;
 			if(awocObj.awocSlotsRes == null)
 			{
-				awocObj.awocSlotsRes = new AWOCSlotsRes();
-				awocObj.SaveAWOC();
+				awocObj.awocSlotsRes = new SlotsRes();
 			}
-				
 			PopulateSlotsContainer();
 		}
 	}

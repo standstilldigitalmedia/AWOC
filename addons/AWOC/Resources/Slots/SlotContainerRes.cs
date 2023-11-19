@@ -3,17 +3,18 @@ using System;
 
 namespace AWOC
 {
-    public partial class AWOCSlotContainerRes : Resource
+    [Tool]
+    public partial class SlotContainerRes : Resource
     {
         [Export] public string slotName;
         [Export] public string[] hideSlots;
 
-        public AWOCSlotContainerRes()
+        public SlotContainerRes()
 		{
 			slotName = "empty";
 		}
 
-		public AWOCSlotContainerRes(string slotName)
+		public SlotContainerRes(string slotName)
 		{
 			this.slotName = slotName;
 		}
@@ -24,11 +25,10 @@ namespace AWOC
 				return true;
 			return false;
 		}
-
 		public override int GetHashCode()
 		{
             string replaced = string.Empty;
-			string stringToHash = slotName + "SlotRes";
+			string stringToHash = slotName + "SlotContainerRes";
             string stringToHashUpper = stringToHash.ToUpper();
             foreach (char c in stringToHashUpper)
             {
@@ -39,9 +39,15 @@ namespace AWOC
                     int asc = (int)c - (int)'A' + 1;
                     replaced += asc;
                 }
-            } 
-			Int32.TryParse(replaced, out int j);
-			return j;
+            }
+
+			if(int.TryParse(replaced, out int j))
+				return j;
+			else
+			{
+				GD.Print("TryParse failed in AWOCSlotContainerRes.GetHashCode()");
+				return 1;
+			}	
 		}
     }
 }

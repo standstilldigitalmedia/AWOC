@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace AWOC
 {
 	[Tool]
-	public partial class SlotContainer : Node
+	public partial class SlotContainer : VBoxContainer
 	{
 		[Signal] public delegate void RenameSlotEventHandler(string slotToRename, string slotName); //In response to the save button being pressed, this signal is emitted for SlotsPane to handle
 		[Signal] public delegate void DeleteSlotEventHandler(string slotToDelete);//In response to the delete button being pressed, this signal is emitted for SlotsPane to handle
@@ -22,6 +22,7 @@ namespace AWOC
 		[Export] OptionButton hideSlotSelect; //each option is slot you can have hidden when this slot is equipped
 		[Export] VBoxContainer hideSlotScrollContainer; //the container that holds all the hide slot controls
 		[Export] PackedScene hideSlotContainerScene; //the scene to instantiate for each hide slot and parent to hideSlotScrollContainer
+		[Export] Button addHideSlotButton;
 
 		string slotName; //The AWOCSlot this container managages
 		Dictionary<string,string> availableSlotsToHide;//
@@ -59,7 +60,7 @@ namespace AWOC
 					}
 				}
 				if(hideSlotSelect.ItemCount > 0)
-					hideSlotSelect.Select(0);
+					hideSlotSelect.Select(-1);
 			}
 		}
 
@@ -133,13 +134,14 @@ namespace AWOC
 		/// <param name="awocSlot">The AWOCSlot this SlotContainer will manage</param>
 		/// <param name="availableSlotsToHide">All of the slots in this AWOC except for the slot in awocSlot</param>
 		/// <returns>void</returns>
-		public void InitSlotContainer(AWOCSlotContainerRes awocSlotContainerRes, Dictionary<string, string> availableSlotsToHide)
+		public void InitSlotContainer(SlotContainerRes awocSlotContainerRes, Dictionary<string, string> availableSlotsToHide)
 		{
 			this.availableSlotsToHide = availableSlotsToHide;
 			hideSlotsArray = awocSlotContainerRes.hideSlots;
 
 			confirmSaveDialog.Visible = false;
 			confirmDeleteDialog.Visible = false;
+			addHideSlotButton.Disabled = true;
 
 			ShowControls(false);
 			InitavailableSlotsToHide();
@@ -196,9 +198,12 @@ namespace AWOC
 		/// <returns>void</returns>
 		void _on_save_button_pressed()
 		{
-			confirmSaveDialog.Title = "Rename " + slotName + "?";
-			confirmSaveDialog.DialogText = "Are you sure you wish to rename " + slotName + "? This can not be undone.";
-			confirmSaveDialog.Visible = true;
+			if(slotNameEdit.Text.Length > 2)
+			{
+				confirmSaveDialog.Title = "Rename " + slotName + "?";
+				confirmSaveDialog.DialogText = "Are you sure you wish to rename " + slotName + "? This can not be undone.";
+				confirmSaveDialog.Visible = true;
+			}
 		}
 
 		/// <summary>
@@ -263,6 +268,7 @@ namespace AWOC
 		/// <returns>void</returns>
 		void _on_add_hide_slot_button_pressed()
 		{
+			addHideSlotButton.Disabled = true;
 			string selectedSlot = hideSlotSelect.GetItemText(hideSlotSelect.GetSelectedId());
 			hideSlotsArray = AWOCHelper.AddElementToArray(selectedSlot,hideSlotsArray);
 			if(availableSlotsToHide.ContainsKey(selectedSlot))
@@ -270,6 +276,15 @@ namespace AWOC
 			PopulateHideSlotContainer();
 			PopulateHideSlotSelect();
 			EmitSignal(SignalName.AddHideSlot,slotName,selectedSlot);
+		}
+
+		void _on_hide_slot_select_item_selected(int index)
+		{
+			if(index >= 0)
+				addHideSlotButton.Disabled = false;
+			else
+				addHideSlotButton.Disabled = true;
+
 		}
 	}
 }

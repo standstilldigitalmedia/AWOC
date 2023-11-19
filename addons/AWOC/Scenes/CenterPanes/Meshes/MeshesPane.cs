@@ -69,10 +69,8 @@ namespace AWOC
 		void _on_load_mesh_dialog_file_selected(string path)
 		{
 			filePathLabel.Text = path;
-			awocObj.awocAvatarRes = new AWOCAvatarRes(AWOCHelper.GetFileNameFromPath(path), GD.Load<PackedScene>(path));
-			//awocObj.init_source_avatar(path)
+			awocObj.awocAvatarRes = new AvatarRes(AWOCHelper.GetFileNameFromPath(path), GD.Load<PackedScene>(path));
 			awocObj.SaveAWOC();
-			awocObj.awocAvatarRes.InitAvatar();
 			PopulateMeshListContainer();
 		}
 	

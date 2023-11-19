@@ -3,41 +3,33 @@ using System;
 
 namespace AWOC
 {
-	
 	[Tool]
-	public partial class AWOCRes : Resource
+	public partial class MaterialContainerRes : Resource
 	{
-		[Export] string awocName;
-		[Export] public string awocPath;
-		[Export] public AWOCSlotsRes awocSlotsRes;
-		[Export] public AWOCAvatarRes awocAvatarRes;
+		[Export] public string materialName;
+		[Export] public Texture2D albedoTexture;
+		[Export] OverlayBaseRes[] overlays;
 
-		public AWOCRes()
+		public MaterialContainerRes()
 		{
-			awocName = "empty";
+			materialName = "empty";
 		}
 
-		public AWOCRes(string awocName, string awocPath)
+		public MaterialContainerRes(string materialName)
 		{
-			this.awocName = awocName;
-			this.awocPath = awocPath;
+			this.materialName = materialName;
 		}
 
-		public void SaveAWOC()
-		{
-			ResourceSaver.Save(this, awocPath);
-		}
 		public override bool Equals(Object obj)
 		{			
 			if(GetHashCode() == obj.GetHashCode())
 				return true;
 			return false;
 		}
-
-		public override int GetHashCode()
+        public override int GetHashCode()
 		{
             string replaced = string.Empty;
-			string stringToHash = awocName + "AWOCRes";
+			string stringToHash = materialName + "MaterialContainerRes";
             string stringToHashUpper = stringToHash.ToUpper();
             foreach (char c in stringToHashUpper)
             {
@@ -49,8 +41,16 @@ namespace AWOC
                     replaced += asc;
                 }
             } 
-			Int32.TryParse(replaced, out int j);
-			return j;
+			
+			if(int.TryParse(replaced, out int j))
+				return j;
+			else
+			{
+				GD.Print("TryParse failed in AWOCMaterialContainerRes.GetHashCode()");
+				return 1;
+			}	
 		}
 	}
 }
+
+

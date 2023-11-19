@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://dp60fbkc3xia" path="res://addons/AWOC/Images/GuiVisibilityVisible.svg" id="7_mvxtw"]
 [ext_resource type="Texture2D" uid="uid://cnuepoi4ynvoy" path="res://addons/AWOC/Images/Add.svg" id="8_gwhr1"]
 
-[node name="SlotContainer" type="VBoxContainer" node_paths=PackedStringArray("slotControlsContainer", "hideSlotContainer", "slotButton", "slotNameEdit", "confirmSaveDialog", "confirmDeleteDialog", "showButton", "hideButton", "hideSlotSelect", "hideSlotScrollContainer")]
+[node name="SlotContainer" type="VBoxContainer" node_paths=PackedStringArray("slotControlsContainer", "hideSlotContainer", "slotButton", "slotNameEdit", "confirmSaveDialog", "confirmDeleteDialog", "showButton", "hideButton", "hideSlotSelect", "hideSlotScrollContainer", "addHideSlotButton")]
 custom_minimum_size = Vector2(235, 0)
 anchors_preset = -1
 anchor_right = 0.205
@@ -29,14 +29,15 @@ hideButton = NodePath("SlotControlsContainer/HideButton")
 hideSlotSelect = NodePath("HideSlotsContainer/HideSlotsOuterContainer/HideSlotsInnerContainer/HideSlotSelectSlot/HideSlotSelect")
 hideSlotScrollContainer = NodePath("HideSlotsContainer/HideSlotsOuterContainer/HideSlotsInnerContainer/HideSlotsScrollBackground/HideSlotsScrollContainer/HideSlotsMarginContainer/HideSlotsContainer")
 hideSlotContainerScene = ExtResource("2_seqos")
+addHideSlotButton = NodePath("HideSlotsContainer/HideSlotsOuterContainer/HideSlotsInnerContainer/HideSlotSelectSlot/AddHideSlotButton")
 
 [node name="SlotButton" type="Button" parent="."]
 layout_mode = 2
 theme = ExtResource("3_1bqud")
 toggle_mode = true
+text_overrun_behavior = 1
 
 [node name="SlotControlsContainer" type="HBoxContainer" parent="."]
-visible = false
 layout_mode = 2
 
 [node name="SlotNameEdit" type="LineEdit" parent="SlotControlsContainer"]
@@ -74,7 +75,6 @@ icon = ExtResource("7_mvxtw")
 icon_alignment = 1
 
 [node name="HideSlotsContainer" type="ColorRect" parent="."]
-visible = false
 custom_minimum_size = Vector2(0, 160)
 layout_mode = 2
 color = Color(1, 1, 1, 0.0784314)
@@ -105,11 +105,13 @@ layout_mode = 2
 custom_minimum_size = Vector2(198, 0)
 layout_mode = 2
 theme = ExtResource("3_1bqud")
+text_overrun_behavior = 1
 
 [node name="AddHideSlotButton" type="Button" parent="HideSlotsContainer/HideSlotsOuterContainer/HideSlotsInnerContainer/HideSlotSelectSlot"]
 custom_minimum_size = Vector2(24, 0)
 layout_mode = 2
 theme = ExtResource("3_1bqud")
+disabled = true
 icon = ExtResource("8_gwhr1")
 icon_alignment = 1
 
@@ -153,6 +155,7 @@ theme = ExtResource("3_1bqud")
 [connection signal="pressed" from="SlotControlsContainer/DeleteButton" to="." method="_on_delete_button_pressed"]
 [connection signal="pressed" from="SlotControlsContainer/ShowButton" to="." method="_on_show_button_pressed"]
 [connection signal="pressed" from="SlotControlsContainer/HideButton" to="." method="_on_hide_button_pressed"]
+[connection signal="item_selected" from="HideSlotsContainer/HideSlotsOuterContainer/HideSlotsInnerContainer/HideSlotSelectSlot/HideSlotSelect" to="." method="_on_hide_slot_select_item_selected"]
 [connection signal="pressed" from="HideSlotsContainer/HideSlotsOuterContainer/HideSlotsInnerContainer/HideSlotSelectSlot/AddHideSlotButton" to="." method="_on_add_hide_slot_button_pressed"]
 [connection signal="confirmed" from="ConfirmSaveDialog" to="." method="_on_confrim_save_dialog_confirmed"]
 [connection signal="confirmed" from="ConfirmDeleteDialog" to="." method="_on_confirm_delete_dialog_confirmed"]
