@@ -28,7 +28,4 @@ horizontal_alignment = 1
 
 [node name="test_model" parent="." instance=ExtResource("3_qt3h4")]
 
-[node name="Cube1" parent="test_model/Armature/Skeleton3D" index="0"]
-transform = Transform3D(1, -1.78727e-07, -2.84217e-14, 1.78727e-07, 1, 3.55271e-15, 2.84217e-14, -1.42109e-14, 1, -3.00366, 0.998028, -7.10543e-15)
-
 [editable path="test_model"]

@@ -3,22 +3,23 @@
 [ext_resource type="Script" path="res://TestImages/TestingImages.cs" id="1_dlgh2"]
 
 [node name="TestingImages" type="Control" node_paths=PackedStringArray("textRect")]
+custom_minimum_size = Vector2(2048, 0)
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
+anchor_right = 1.778
 anchor_bottom = 1.0
+offset_right = -0.256104
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_dlgh2")
 textRect = NodePath("ScrollContainer/TextureRect")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
-custom_minimum_size = Vector2(512, 512)
+custom_minimum_size = Vector2(2048, 512)
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.444
+anchor_right = 1.0
 anchor_bottom = 0.79
-offset_right = -471.488
+offset_right = -414.912
 offset_bottom = -471.92
 
 [node name="TextureRect" type="TextureRect" parent="ScrollContainer"]
