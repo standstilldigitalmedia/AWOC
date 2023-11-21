@@ -1,0 +1,311 @@
+[gd_scene load_steps=8 format=3 uid="uid://bn5sodnaiwoee"]
+
+[ext_resource type="Script" path="res://addons/AWOC/Scenes/Parts/OverlayContainer/OverlayContainer.cs" id="1_61b4v"]
+[ext_resource type="Theme" uid="uid://drffev6w87ljh" path="res://addons/AWOC/Themes/main_theme.tres" id="1_us13k"]
+[ext_resource type="Texture2D" uid="uid://dewa5wjv0dbel" path="res://addons/AWOC/Images/Save.svg" id="2_okc6k"]
+[ext_resource type="Texture2D" uid="uid://cg741telb0c24" path="res://addons/AWOC/Images/Remove.svg" id="3_rmh2t"]
+[ext_resource type="Texture2D" uid="uid://bajmsg6jpht1s" path="res://addons/AWOC/Images/GuiVisibilityHidden.svg" id="4_ldvu6"]
+[ext_resource type="Texture2D" uid="uid://ck44qw1l0nk63" path="res://addons/AWOC/Images/Folder.svg" id="5_0fdvo"]
+[ext_resource type="Texture2D" uid="uid://dp60fbkc3xia" path="res://addons/AWOC/Images/GuiVisibilityVisible.svg" id="6_kncb2"]
+
+[node name="OverlayContainer" type="VBoxContainer" node_paths=PackedStringArray("overlayControlsContainer", "overlayPropertiesContainer", "showOverlayPropertiesButton", "hideOverlayPropertiesButton")]
+anchors_preset = -1
+anchor_right = 0.209
+anchor_bottom = 0.701
+offset_right = 0.231995
+offset_bottom = -0.248016
+script = ExtResource("1_61b4v")
+overlayControlsContainer = NodePath("OverlayControlsContainer")
+overlayPropertiesContainer = NodePath("OverlayPropertiesContainer")
+showOverlayPropertiesButton = NodePath("OverlayControlsContainer/ShowOverylayPropertiesButton")
+hideOverlayPropertiesButton = NodePath("OverlayControlsContainer/HideOverlayPropertiesButton")
+
+[node name="OverlayButton" type="Button" parent="."]
+layout_mode = 2
+theme = ExtResource("1_us13k")
+toggle_mode = true
+text = "OverlayButton"
+
+[node name="OverlayControlsContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="NameEdit" type="LineEdit" parent="OverlayControlsContainer"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+theme = ExtResource("1_us13k")
+
+[node name="SaveButton" type="Button" parent="OverlayControlsContainer"]
+custom_minimum_size = Vector2(23, 23)
+layout_mode = 2
+theme = ExtResource("1_us13k")
+icon = ExtResource("2_okc6k")
+icon_alignment = 1
+
+[node name="DeleteButton" type="Button" parent="OverlayControlsContainer"]
+custom_minimum_size = Vector2(23, 23)
+layout_mode = 2
+theme = ExtResource("1_us13k")
+icon = ExtResource("3_rmh2t")
+icon_alignment = 1
+
+[node name="ShowOverylayPropertiesButton" type="Button" parent="OverlayControlsContainer"]
+custom_minimum_size = Vector2(23, 23)
+layout_mode = 2
+theme = ExtResource("1_us13k")
+icon = ExtResource("4_ldvu6")
+icon_alignment = 1
+
+[node name="HideOverlayPropertiesButton" type="Button" parent="OverlayControlsContainer"]
+visible = false
+custom_minimum_size = Vector2(23, 23)
+layout_mode = 2
+theme = ExtResource("1_us13k")
+icon = ExtResource("6_kncb2")
+icon_alignment = 1
+
+[node name="OverlayPropertiesContainer" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 400)
+layout_mode = 2
+
+[node name="OverlayImageContainer" type="HBoxContainer" parent="OverlayPropertiesContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="OverlayPropertiesContainer/OverlayImageContainer"]
+custom_minimum_size = Vector2(92, 92)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="OverlayPropertiesContainer/OverlayImageContainer/TextureRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.125
+anchor_top = 0.37
+anchor_right = 0.875
+anchor_bottom = 0.63
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_us13k")
+text = "No Image"
+
+[node name="Label" type="Label" parent="OverlayPropertiesContainer/OverlayImageContainer"]
+layout_mode = 2
+theme = ExtResource("1_us13k")
+text = "Overlay Image:"
+
+[node name="ColorRect" type="ColorRect" parent="OverlayPropertiesContainer/OverlayImageContainer"]
+custom_minimum_size = Vector2(23, 0)
+layout_mode = 2
+color = Color(1, 1, 1, 0)
+
+[node name="Button" type="Button" parent="OverlayPropertiesContainer/OverlayImageContainer/ColorRect"]
+custom_minimum_size = Vector2(23, 23)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.385
+anchor_right = 1.0
+anchor_bottom = 0.615
+grow_horizontal = 0
+grow_vertical = 2
+theme = ExtResource("1_us13k")
+icon = ExtResource("5_0fdvo")
+icon_alignment = 1
+
+[node name="ColorCheckboxContainer" type="HBoxContainer" parent="OverlayPropertiesContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="OverlayPropertiesContainer/ColorCheckboxContainer"]
+custom_minimum_size = Vector2(210, 0)
+layout_mode = 2
+theme = ExtResource("1_us13k")
+text = "Color:"
+
+[node name="ColorCheckbox" type="CheckBox" parent="OverlayPropertiesContainer/ColorCheckboxContainer"]
+layout_mode = 2
+
+[node name="ColorStrengthContainer" type="MarginContainer" parent="OverlayPropertiesContainer"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="ColorRect" type="ColorRect" parent="OverlayPropertiesContainer/ColorStrengthContainer"]
+layout_mode = 2
+color = Color(1, 1, 1, 0.0392157)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="OverlayPropertiesContainer/ColorStrengthContainer/ColorRect"]
+custom_minimum_size = Vector2(231, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.946
+offset_bottom = -0.00200272
+
+[node name="ColorStrength" type="HSlider" parent="OverlayPropertiesContainer/ColorStrengthContainer/ColorRect/HBoxContainer"]
+custom_minimum_size = Vector2(190, 0)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="ColorColor" type="ColorPickerButton" parent="OverlayPropertiesContainer/ColorStrengthContainer/ColorRect/HBoxContainer"]
+custom_minimum_size = Vector2(32, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="MetallicCheckboxContainer" type="HBoxContainer" parent="OverlayPropertiesContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="OverlayPropertiesContainer/MetallicCheckboxContainer"]
+custom_minimum_size = Vector2(210, 0)
+layout_mode = 2
+theme = ExtResource("1_us13k")
+text = "Metallic:"
+
+[node name="MetallicCheckbox" type="CheckBox" parent="OverlayPropertiesContainer/MetallicCheckboxContainer"]
+layout_mode = 2
+
+[node name="MetallicStrengthContainer" type="MarginContainer" parent="OverlayPropertiesContainer"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="ColorRect" type="ColorRect" parent="OverlayPropertiesContainer/MetallicStrengthContainer"]
+layout_mode = 2
+color = Color(1, 1, 1, 0.0392157)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="OverlayPropertiesContainer/MetallicStrengthContainer/ColorRect"]
+custom_minimum_size = Vector2(231, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.946
+offset_bottom = -0.00200272
+
+[node name="MetallicStrength" type="HSlider" parent="OverlayPropertiesContainer/MetallicStrengthContainer/ColorRect/HBoxContainer"]
+custom_minimum_size = Vector2(190, 0)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="RoughnessContainer" type="HBoxContainer" parent="OverlayPropertiesContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="OverlayPropertiesContainer/RoughnessContainer"]
+custom_minimum_size = Vector2(210, 0)
+layout_mode = 2
+theme = ExtResource("1_us13k")
+text = "Roughness:"
+
+[node name="RoughnessCheckbox" type="CheckBox" parent="OverlayPropertiesContainer/RoughnessContainer"]
+layout_mode = 2
+
+[node name="RoughnessStrengthContainer" type="MarginContainer" parent="OverlayPropertiesContainer"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="ColorRect" type="ColorRect" parent="OverlayPropertiesContainer/RoughnessStrengthContainer"]
+layout_mode = 2
+color = Color(1, 1, 1, 0.0392157)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="OverlayPropertiesContainer/RoughnessStrengthContainer/ColorRect"]
+custom_minimum_size = Vector2(231, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.946
+offset_bottom = -0.00200272
+
+[node name="RougnessStrength" type="HSlider" parent="OverlayPropertiesContainer/RoughnessStrengthContainer/ColorRect/HBoxContainer"]
+custom_minimum_size = Vector2(190, 0)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="HeightCheckboxContainer" type="HBoxContainer" parent="OverlayPropertiesContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="OverlayPropertiesContainer/HeightCheckboxContainer"]
+custom_minimum_size = Vector2(210, 0)
+layout_mode = 2
+theme = ExtResource("1_us13k")
+text = "Height:"
+
+[node name="HeightCheckbox" type="CheckBox" parent="OverlayPropertiesContainer/HeightCheckboxContainer"]
+layout_mode = 2
+
+[node name="HeightStrengthContainer" type="MarginContainer" parent="OverlayPropertiesContainer"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="ColorRect" type="ColorRect" parent="OverlayPropertiesContainer/HeightStrengthContainer"]
+layout_mode = 2
+color = Color(1, 1, 1, 0.0392157)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="OverlayPropertiesContainer/HeightStrengthContainer/ColorRect"]
+custom_minimum_size = Vector2(231, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.946
+offset_bottom = -0.00200272
+
+[node name="HeightSlider" type="HSlider" parent="OverlayPropertiesContainer/HeightStrengthContainer/ColorRect/HBoxContainer"]
+custom_minimum_size = Vector2(190, 0)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="EmissionCheckboxContainer" type="HBoxContainer" parent="OverlayPropertiesContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="OverlayPropertiesContainer/EmissionCheckboxContainer"]
+custom_minimum_size = Vector2(210, 0)
+layout_mode = 2
+theme = ExtResource("1_us13k")
+text = "Emission:"
+
+[node name="EmissionCheckbox" type="CheckBox" parent="OverlayPropertiesContainer/EmissionCheckboxContainer"]
+layout_mode = 2
+
+[node name="EmissionStrengthContainer" type="MarginContainer" parent="OverlayPropertiesContainer"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="ColorRect" type="ColorRect" parent="OverlayPropertiesContainer/EmissionStrengthContainer"]
+layout_mode = 2
+color = Color(1, 1, 1, 0.0392157)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="OverlayPropertiesContainer/EmissionStrengthContainer/ColorRect"]
+custom_minimum_size = Vector2(231, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.946
+offset_bottom = -0.00200272
+
+[node name="EmissionStrength" type="HSlider" parent="OverlayPropertiesContainer/EmissionStrengthContainer/ColorRect/HBoxContainer"]
+custom_minimum_size = Vector2(190, 0)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="EmissionColor" type="ColorPickerButton" parent="OverlayPropertiesContainer/EmissionStrengthContainer/ColorRect/HBoxContainer"]
+custom_minimum_size = Vector2(32, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[connection signal="toggled" from="OverlayButton" to="." method="_on_overlay_button_toggled"]
+[connection signal="pressed" from="OverlayControlsContainer/ShowOverylayPropertiesButton" to="." method="_on_show_overylay_properties_button_pressed"]
+[connection signal="pressed" from="OverlayControlsContainer/HideOverlayPropertiesButton" to="." method="_on_hide_overlay_properties_button_pressed"]

@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=9 format=3 uid="uid://drffev6w87ljh"]
+[gd_resource type="Theme" load_steps=11 format=3 uid="uid://drffev6w87ljh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jjps5"]
 bg_color = Color(0.0392157, 0.0784314, 0.0392157, 1)
@@ -14,6 +14,12 @@ bg_color = Color(0, 0.156863, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y13hn"]
 bg_color = Color(0.0392157, 0.196078, 0.0392157, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dycgc"]
+bg_color = Color(0, 0.196078, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_efdb0"]
+bg_color = Color(0, 0.196078, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_24kjj"]
 bg_color = Color(0.823529, 1, 0.823529, 1)
@@ -43,6 +49,9 @@ Button/styles/hover = SubResource("StyleBoxFlat_x351x")
 Button/styles/normal = SubResource("StyleBoxFlat_v2l2w")
 Button/styles/pressed = SubResource("StyleBoxFlat_y13hn")
 CheckButton/constants/check_v_offset = -3
+HSlider/icons/grabber = null
+HSlider/styles/grabber_area = SubResource("StyleBoxFlat_dycgc")
+HSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_efdb0")
 Label/colors/font_color = Color(0.784314, 1, 0.784314, 1)
 LineEdit/colors/caret_color = Color(0, 0.117647, 0, 1)
 LineEdit/colors/clear_button_color_pressed = Color(1, 1, 1, 1)

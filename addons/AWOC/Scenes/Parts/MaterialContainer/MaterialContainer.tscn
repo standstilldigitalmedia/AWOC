@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://blxcbsm5n8drd"]
+[gd_scene load_steps=9 format=3 uid="uid://ynsri6m7gtxe"]
 
 [ext_resource type="Script" path="res://addons/AWOC/Scenes/Parts/MaterialContainer/MaterialContainer.cs" id="1_rnc1n"]
 [ext_resource type="Theme" uid="uid://drffev6w87ljh" path="res://addons/AWOC/Themes/main_theme.tres" id="2_exn7t"]
@@ -228,8 +228,6 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -218.0
-offset_bottom = -160.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 5

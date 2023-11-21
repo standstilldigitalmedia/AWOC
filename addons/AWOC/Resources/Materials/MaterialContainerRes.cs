@@ -8,7 +8,7 @@ namespace AWOC
 	{
 		[Export] public string materialName;
 		[Export] public Texture2D albedoTexture;
-		[Export] OverlayBaseRes[] overlays;
+		[Export] public Texture2D normalTexture;
 
 		public MaterialContainerRes()
 		{

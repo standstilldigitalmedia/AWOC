@@ -94,5 +94,82 @@ namespace AWOC
 			newArray[newArray.Length -1] = elementToAdd;
 			return newArray;
 		}
+
+		public static void ColorTextureWithOverlay(Image textureImage, Image overlayImage, Color color, float colorStrength)
+		{
+			byte[] textureImageBytes = textureImage.GetData();
+			byte[] overlayImageBytes = overlayImage.GetData();
+
+			int textureImageWidth = textureImage.GetWidth();
+			int textureImageHeight = textureImage.GetHeight();
+			int overlayImageWidth = overlayImage.GetWidth();
+			int overlayImageHeight = overlayImage.GetHeight();
+
+			int textureImageBytesSize = textureImageBytes.Length;
+			int overlayImageBytesSize = overlayImageBytes.Length;
+
+			if(textureImageWidth != overlayImageWidth || textureImageHeight != overlayImageHeight || textureImageBytesSize != overlayImageBytesSize)
+			{
+				GD.Print("Texture and overlay sizes must be the same and must be the same format");
+				return;
+			}
+
+			for(int a = 0; a < textureImageBytesSize; a += 4)
+			{
+				if(overlayImageBytes[a] > 0)
+				{
+					Color imgColor = new Color(textureImageBytes[a],textureImageBytes[a + 1],textureImageBytes[a + 2],255);
+					Color newColor = imgColor.Lerp(color, colorStrength);
+					textureImageBytes[a] = (byte)newColor.R;
+					textureImageBytes[a + 1] = (byte)newColor.G;
+					textureImageBytes[a + 2] = (byte)newColor.B;
+					textureImageBytes[a + 3] = (byte)newColor.A;
+				}
+			}
+			textureImage.SetData(textureImageWidth, textureImageHeight,false,textureImage.GetFormat(),textureImageBytes);
+		}
+
+		public static void CombineImages(Image destImage, Image sourceImage, int offset, int offsetMax)
+		{
+			byte[] destImageBytes = destImage.GetData();
+			byte[] sourceImageBytes = sourceImage.GetData();
+
+			int destImageWidth = destImage.GetWidth();
+			int destImageHeight = destImage.GetHeight();
+			int sourceImageWidth = sourceImage.GetWidth();
+			int sourceImageHeight = sourceImage.GetHeight();
+
+			if(destImageHeight != sourceImageHeight)
+			{
+				GD.Print("Heights of all images must match");
+				return;
+			}
+
+			if(destImageWidth != sourceImageWidth * offsetMax)
+			{
+				GD.Print("Destination image width must be the width of the source image multiplied by offsetMax");
+				return;
+			}
+
+			int destPosition = sourceImageWidth * 4 * offset;
+			int widthCounter = 0;
+			for(int a = 0; a < sourceImageBytes.Length; a += 4)
+			{
+				destImageBytes[destPosition] = sourceImageBytes[a];
+				destImageBytes[destPosition + 1] = sourceImageBytes[a+1];
+				destImageBytes[destPosition + 2] = sourceImageBytes[a+2];
+				destImageBytes[destPosition + 3] = sourceImageBytes[a+3];
+
+				widthCounter +=4;
+				if(widthCounter >= (sourceImageWidth * 4))
+				{
+					widthCounter = 0;
+					destPosition += (sourceImageWidth * 4 * (offsetMax-1)) + 4;
+				}
+				else
+					destPosition += 4;
+			}
+			destImage.SetData(destImageWidth, destImageHeight,false,destImage.GetFormat(),destImageBytes);
+		}
 	}
 }

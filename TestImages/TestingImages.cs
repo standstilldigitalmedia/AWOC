@@ -4,96 +4,83 @@ public partial class TestingImages : Control
 {
 	[Export] TextureRect textRect;
 
-	void AddImageWithOverlay(Image mainImage, Texture2D albedoTexture, Texture2D overlayTexture, int offset, int offsetMax, Color color, float colorStrength)
+	void ColorTextureWithOverlay(Image textureImage, Image overlayImage, Color color, float colorStrength)
 	{
-		Image albedoImage = albedoTexture.GetImage();
-		Image overlayImage = overlayTexture.GetImage();
-
-		byte[] mainImageBytes = mainImage.GetData();
-		byte[] albedoImageBytes = albedoImage.GetData();
+		byte[] textureImageBytes = textureImage.GetData();
 		byte[] overlayImageBytes = overlayImage.GetData();
 
-		int mainImageWidth = mainImage.GetWidth();
-		int mainImageHeight = mainImage.GetHeight();
-		int albedoImageWidth = albedoImage.GetWidth();
-		int albedoImageHeight = albedoImage.GetHeight();
+		int textureImageWidth = textureImage.GetWidth();
+		int textureImageHeight = textureImage.GetHeight();
 		int overlayImageWidth = overlayImage.GetWidth();
 		int overlayImageHeight = overlayImage.GetHeight();
 
-		if(mainImageHeight != albedoImageHeight || albedoImageHeight != overlayImageHeight)
+		int textureImageBytesSize = textureImageBytes.Length;
+		int overlayImageBytesSize = overlayImageBytes.Length;
+
+		if(textureImageWidth != overlayImageWidth || textureImageHeight != overlayImageHeight || textureImageBytesSize != overlayImageBytesSize)
+		{
+			GD.Print("Texture and overlay sizes must be the same and must be the same format");
+			return;
+		}
+
+		for(int a = 0; a < textureImageBytesSize; a += 4)
+		{
+			if(overlayImageBytes[a] > 0)
+			{
+				Color imgColor = new Color(textureImageBytes[a],textureImageBytes[a + 1],textureImageBytes[a + 2],255);
+				Color newColor = imgColor.Lerp(color, colorStrength);
+				textureImageBytes[a] = (byte)newColor.R;
+				textureImageBytes[a + 1] = (byte)newColor.G;
+				textureImageBytes[a + 2] = (byte)newColor.B;
+				textureImageBytes[a + 3] = (byte)newColor.A;
+			}
+		}
+		textureImage.SetData(textureImageWidth, textureImageHeight,false,textureImage.GetFormat(),textureImageBytes);
+	}
+
+	void CombineImages(Image destImage, Image sourceImage, int offset, int offsetMax)
+	{
+		byte[] destImageBytes = destImage.GetData();
+		byte[] sourceImageBytes = sourceImage.GetData();
+
+		int destImageWidth = destImage.GetWidth();
+		int destImageHeight = destImage.GetHeight();
+		int sourceImageWidth = sourceImage.GetWidth();
+		int sourceImageHeight = sourceImage.GetHeight();
+
+		if(destImageHeight != sourceImageHeight)
 		{
 			GD.Print("Heights of all images must match");
 			return;
 		}
 
-		if(albedoImageWidth != overlayImageWidth)
+		if(destImageWidth != sourceImageWidth * offsetMax)
 		{
-			GD.Print("Albedo and overlay widths must be the same");
+			GD.Print("Destination image width must be the width of the source image multiplied by offsetMax");
 			return;
 		}
 
-		int destPosition = albedoImageWidth * 4 * offset;
+		int destPosition = sourceImageWidth * 4 * offset;
 		int widthCounter = 0;
-		for(int a = 0; a < albedoImageBytes.Length; a += 4)
+		for(int a = 0; a < sourceImageBytes.Length; a += 4)
 		{
-			if(overlayImageBytes[a] > 0)
-			{
-				Color imgColor = new Color(albedoImageBytes[a],albedoImageBytes[a + 1],albedoImageBytes[a + 2],255);
-				Color newColor = imgColor.Lerp(color, colorStrength);
-				mainImageBytes[destPosition] = (byte)newColor.R;
-				mainImageBytes[destPosition + 1] = (byte)newColor.G;
-				mainImageBytes[destPosition + 2] = (byte)newColor.B;
-				mainImageBytes[destPosition + 3] = (byte)newColor.A;
-			}
-			else
-			{
-				mainImageBytes[destPosition] = albedoImageBytes[a];
-				mainImageBytes[destPosition + 1] = albedoImageBytes[a+1];
-				mainImageBytes[destPosition + 2] = albedoImageBytes[a+2];
-				mainImageBytes[destPosition + 3] = albedoImageBytes[a+3];
-			}
+			destImageBytes[destPosition] = sourceImageBytes[a];
+			destImageBytes[destPosition + 1] = sourceImageBytes[a+1];
+			destImageBytes[destPosition + 2] = sourceImageBytes[a+2];
+			destImageBytes[destPosition + 3] = sourceImageBytes[a+3];
+
 			widthCounter +=4;
-			if(widthCounter >= (albedoImageWidth * 4))
+			if(widthCounter >= (sourceImageWidth * 4))
 			{
 				widthCounter = 0;
-				destPosition += (albedoImageWidth * 4 * (offsetMax-1)) + 4;
+				destPosition += (sourceImageWidth * 4 * (offsetMax-1)) + 4;
 			}
 			else
 				destPosition += 4;
 		}
-		mainImage.SetData(mainImageWidth, mainImageHeight,true,Image.Format.Rgba8,mainImageBytes);
+		destImage.SetData(destImageWidth, destImageHeight,false,destImage.GetFormat(),destImageBytes);
 	}
 
-	void AddImage(byte[] mainImageBytes, string imageToAddPath, int offset, Color color)
-	{
-		Texture2D text = GD.Load<Texture2D>(imageToAddPath);
-		Image img = text.GetImage();
-		byte[] imgData = img.GetData();
-		int width = img.GetWidth();
-
-		int destPosition = width * 4 * offset;
-		int widthCounter = 0;
-		for(int a = 0; a < imgData.Length; a += 4)
-		{
-			if(imgData[a] > 0)
-			{
-				Color imgColor = new Color(imgData[a],imgData[a + 1],imgData[a + 2],255);
-				Color newColor = color.Lerp(imgColor, 0.5f);
-				mainImageBytes[destPosition] = (byte)(newColor.R);
-				mainImageBytes[destPosition + 1] = (byte)(newColor.G);
-				mainImageBytes[destPosition + 2] = (byte)(newColor.B);
-				mainImageBytes[destPosition + 3] = (byte)(newColor.A);
-			}
-			widthCounter +=4;
-			if(widthCounter >= (width * 4))
-			{
-				widthCounter = 0;
-				destPosition += (width * 4) + (width * 4)+ (width * 4) + 4;
-			}
-			else
-				destPosition += 4;
-		}
-	}
 	public override void _Ready()
 	{
 		Texture2D feetAlbedo = GD.Load<Texture2D>("res://TestModel/Textures/Feet/albedo.png");
@@ -110,21 +97,25 @@ public partial class TestingImages : Control
 
 		int newWidth = feetAlbedo.GetWidth() * 3;
 		int newHeight = feetAlbedo.GetHeight();
-
-		Image destImage = Image.Create(newWidth,newHeight,true, Image.Format.Rgba8);
-
 		int offsetMax = 3;
-		AddImageWithOverlay(destImage,feetAlbedo,bottomOverlay,0,offsetMax,new Color(255,0,0,255), 0.5f);
-		AddImageWithOverlay(destImage,handsAlbedo,leftOverlay,1,offsetMax,new Color(0,255,0,255), 0.5f);
-		AddImageWithOverlay(destImage,legsAlbedo,middleOverlay,2,offsetMax,new Color(0,0,255,255),0.5f);
-		//AddImageWithOverlay(destImage,torsoAlbedo,rightOverlay,3,offsetMax,new Color(255,255,0,255),0.1f);
 
-		Image newImage = Image.CreateFromData(newWidth,newHeight,true, Image.Format.Rgba8,destImage.GetData());
-		ImageTexture newTexture = ImageTexture.CreateFromImage(newImage);
+		Image feetImage = feetAlbedo.GetImage();
+		Image handsImage = handsAlbedo.GetImage();
+		Image topOverlayImage = topOverlay.GetImage();
+		Image bottomOverlayImage = bottomOverlay.GetImage();
+		Image leftOverlayImage = leftOverlay.GetImage();
+
+		Image destImage = Image.Create(newWidth,newHeight,false, Image.Format.Rgba8);
+
+		ColorTextureWithOverlay(feetImage,topOverlayImage,new Color(255,0,0,255),0.5f);
+		ColorTextureWithOverlay(feetImage,bottomOverlayImage,new Color(0,255,0,255),0.5f);
+
+		ColorTextureWithOverlay(handsImage,leftOverlayImage,new Color(0,0,255,255),0.5f);
+
+		CombineImages(destImage,feetImage,0,offsetMax);
+		CombineImages(destImage, handsImage,1, offsetMax);
+
+		ImageTexture newTexture = ImageTexture.CreateFromImage(destImage);
 		textRect.Texture = newTexture;
-	}
-
-	public override void _Process(double delta)
-	{
 	}
 }
