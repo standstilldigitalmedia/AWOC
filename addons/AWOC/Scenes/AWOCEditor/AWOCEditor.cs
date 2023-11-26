@@ -85,21 +85,13 @@ namespace AWOC
 				DisableLeftNav(true);
 			else
 				DisableLeftNav(false);
-			
-			//individual panes will load their own version of the preview pane so whichever one is
-			//currently enabled gets QueueFreed
-			if(currentPreviewNode != null)
-			{
-				currentPreviewNode.QueueFree();
-				currentPreviewNode = null;
-			}
 
-			//if there is a pane showing in the middle of the AWOC editor window, free it before adding the new one
+			if(currentPreviewNode != null)
+				currentPreviewNode.QueueFree();
+			currentPreviewNode = null;
+
 			if(currentPane != null)
-			{
 				currentPane.QueueFree();
-				currentPane = null;
-			}
 
 			//now that all the old stuff has been freed, the new pane can be instantiated and parented to the right pane	
 			currentPane = pane.Instantiate<CenterPaneBase>();

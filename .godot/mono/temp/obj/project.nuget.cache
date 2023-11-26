@@ -1,14 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "grtxKhIqhidXarjWrs/5c9UJUPiV7WbofeSPJpHLqTPMcvYDTHBalQL6oobObb4lym6NQULaf/+pxcjrP3u8oA==",
+  "dgSpecHash": "fB2Xe526jEonb/Yu3XJo7pd6oag4/v0RFlvnjacdq3EaentK66DkixyLFPiHnw8fIw57r39N8G+JQqo8VxZhhA==",
   "success": true,
   "projectFilePath": "/home/chad/Repos/AWOC/AWOC.csproj",
   "expectedPackageFiles": [
     "/home/chad/.nuget/packages/godot.sourcegenerators/4.1.3/godot.sourcegenerators.4.1.3.nupkg.sha512",
     "/home/chad/.nuget/packages/godotsharp/4.1.3/godotsharp.4.1.3.nupkg.sha512",
     "/home/chad/.nuget/packages/godotsharpeditor/4.1.3/godotsharpeditor.4.1.3.nupkg.sha512",
-    "/home/chad/.nuget/packages/microsoft.netcore.app.ref/6.0.25/microsoft.netcore.app.ref.6.0.25.nupkg.sha512",
-    "/home/chad/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.25/microsoft.aspnetcore.app.ref.6.0.25.nupkg.sha512"
+    "/home/chad/.nuget/packages/microsoft.netcore.app.ref/6.0.24/microsoft.netcore.app.ref.6.0.24.nupkg.sha512",
+    "/home/chad/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.24/microsoft.aspnetcore.app.ref.6.0.24.nupkg.sha512"
   ],
   "logs": []
 }

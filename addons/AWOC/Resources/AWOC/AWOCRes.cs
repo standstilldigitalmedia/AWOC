@@ -37,7 +37,7 @@ namespace AWOC
 
 		public override int GetHashCode()
 		{
-            string replaced = string.Empty;
+			string replaced = string.Empty;
 			string stringToHash = awocName + "AWOCRes";
 
 			if(awocSlotsRes != null)
@@ -48,18 +48,18 @@ namespace AWOC
 				stringToHash += awocMaterialRes.GetHashCode();
 
 			stringToHash += "AWOCRes";
-            string stringToHashUpper = stringToHash.ToUpper();
+			string stringToHashUpper = stringToHash.ToUpper();
 
-            foreach (char c in stringToHashUpper)
-            {
-                if (char.IsDigit(c))
-                    replaced += c;
-                else if (char.IsLetter(c))  
-                {
-                    int asc = (int)c - (int)'A' + 1;
-                    replaced += asc;
-                }
-            } 
+			foreach (char c in stringToHashUpper)
+			{
+				if (char.IsDigit(c))
+					replaced += c;
+				else if (char.IsLetter(c))  
+				{
+					int asc = (int)c - (int)'A' + 1;
+					replaced += asc;
+				}
+			} 
 
 			if(int.TryParse(replaced, out int j))
 				return j;

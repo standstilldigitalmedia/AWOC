@@ -29,6 +29,7 @@ namespace AWOC
 				{
 					meshPreview.QueueFree();
 					meshPreview = null;
+					awocEditor.currentPreviewNode = null;
 				}
 					
 			}
