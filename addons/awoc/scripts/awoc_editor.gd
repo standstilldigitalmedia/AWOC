@@ -7,8 +7,8 @@ var scroll_panel_container: PanelContainer
 var scroll_panel_vbox: VBoxContainer
 var margin_container_vbox: VBoxContainer
 var margin_container: MarginContainer
-var awoc_manager_resource_controller: AWOCDiskResourceController
-var selected_awoc_resource_controller: AWOCDiskResourceController
+var awoc_manager_resource_controller: AWOCManagerController
+var selected_awoc_resource_controller: AWOCResourceController
 
 func create_controls():
 	main_panel_container = create_panel_container(0.0,0.0,0.0,0.0)
@@ -20,16 +20,18 @@ func create_controls():
 	scroll_panel_container = create_panel_container(0.0,0.0,0.0,0.0)
 	scroll_panel_vbox = create_vbox(0)
 	
-func parent_controls(scroll: bool):
-	margin_container.add_child(margin_container_vbox)
-	scroll_panel_vbox.add_child(home_button)
-	scroll_panel_vbox.add_child(margin_container)
+func parent_with_scroll(scroll: bool):
 	if scroll:
 		scroll_panel_container.add_child(scroll_panel_vbox)
 		scroll_container.add_child(scroll_panel_container)
 		main_panel_container.add_child(scroll_container)
 	else:
 		main_panel_container.add_child(scroll_panel_vbox)
+	
+func parent_controls():
+	margin_container.add_child(margin_container_vbox)
+	scroll_panel_vbox.add_child(home_button)
+	scroll_panel_vbox.add_child(margin_container)	
 		
 func show_tab_bar_tab():
 	var tab_bar_tab: AWOCTabBarTab = AWOCTabBarTab.new(selected_awoc_resource_controller)
@@ -37,7 +39,7 @@ func show_tab_bar_tab():
 		child.queue_free()
 	margin_container_vbox.add_child(tab_bar_tab.main_panel_container)
 	
-func on_awoc_edit(awoc: AWOCDiskResourceController):
+func on_awoc_edit(awoc: AWOCResourceController):
 	selected_awoc_resource_controller = awoc
 	show_tab_bar_tab()
 		
@@ -52,9 +54,10 @@ func show_welcome():
 func on_home_button_clicked():
 	show_welcome()
 	
-func _init(awoc_manager_cr: AWOCDiskResourceController, scroll: bool):
+func _init(awoc_manager_cr: AWOCManagerController, scroll: bool):
 	awoc_manager_resource_controller = awoc_manager_cr
 	create_controls()
-	parent_controls(scroll)
+	parent_controls()
+	parent_with_scroll(scroll)
 	home_button.pressed.connect(on_home_button_clicked)
 	show_welcome()

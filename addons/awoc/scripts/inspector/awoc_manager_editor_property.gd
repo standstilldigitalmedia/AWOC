@@ -1,3 +1,4 @@
+@tool
 class_name AWOCManagerEditorProperty extends EditorProperty
 
 var updating = false

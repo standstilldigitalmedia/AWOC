@@ -22,7 +22,7 @@ func destroy_tab():
 	if main_panel_container != null:
 		main_panel_container.queue_free()
 
-func create_tab_controls():
+func create_controls():
 	main_panel_container = create_panel_container(0.0,0.0,0.0,0.0)
 	main_panel_container.set_anchors_preset(Control.PRESET_FULL_RECT)
 	main_margin_container = create_margin_container(10,5,10,5)
@@ -43,7 +43,7 @@ func set_tab_button_text(new_resource_button_text: String, manage_resources_butt
 	new_resource_button.text = new_resource_button_text
 	manage_resources_button.text = manage_resources_button_text
 	
-func parent_tab_controls():
+func parent_controls():
 	manage_resources_margin_container.add_child(manage_resources_inner_vbox)
 	new_resource_panel_container.add_child(new_resource_margin_container)
 	manage_resources_panel_container.add_child(manage_resources_margin_container)
@@ -77,12 +77,7 @@ func set_tab_listeners():
 	manage_resources_button.toggled.connect(on_manage_resources_button_toggled)
 	
 func set_manage_button_disabled():
-	if  resource_controller.dictionary.size() > 0:
-		manage_resources_button.disabled = false
-	else:
-		manage_resources_button.disabled = true
-		manage_resources_button.set_pressed_no_signal(false)
-		manage_resources_panel_container.visible = false
+	pass
 	
 func reset_tab():
 	new_resource_button.set_pressed_no_signal(false)
@@ -107,11 +102,10 @@ func create_new_resource_control():
 	new_resource_control.resource_created.connect(on_new_resource)
 	new_resource_margin_container.add_child(new_resource_control.main_panel_container)
 	
-func _init(r_controller: AWOCResourceControllerBase):
-	super(r_controller)
-	create_tab_controls()
+func _init():
+	create_controls()
+	parent_controls()
 	create_new_resource_control()
 	populate_manage_resources_container()
-	parent_tab_controls()
 	set_tab_listeners()
 	reset_tab()

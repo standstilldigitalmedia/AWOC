@@ -1,42 +1,11 @@
 @tool
-class_name AWOCDiskResourceController extends AWOCResourceControllerBase
+class_name AWOCResourceController extends AWOCDiskResourceController
 
-var resource: AWOCResourceBase
-var dictionary: Dictionary
-var path: String
-	
-func save_resource():
-	ResourceSaver.save(resource, ResourceUID.get_id_path(resource.uid))
-	
-func save_resource_to_path():
-	var path_dir: String = path.get_base_dir()
-	var file_name: String = path.get_file()
-	if path_dir == null or path_dir.length() < 1:
-		push_error("Invalid path for resource creation.")
-		return
-	if file_name == null or file_name.length() < 1:
-		push_error("Invalid filename for resource creation.")
-		return
-	var dir = DirAccess.open(path_dir)
-	if !dir:
-		dir = DirAccess.open("res://")
-		dir.make_dir_recursive(path_dir)
-	ResourceSaver.save(resource, path)
-	resource.uid = ResourceLoader.get_resource_uid(path)
-	ResourceSaver.save(resource, path)
-	
+var awoc_manager_controller: AWOCManagerController
+
 func create_resource():
 	save_resource_to_path()
 	dictionary[resource.name] = resource.uid
-	save_awoc()
-	scan()
-
-"""func load_resource(load_uid: int) -> AWOCResourceBase:
-	path = ResourceUID.get_id_path(load_uid)
-	if !FileAccess.file_exists(path):
-		push_error("AWOC Resource no longer existis on disk")
-		return null
-	return load(path)"""
 	
 func delete_resource():
 	if !dictionary.has(resource.name):
@@ -55,7 +24,7 @@ func delete_resource():
 			dir.remove(file_path)
 			if dir.get_files_at(base_dir).size() < 1 and dir.get_directories_at(base_dir).size() < 1:
 				dir.remove(base_dir)
-	save_awoc()
+	awoc_manager_controller.save_resource()
 	scan()
 	
 func rename_resource(new_name: String):
@@ -79,11 +48,10 @@ func rename_resource(new_name: String):
 	dir.rename(old_path, new_path)
 	ResourceUID.set_id(resource.uid, new_path)
 	save_resource()
-	save_awoc()
+	awoc_manager_controller.save_resource()
 	scan()
-
-func _init(res: AWOCResourceBase, awoc: AWOC, dict: Dictionary, res_path: String):
-	resource = res
-	awoc_resource = awoc
-	dictionary = dict
-	path = res_path
+	
+func _init(awoc: AWOC, a_manager_controller: AWOCManagerController):
+	resource = awoc
+	awoc_manager_controller = a_manager_controller
+	dictionary = awoc_manager_controller.dictionary

@@ -6,18 +6,21 @@ const SCAN_ON_RELOAD = true
 
 var plugin
 var dock: Control
-var awoc_manager_resource_controller: AWOCDiskResourceController
+var awoc_manager_controller: AWOCManagerController
 var tool_menu_set: String
 
 func load_awoc_manager():
 	if FileAccess.file_exists(AWOCManager.AWOC_MANAGER_PATH):
 		var awoc_manager = load(AWOCManager.AWOC_MANAGER_PATH)
-		awoc_manager_resource_controller = AWOCDiskResourceController.new(awoc_manager,awoc_manager,awoc_manager.awoc_uid_dictionary)
+		awoc_manager_controller = AWOCManagerController.new(awoc_manager)
+		if awoc_manager.uid != ResourceLoader.get_resource_uid(AWOCManager.AWOC_MANAGER_PATH):
+			awoc_manager.uid = ResourceLoader.get_resource_uid(AWOCManager.AWOC_MANAGER_PATH)
+			awoc_manager_controller.save_resource()
 	else:
 		var awoc_manager = AWOCManager.new()
-		awoc_manager_resource_controller = AWOCDiskResourceController.new(awoc_manager,awoc_manager,{})
-		awoc_manager_resource_controller.create_resource(AWOCManager.AWOC_MANAGER_PATH)
-		awoc_manager_resource_controller.dictionary = awoc_manager.awoc_uid_dictionary
+		awoc_manager_controller = AWOCManagerController.new(awoc_manager)
+		awoc_manager_controller.path = AWOCManager.AWOC_MANAGER_PATH
+		awoc_manager_controller.create_resource()
 		
 func add_tool_menu():
 	var popup = PopupMenu.new()
@@ -28,7 +31,7 @@ func add_tool_menu():
 		
 func create_dock():
 	dock = Control.new()
-	dock.add_child(AWOCEditor.new(awoc_manager_resource_controller, true).main_panel_container)
+	dock.add_child(AWOCEditor.new(awoc_manager_controller, true).main_panel_container)
 	dock.name = "AWOC"
 	add_control_to_dock(DOCK_SLOT_LEFT_UR, dock)
 	

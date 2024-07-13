@@ -1,10 +1,16 @@
 @tool
 class_name AWOCDictionaryResourceController extends AWOCResourceControllerBase
-	
+
+var resource: AWOCResourceBase
+var dictionary: Dictionary
+
 func create_resource():
 	dictionary[resource.name] = resource
-	save_resource_controller()
+	save_awoc()
 	scan()
+	
+func save_resource():
+	ResourceSaver.save(awoc_resource, ResourceUID.get_id_path(awoc_resource.uid))
 
 """func load_resource(load_uid: int) -> AWOCResourceBase:
 	path = ResourceUID.get_id_path(load_uid)
@@ -18,7 +24,7 @@ func delete_resource():
 		push_error("Resource " + resource.name + " does not exist.")
 		return
 	dictionary.erase(resource.name)
-	save_resource_controller()
+	save_awoc()
 	scan()
 	
 func rename_resource(new_name: String):
@@ -36,5 +42,10 @@ func rename_resource(new_name: String):
 	resource.name = new_name
 	dictionary[new_name] = dictionary[old_name]
 	dictionary.erase(old_name)
-	save_resource_controller()
+	save_awoc()
 	scan()
+
+func _init(res: AWOCResourceBase, awoc: AWOC, dict: Dictionary):
+	resource = res
+	awoc_resource = awoc
+	dictionary = dict
