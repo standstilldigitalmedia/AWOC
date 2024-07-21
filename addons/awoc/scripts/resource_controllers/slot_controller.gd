@@ -26,9 +26,9 @@ func delete_slot_from_all_hide_slot_arrays(slot_name: String):
 	scan()
 	
 func delete_hide_slot(hide_slot_name: String):
-	for a in dictionary[resource_name].size():
-		if hide_slot_name == dictionary[resource_name][a]:
-			dictionary[resource_name].remove_at(a)
+	for a in hide_slot_array.size():
+		if hide_slot_name == hide_slot_array[a]:
+			hide_slot_array.remove_at(a)
 			break
 	save_awoc()
 	scan()

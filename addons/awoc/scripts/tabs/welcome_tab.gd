@@ -31,6 +31,11 @@ func create_new_resource_control():
 	new_resource_control = AWOCNewAWOCControl.new(awoc_manager_resource_controller)
 	super()
 	
+func on_manage_resources_button_toggled(toggled_on: bool):
+	if toggled_on:
+		populate_manage_resources_container()
+	super(toggled_on)
+	
 func set_manage_button_disabled():
 	if awoc_manager_resource_controller.dictionary.size() > 0:
 		manage_resources_button.disabled = false

@@ -9,9 +9,12 @@ func populate_available_slots_option_button():
 	available_slots_option_button.clear()
 	for slot in slot_controller.dictionary:
 		var found: bool = false
-		for hideslot in slot_controller.hide_slot_array:
-			if hideslot == slot:
-				found = true
+		if slot == slot_controller.resource_name:
+			found = true
+		else:
+			for hideslot in slot_controller.hide_slot_array:
+				if hideslot == slot:
+					found = true
 		if !found:
 			available_slots_option_button.add_item(slot)
 	available_slots_option_button.selected = -1

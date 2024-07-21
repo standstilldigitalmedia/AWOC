@@ -106,6 +106,5 @@ func _init():
 	create_controls()
 	parent_controls()
 	create_new_resource_control()
-	populate_manage_resources_container()
 	set_tab_listeners()
 	reset_tab()

@@ -8,13 +8,6 @@ var hide_slot_tab: AWOCHideSlotTab
 var slot_controller: AWOCSlotController
 
 func _on_delete_confirmed():
-	"""for slot in resource_controller.dictionary:
-		for a in resource_controller.dictionary[slot].hide_slot_array.size():
-			if slot == resource_controller.dictionary[slot].hide_slot_array[a].name:
-				printerr("found")
-				resource_controller.dictionary[slot].hide_slot_array.remove_at(a)
-				break
-	super()"""
 	slot_controller.delete_resource()
 	resource_deleted.emit()
 	

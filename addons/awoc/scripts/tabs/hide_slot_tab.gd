@@ -13,7 +13,7 @@ func populate_manage_resources_container():
 func reset_tab():
 	new_resource_control.reset_inputs()
 	populate_manage_resources_container()
-	if slot_controller.dictionary.size() > 1:
+	if slot_controller.dictionary.size() > 0:
 		new_resource_button.disabled = false
 	else:
 		new_resource_button.disabled = true
