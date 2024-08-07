@@ -1,9 +1,29 @@
 @tool
 class_name AWOCHideSlotTab extends AWOCTabBase
 
-var slot_controller: AWOCSlotController
+var slot_controller: AWOCResourceControllerBase
 
-func populate_manage_resources_container():
+func create_controls():
+	new_resource_control = AWOCNewHideSlotControl.new(slot_controller)
+	manage_resources_control = AWOCManageHideSlotsControl.new(slot_controller.resource.hide_slot_dictionary)
+	super()
+	
+func set_manage_button_disabled():
+	if slot_controller.resource.hide_slot_dictionary.size() > 0:
+		manage_resources_button.disabled = false
+	else:
+		manage_resources_button.disabled = true
+		manage_resources_button.set_pressed_no_signal(false)
+		manage_resources_panel_container.visible = false
+		
+func on_resource_deleted():
+	super()
+	slot_controller.save_resource()
+	
+func on_resource_renamed():
+	slot_controller.save_resource()
+
+"""func populate_manage_resources_container():
 	super()
 	for hide_slot in slot_controller.hide_slot_array:
 		var control = AWOCManageHideSlotControl.new(slot_controller, hide_slot)
@@ -33,8 +53,8 @@ func set_manage_button_disabled():
 	
 func create_new_resource_control():
 	new_resource_control = AWOCNewHideSlotControl.new(slot_controller)
-	super()
+	super()"""
 
-func _init(s_controller: AWOCSlotController):
+func _init(s_controller: AWOCResourceControllerBase):
 	slot_controller = s_controller
 	super()

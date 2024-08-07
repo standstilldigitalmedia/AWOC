@@ -1,14 +1,53 @@
 class_name AWOCAvatar extends Resource
 
 @export var skeleton_uid: int
-@export var mesh_uids_dict: Dictionary
+@export var mesh_uids_dictionary: Dictionary
 
 var avatar: Node3D
 var skeleton: Skeleton3D
 var mesh_dictionary: Dictionary
+
+func serialize_all_meshes(source_skeleton: Skeleton3D, avatar_path: String):
+	if !Engine.is_editor_hint():
+		return
+	if source_skeleton.get_child_count() < 1:
+		push_error("No mesh children found in source skeleton.\nAWOCAvatarRes serialize_meshes")
+		return
+	var found: bool = false
+	for mesh in source_skeleton.get_children():
+		if mesh is MeshInstance3D:
+			found = true
+			var mesh_res: AWOCMesh = AWOCMesh.new()
+			mesh_res.serialize_mesh(mesh)
+			var mesh_path = avatar_path + "/" + mesh.name + ".res"
+			if !mesh_path.is_absolute_path():
+				push_error("Invalid mesh path\nAWOCAvatarRes serialize_meshes")
+				return
+			var save_mesh: Error = ResourceSaver.save(mesh_res, mesh_path)
+			if save_mesh != OK:
+				push_error("Save mesh failed. ResourceSaver.save Error: " + str(save_mesh) + "\nAWOCAvatarRes serialize_meshes")
+				return
+			var mesh_uid: int = ResourceLoader.get_resource_uid(mesh_path)
+			if mesh_uid == -1:
+				push_error("Mesh ID not found.\nAWOCAvatarRes serialize_meshes")
+				return
+			mesh_uids_dictionary[mesh.name] = mesh_uid
+	if !found:
+		push_error("No meshes found in source skeleton.\nAWOCAvatarRes serialize_meshes")
+		return
+
+func create_avatar_from_mesh_name_array(mesh_name_array: Array) -> Node3D:
+	var node = Node3D.new()
+	var skeleton_resource = load(ResourceUID.get_id_path(skeleton_uid))
+	var skeleton: Skeleton3D = skeleton_resource.deserialize_skeleton()
+	for mesh_name in mesh_name_array:
+		var mesh_resource = load(ResourceUID.get_id_path(mesh_uids_dictionary[mesh_name]))
+		mesh_resource.deserialize_mesh(skeleton)
+	node.add_child(skeleton)
+	return node
 	
 func add_mesh_to_skeleton(mesh_to_add: String):
-	if !mesh_uids_dict.has(mesh_to_add):
+	if !mesh_uids_dictionary.has(mesh_to_add):
 		push_error("Mesh ID dictionary does not contain " + mesh_to_add + "\nAWOCAvatarRes add_mesh_to_skeleton")
 		return
 	if skeleton == null:
@@ -16,9 +55,9 @@ func add_mesh_to_skeleton(mesh_to_add: String):
 		return
 	var mesh_res: AWOCMesh
 	if Engine.is_editor_hint():
-		mesh_res = load(ResourceUID.get_id_path(mesh_uids_dict[mesh_to_add]))
+		mesh_res = load(ResourceUID.get_id_path(mesh_uids_dictionary[mesh_to_add]))
 	else:
-		mesh_res = load(mesh_uids_dict[mesh_to_add].path)
+		mesh_res = load(mesh_uids_dictionary[mesh_to_add].path)
 	if mesh_res == null:
 		push_error("AWOCMeshRes not loaded.\nAWOCAvatarRes add_mesh_to_skeleton")
 		return
@@ -55,7 +94,7 @@ func serialize_meshes(source_skeleton: Skeleton3D, avatar_path: String):
 			if mesh_uid == -1:
 				push_error("Mesh ID not found.\nAWOCAvatarRes serialize_meshes")
 				return
-			mesh_uids_dict[mesh.name] = mesh_uid
+			mesh_uids_dictionary[mesh.name] = mesh_uid
 	if !found:
 		push_error("No meshes found in source skeleton.\nAWOCAvatarRes serialize_meshes")
 		return
@@ -101,7 +140,7 @@ func deserialize_avatar(mesh_list: Array):
 	for mesh_name in mesh_list:
 		var mesh_res: AWOCMesh
 		#if Engine.is_editor_hint():
-		mesh_res = load(ResourceUID.get_id_path(mesh_uids_dict[mesh_name]))
+		mesh_res = load(ResourceUID.get_id_path(mesh_uids_dictionary[mesh_name]))
 		#else:
 			#mesh_res = load(mesh_res_container_dict[mesh_name].path)
 		if mesh_res == null:

@@ -7,10 +7,6 @@ class_name AWOCMesh extends AWOCResourceBase
 func add_mesh_to_surface(surface_tool: SurfaceTool):
 	var st = SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
-
-
-
-
 	for surface in surface_array.size():
 		var counter = 0
 		for array_counter in surface_array[surface][Mesh.ARRAY_VERTEX].size():

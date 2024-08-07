@@ -11,8 +11,7 @@ func recursive_get_skeleton(sourceObj: Node) -> Skeleton3D:
 			return skele	
 	return null
 
-func serialize_skeleton(source_object: Node):
-	var source_skeleton = recursive_get_skeleton(source_object)
+func serialize_skeleton(source_skeleton: Skeleton3D):
 	var bone_count = source_skeleton.get_bone_count()
 	if bone_count < 1:
 		push_error("Source skeleton does not have any bones\nAWOCSkeletonRes serialize_skeleton")
@@ -27,9 +26,6 @@ func deserialize_skeleton() -> Skeleton3D:
 	if bones == null or bones.size() < 1:
 		push_error("Skeleton resource does not have any bones\n AWOCSkeletonRes deserialize_skeleton")
 		return null	
-	if uid < 1:
-		push_error("AWOC must have a skeleton.")
-		return null
 	var bone_count: int = bones.size()
 	var skeleton: Skeleton3D = Skeleton3D.new()
 	for a in bone_count:

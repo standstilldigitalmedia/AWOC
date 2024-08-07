@@ -1,5 +1,5 @@
 @tool
-class_name AWOCManageResourceControlBase extends AWOCControlBase
+class_name AWOCResourceControlBase extends AWOCControlBase
 
 signal resource_renamed()
 signal resource_deleted()
@@ -11,7 +11,7 @@ var rename_confirmation_dialog: ConfirmationDialog
 var delete_confirmation_dialog: ConfirmationDialog
 
 func create_controls():
-	main_panel_container = create_panel_container(0.0,0.0,0.0,0.0)
+	main_panel_container = create_transparent_panel_container()
 	rename_button = create_rename_button()
 	delete_button = create_delete_button()
 	

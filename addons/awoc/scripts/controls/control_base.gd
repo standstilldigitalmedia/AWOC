@@ -5,6 +5,7 @@ const NAME_MIN_CHAR = 4
 const image_base_dir: String = "res://addons/awoc/images/godot_icons/"
 
 var main_panel_container: PanelContainer
+var main_margin_container: MarginContainer
 
 static func is_valid_name(name: String) -> bool:
 	if name.length() < NAME_MIN_CHAR:
@@ -209,6 +210,9 @@ func create_margin_container(top: int, left: int, bottom: int, right: int) -> Ma
 	margin_container.add_theme_constant_override("margin_left", left)
 	margin_container.add_theme_constant_override("margin_bottom", bottom)
 	margin_container.add_theme_constant_override("margin_right", right)
+	margin_container.set_anchors_preset(Control.PRESET_FULL_RECT)
+	margin_container.set_h_size_flags(Control.SizeFlags.SIZE_EXPAND_FILL)
+	margin_container.set_v_size_flags(Control.SizeFlags.SIZE_EXPAND_FILL)
 	return margin_container
 	
 func create_label(text: String) -> Label:
@@ -218,6 +222,7 @@ func create_label(text: String) -> Label:
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD
+	label.set_h_size_flags(Control.SizeFlags.SIZE_EXPAND_FILL)
 	return label
 	
 func create_panel_container(r: float, g: float, b: float, a: float) -> PanelContainer:
@@ -229,6 +234,12 @@ func create_panel_container(r: float, g: float, b: float, a: float) -> PanelCont
 	panel_container.set_h_size_flags(Control.SizeFlags.SIZE_EXPAND_FILL)
 	panel_container.set_v_size_flags(Control.SizeFlags.SIZE_EXPAND_FILL)
 	return panel_container
+
+func create_transparent_panel_container():
+	return create_panel_container(0.0,0.0,0.0,0.0)
+
+func create_simi_transparent_panel_container():
+	return create_panel_container(1.0,1.0,1.0,0.05)
 	
 func create_scroll_container() -> ScrollContainer:
 	var scroll_container: ScrollContainer = ScrollContainer.new()
@@ -237,6 +248,11 @@ func create_scroll_container() -> ScrollContainer:
 	scroll_container.set_h_size_flags(Control.SizeFlags.SIZE_EXPAND_FILL)
 	scroll_container.set_v_size_flags(Control.SizeFlags.SIZE_EXPAND_FILL)
 	return scroll_container
+	
+func create_container() -> Container:
+	var container: Container = Container.new()
+	container.set_anchors_preset(Control.PRESET_FULL_RECT)
+	return container
 	
 func create_controls():
 	pass

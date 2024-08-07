@@ -1,7 +1,7 @@
 @tool
 class_name AWOCSlotController extends AWOCResourceControllerBase
 
-var hide_slot_array: Array
+"""var hide_slot_array: Array
 var dictionary: Dictionary
 
 func add_hide_slot(hide_slot_name: String):
@@ -39,7 +39,7 @@ func create_resource():
 	scan()
 	
 func save_resource():
-	ResourceSaver.save(awoc_resource, ResourceUID.get_id_path(awoc_resource.uid))
+	ResourceSaver.save(awoc_resource, ResourceUID.get_id_path(awoc_resource.uid))"""
 
 """func load_resource(load_uid: int) -> AWOCResourceBase:
 	path = ResourceUID.get_id_path(load_uid)
@@ -48,7 +48,7 @@ func save_resource():
 		return null
 	return load(path)"""
 	
-func delete_resource():
+"""func delete_resource():
 	if !dictionary.has(resource_name):
 		push_error("Resource " + resource_name + " does not exist.")
 		return
@@ -83,4 +83,4 @@ func _init(slot_name: String, awoc: AWOC):
 	if dictionary.has(slot_name):
 		hide_slot_array = dictionary[slot_name]
 	else:
-		hide_slot_array = Array()	
+		hide_slot_array = Array()	"""

@@ -1,5 +1,5 @@
 @tool
-class_name AWOCManageHideSlotControl extends AWOCManageResourceControlBase
+class_name AWOCHideSlotControl extends AWOCResourceControlBase
 
 var label: Label
 var hide_slot_name: String

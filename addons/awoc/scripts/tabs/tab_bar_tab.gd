@@ -2,18 +2,15 @@
 class_name AWOCTabBarTab extends AWOCControlBase
 
 var tab_bar: TabBar
-var tab_label: Label
-var main_margin_container: MarginContainer
 var main_vbox_container: VBoxContainer
 var inner_vbox_container: VBoxContainer
-var awoc_resource_controller: AWOCResourceController
+var awoc_resource_controller: AWOCResourceControllerBase
 
 func show_avatar_tab():
-	"""var meshes_tab_controller: AWOCDiskResourceController = AWOCDiskResourceController.new(null, resource_controller.resource, resource_controller.resource.meshes_uid_dictionary)
-	var meshes_tab: AWOCMeshesTab = AWOCMeshesTab.new(meshes_tab_controller)
-	meshes_tab.set_tab_button_text("New Mesh(es)", "Manage Meshes")
-	meshes_tab.reset_tab()
-	inner_vbox_container.add_child(meshes_tab.main_panel_container)"""
+	var avatar_tab: AWOCAvatarTab = AWOCAvatarTab.new(awoc_resource_controller)
+	avatar_tab.set_tab_button_text("New Mesh(es)", "Manage Meshes")
+	avatar_tab.reset_tab()
+	inner_vbox_container.add_child(avatar_tab.main_panel_container)
 
 func show_slots_tab():
 	var slots_tab: AWOCSlotsTab = AWOCSlotsTab.new(awoc_resource_controller)
@@ -40,13 +37,11 @@ func set_tab_bar():
 	
 func create_controls():
 	set_tab_bar()
-	main_panel_container = create_panel_container(0.0,0.0,0.0,0.0)
-	tab_label = create_label(awoc_resource_controller.resource.name)
+	main_panel_container = create_transparent_panel_container()
 	main_vbox_container = create_vbox(10)
 	inner_vbox_container = create_vbox(0)
 	
 func parent_controls():
-	main_vbox_container.add_child(tab_label)
 	main_vbox_container.add_child(tab_bar)
 	main_vbox_container.add_child(inner_vbox_container)
 	main_panel_container.add_child(main_vbox_container)
@@ -54,7 +49,7 @@ func parent_controls():
 func set_listeners():
 	tab_bar.tab_changed.connect(on_tab_changed)
 	
-func _init(a_controller: AWOCResourceController):
+func _init(a_controller: AWOCResourceControllerBase):
 	awoc_resource_controller = a_controller
 	create_controls()
 	parent_controls()

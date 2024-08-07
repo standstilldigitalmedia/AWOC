@@ -3,11 +3,11 @@ class_name AWOCNewHideSlotControl extends AWOCNewResourceControlBase
 
 var available_slots_option_button: OptionButton
 var add_resource_button: Button
-var slot_controller: AWOCSlotController
+var slot_controller: AWOCResourceControllerBase
 
 func populate_available_slots_option_button():
 	available_slots_option_button.clear()
-	for slot in slot_controller.dictionary:
+	for slot in slot_controller.resource.hide_slot_dictionary:
 		var found: bool = false
 		if slot == slot_controller.resource_name:
 			found = true
@@ -49,7 +49,7 @@ func parent_controls():
 	hbox.add_child(add_resource_button)
 	main_panel_container.add_child(hbox)
 
-func _init(s_controller: AWOCSlotController):
+func _init(s_controller: AWOCResourceControllerBase):
 	slot_controller = s_controller
 	create_controls()
 	parent_controls()

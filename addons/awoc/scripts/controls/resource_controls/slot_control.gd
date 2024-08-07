@@ -1,18 +1,18 @@
 @tool
-class_name AWOCManageSlotControl extends AWOCManageResourceControlBase
+class_name AWOCSlotControl extends AWOCResourceControlBase
 
 var show_button: Button
 var hide_button: Button
 var hide_slots_panel_container: PanelContainer
 var hide_slot_tab: AWOCHideSlotTab
-var slot_controller: AWOCSlotController
+var slot_controller: AWOCResourceControllerBase
 
 func _on_delete_confirmed():
-	slot_controller.delete_resource()
+	slot_controller.delete_resource_from_dictionary()
 	resource_deleted.emit()
 	
 func _on_rename_confirmed():
-	slot_controller.rename_resource(name_line_edit.text)
+	slot_controller.rename_resource_in_dictionary(name_line_edit.text)
 	resource_renamed.emit()
 	
 func _on_rename_button_pressed():
@@ -42,8 +42,8 @@ func create_controls():
 	hide_button.visible = false
 	hide_slots_panel_container = create_panel_container(1.0,1.0,1.0,0.05)
 	hide_slots_panel_container.visible = false
-	hide_slot_tab = AWOCHideSlotTab.new(slot_controller)
-	hide_slot_tab.set_tab_button_text("New Hide Slot", "Manage Hide Slots")
+	#hide_slot_tab = AWOCHideSlotTab.new(slot_controller)
+	#hide_slot_tab.set_tab_button_text("New Hide Slot", "Manage Hide Slots")
 	super()
 
 func parent_controls():
@@ -54,12 +54,12 @@ func parent_controls():
 	hbox.add_child(delete_button)
 	hbox.add_child(show_button)
 	hbox.add_child(hide_button)
-	hide_slots_panel_container.add_child(hide_slot_tab.main_panel_container)
+	#hide_slots_panel_container.add_child(hide_slot_tab.main_panel_container)
 	vbox.add_child(hbox)
 	vbox.add_child(hide_slots_panel_container)
 	main_panel_container.add_child(vbox)
 
-func _init(s_controller: AWOCSlotController):
+func _init(s_controller: AWOCResourceControllerBase):
 	slot_controller = s_controller
 	create_controls()
 	parent_controls()
