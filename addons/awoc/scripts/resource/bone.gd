@@ -1,3 +1,4 @@
+@tool
 class_name AWOCBone extends AWOCResourceBase
 
 @export var bone_name: String

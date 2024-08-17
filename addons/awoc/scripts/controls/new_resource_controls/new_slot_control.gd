@@ -1,86 +1,47 @@
 @tool
 class_name AWOCNewSlotControl extends AWOCNewResourceControlBase
 
-var vbox: VBoxContainer
+var awoc_resource_controller: AWOCResourceController
 var name_line_edit: LineEdit
-var create_resource_button: Button
-var hide_slot_tab: AWOCHideSlotTab
-var new_slot_controller: AWOCResourceControllerBase
-var awoc_resource_controller: AWOCResourceControllerBase
+var create_new_resource_button: Button
+var hide_slots_tab: AWOCHideSlotsTab
+var hide_slots_array: Array
 
-"""func reset_hide_slots_tab():
-	if hide_slot_tab != null:
-		hide_slot_tab.queue_free()
-	#hide_slot_tab = AWOCHideSlotTab.new(AWOCSlotController.new("", awoc_resource_controller.resource))
-	#hide_slot_tab.set_tab_button_text("New Hide Slot", "Manage Hide Slots")
-	#hide_slot_tab.reset_tab()"""
-
-func reset_inputs():
+func reset_controls():
 	name_line_edit.text = ""
-	create_resource_button.disabled = true
-	hide_slot_tab.slot_controller.hide_slot_array = Array()
-	hide_slot_tab.reset_tab()
+	create_new_resource_button.disabled = true
+	hide_slots_array = Array()
+	hide_slots_tab.hide_slots_array = hide_slots_array
+	hide_slots_tab.reset_controls()
 
-func validate_inputs() -> bool:
+func validate_inputs():
 	if !is_valid_name(name_line_edit.text):
-		create_resource_button.disabled = true
-		return false
-	create_resource_button.disabled = false
-	return true
+		create_new_resource_button.disabled = true
+		return
+	create_new_resource_button.disabled = false
 	
-func on_name_line_edit_text_changed(new_text: String):
-	validate_inputs()
-	
-func on_path_line_edit_text_changed(new_text: String):
+func _on_name_line_edit_text_changed(new_text: String):
 	validate_inputs()
 	
 func _on_add_new_resource_button_pressed():
-	if validate_inputs():
-		var slot_controller: AWOCResourceControllerBase = AWOCResourceControllerBase.new(name_line_edit.text, awoc_resource_controller.resource.slots_dictionary, 0, "")
-		slot_controller.resource = AWOCSlot.new()
-		slot_controller.create_resource_in_dictionary()
-		awoc_resource_controller.save_resource()
-		reset_inputs()
-		"""var new_slot_controller: AWOCSlotController = AWOCSlotController.new(name_line_edit.text,awoc_resource_controller.resource)
-		new_slot_controller.create_resource()
-		resource_created.emit()
-		hide_slot_tab.reset_tab()
-		
-		slot_resource_controller.resource = AWOCSlot.new()
-		slot_resource_controller.dictionary[name_line_edit.text] = new_slot_hide_slot_array
-		slot_resource_controller.save_resource()
-		new_slot_hide_slot_array = Array()
-		#hide_slot_tab.reset_tab()
-		resource_created.emit()"""
-		
+	awoc_resource_controller.add_new_slot(name_line_edit.text, hide_slots_array)
+	control_reset.emit()
+
 func create_controls():
-	name_line_edit = create_line_edit("Slot Name")
-	create_resource_button = create_add_new_resource_button("Add Slot")
-	name_line_edit.text_changed.connect(on_name_line_edit_text_changed)
-	create_resource_button.disabled = true
-	hide_slot_tab = AWOCHideSlotTab.new(new_slot_controller)
-	hide_slot_tab.set_tab_button_text("New Hide Slot", "Manage Hide Slots")
-	hide_slot_tab.reset_tab()
+	tab_button = create_new_resource_toggle_button("New Slot")
+	name_line_edit = create_name_line_edit("Slot Name")
+	create_new_resource_button = create_add_new_resource_button("Create Slot")
+	hide_slots_array = Array()
+	hide_slots_tab = AWOCHideSlotsTab.new(awoc_resource_controller, hide_slots_array, "")
+	
 	super()
 	
 func parent_controls():
-	if vbox != null:
-		vbox.queue_free()
-		create_controls()
-	vbox = create_vbox(10)
-	vbox.add_child(name_line_edit)
-	vbox.add_child(hide_slot_tab.main_panel_container)
-	vbox.add_child(create_resource_button)
-	main_margin_container.add_child(vbox)
 	super()
-	
-func set_new_slot_controller():
-	var new_slot: AWOCSlot = AWOCSlot.new()
-	new_slot_controller = AWOCResourceControllerBase.new("", awoc_resource_controller.resource.slots_dictionary, 0, "")
-	new_slot_controller.resource = new_slot
+	control_panel_container_vbox.add_child(name_line_edit)
+	control_panel_container_vbox.add_child(hide_slots_tab.main_panel_container)
+	control_panel_container_vbox.add_child(create_new_resource_button)
 
-func _init(a_controller: AWOCResourceControllerBase):
-	awoc_resource_controller = a_controller
-	set_new_slot_controller()
-	create_controls()
-	parent_controls()
+func _init(a_resource_controller: AWOCResourceController):
+	awoc_resource_controller = a_resource_controller
+	super()

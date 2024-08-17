@@ -1,41 +1,48 @@
 @tool
 class_name AWOCControl extends AWOCResourceControlBase
 
-signal awoc_edited(awoc: AWOCResourceControllerBase)
+signal awoc_edited(awoc_resource_controller: AWOCResourceController)
 
+var awoc_manager_controller: AWOCManagerResourceController
+var awoc_name: String
+var name_line_edit: LineEdit
+var rename_button: Button
+var delete_button: Button
 var edit_button: Button
-var awoc_resource_controller: AWOCResourceControllerBase
+var rename_confimation_dialog: ConfirmationDialog
+var delete_confirmation_dialog: ConfirmationDialog
 
-func validate_inputs():
-	pass
-	
 func _on_delete_confirmed():
-	awoc_resource_controller.delete_resource_from_dictionary()
-	awoc_resource_controller.delete_resource_from_disk()
-	resource_deleted.emit()
+	awoc_manager_controller.remove_awoc(awoc_name)
+	control_reset.emit()
 	
 func _on_rename_confirmed():
-	awoc_resource_controller.rename_resource_in_dictionary(name_line_edit.text)
-	awoc_resource_controller.rename_resource_on_disk(name_line_edit.text)
-	awoc_resource_controller.resource_name = name_line_edit.text
-	resource_renamed.emit()
-	
-func _on_rename_button_pressed():
-	rename_confirmation_dialog = create_rename_confirmation_dialog(awoc_resource_controller.resource_name)
-	rename_confirmation_dialog.visible = true
-	main_panel_container.add_child(rename_confirmation_dialog)
-	
-func _on_delete_button_pressed():
-	delete_confirmation_dialog = create_delete_confirmation_dialog(awoc_resource_controller.resource_name)
-	delete_confirmation_dialog.visible = true
-	main_panel_container.add_child(delete_confirmation_dialog)
+	awoc_manager_controller.rename_awoc(awoc_name, name_line_edit.text)
+	control_reset.emit()
 	
 func _on_edit_button_pressed():
-	awoc_edited.emit(awoc_resource_controller)
+	awoc_edited.emit(awoc_manager_controller.get_awoc_controller(awoc_name))
 	
+func _on_rename_button_pressed():
+	rename_confimation_dialog.visible = true
+	
+func _on_delete_button_pressed():
+	delete_confirmation_dialog.visible = true
+	
+func _on_name_line_edit_text_changed(new_text: String):
+	if is_valid_name(name_line_edit.text):
+		rename_button.disabled = false
+	else:
+		rename_button.disabled = true
+
 func create_controls():
-	name_line_edit = create_line_edit("AWOC Name", awoc_resource_controller.resource_name)
+	main_panel_container = create_transparent_panel_container()
+	name_line_edit = create_name_line_edit("AWOC Name", awoc_name)
+	rename_button = create_rename_button()
+	delete_button = create_delete_button()
 	edit_button = create_edit_button()
+	rename_confimation_dialog = create_rename_confirmation_dialog(awoc_name)
+	delete_confirmation_dialog = create_delete_confirmation_dialog(awoc_name)
 	super()
 	
 func parent_controls():
@@ -44,9 +51,12 @@ func parent_controls():
 	hbox.add_child(rename_button)
 	hbox.add_child(delete_button)
 	hbox.add_child(edit_button)
+	hbox.add_child(rename_confimation_dialog)
+	hbox.add_child(delete_confirmation_dialog)
 	main_panel_container.add_child(hbox)
+	super()
 
-func _init(a_resource_controller: AWOCResourceControllerBase):
-	awoc_resource_controller = a_resource_controller
-	create_controls()
-	parent_controls()
+func _init(am_controller: AWOCManagerResourceController, a_name: String):
+	awoc_manager_controller = am_controller
+	awoc_name = a_name
+	super()

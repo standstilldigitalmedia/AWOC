@@ -1,3 +1,4 @@
+@tool
 class_name AWOCAvatar extends Resource
 
 @export var skeleton_uid: int

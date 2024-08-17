@@ -1,57 +1,34 @@
 @tool
 class_name AWOCTabBarTab extends AWOCControlBase
 
-var tab_bar: TabBar
-var main_vbox_container: VBoxContainer
-var inner_vbox_container: VBoxContainer
-var awoc_resource_controller: AWOCResourceControllerBase
+var awoc_resource_controller: AWOCResourceController
+var slots_tab: AWOCSlotsTab
+var tab_label: Label
+var tab_bar: TabContainer
+var tab_panel_container: PanelContainer
 
-func show_avatar_tab():
-	var avatar_tab: AWOCAvatarTab = AWOCAvatarTab.new(awoc_resource_controller)
-	avatar_tab.set_tab_button_text("New Mesh(es)", "Manage Meshes")
-	avatar_tab.reset_tab()
-	inner_vbox_container.add_child(avatar_tab.main_panel_container)
-
-func show_slots_tab():
-	var slots_tab: AWOCSlotsTab = AWOCSlotsTab.new(awoc_resource_controller)
-	slots_tab.set_tab_button_text("New Slot", "Manage Slots")
+func reset_tab():
 	slots_tab.reset_tab()
-	inner_vbox_container.add_child(slots_tab.main_panel_container)
+	tab_bar.set_current_tab(0)
 
-func on_tab_changed(tab: int):
-	for child in inner_vbox_container.get_children():
-		child.queue_free()
-	match tab:
-		0:
-			show_slots_tab()
-		1:
-			show_avatar_tab()
-
-func set_tab_bar():
-	tab_bar = TabBar.new()
-	tab_bar.add_tab("Slots")
-	tab_bar.add_tab("Avatar")
-	tab_bar.add_tab("Materials")
-	tab_bar.add_tab("Recipes")
-	tab_bar.add_tab("Wardrobes")
-	
 func create_controls():
-	set_tab_bar()
 	main_panel_container = create_transparent_panel_container()
-	main_vbox_container = create_vbox(10)
-	inner_vbox_container = create_vbox(0)
+	tab_panel_container = create_simi_transparent_panel_container()
+	tab_label = create_label(awoc_resource_controller.awoc_resource.awoc_name)
+	tab_bar = TabContainer.new()
+	slots_tab = AWOCSlotsTab.new(awoc_resource_controller)
+	tab_bar.add_child(slots_tab.main_panel_container)
+	tab_bar.set_tab_title(0, "Slots")
 	
 func parent_controls():
-	main_vbox_container.add_child(tab_bar)
-	main_vbox_container.add_child(inner_vbox_container)
-	main_panel_container.add_child(main_vbox_container)
-	
-func set_listeners():
-	tab_bar.tab_changed.connect(on_tab_changed)
-	
-func _init(a_controller: AWOCResourceControllerBase):
-	awoc_resource_controller = a_controller
-	create_controls()
-	parent_controls()
-	show_slots_tab()
-	set_listeners()
+	var inner_vbox = create_vbox(0)
+	inner_vbox.add_child(tab_bar)
+	inner_vbox.add_child(tab_panel_container)
+	var outer_vbox = create_vbox(10)
+	outer_vbox.add_child(tab_label)
+	outer_vbox.add_child(inner_vbox)
+	main_panel_container.add_child(outer_vbox)
+
+func _init(ar_controller: AWOCResourceController):
+	awoc_resource_controller = ar_controller
+	super()

@@ -1,11 +1,26 @@
 @tool
 class_name AWOCManageHideSlotsControl extends AWOCManageResourcesControlBase
 
-func populate_manage_resources_container():
+var hide_slots_array: Array
+
+func set_tab_button_disabled():
+	if hide_slots_array.size() > 0:
+		tab_button.disabled = false
+	else:
+		tab_button.disabled = true
+		hide_control_panel_container()
+
+func populate_resource_controls_area():
 	super()
-	"""for slot in dictionary:
-		var controller: AWOCResourceControllerBase = AWOCResourceControllerBase.new(slot, dictionary, 0, "")
-		var control = AWOCSlotControl.new(controller)
-		manage_resources_vbox.add_child(control.main_panel_container)
-		control.resource_renamed.connect(on_resource_renamed)
-		control.resource_deleted.connect(on_resource_deleted)"""
+	for a in hide_slots_array.size():
+		var hide_slots_control = AWOCHideSlotControl.new(hide_slots_array[a], hide_slots_array)
+		hide_slots_control.control_reset.connect(emit_control_reset)
+		control_panel_container_vbox.add_child(hide_slots_control.main_panel_container)
+
+func create_controls():
+	tab_button = create_manage_resources_toggle_button("Manage Hide Slots")
+	super()
+	
+func _init(hs_array: Array):
+	hide_slots_array = hs_array
+	super({})

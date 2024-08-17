@@ -1,3 +1,4 @@
+@tool
 class_name AWOCSkeleton extends AWOCResourceBase
 
 @export var bones: Array

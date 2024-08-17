@@ -1,17 +1,25 @@
 @tool
-class_name ManageAWOCsControl extends AWOCManageResourcesControlBase
+class_name AWOCManageAWOCsControl extends AWOCManageResourcesControlBase
 
-signal awoc_edited(awoc: AWOCResourceControllerBase)
+signal awoc_edited(awoc_resource_controller: AWOCResourceController)
 
-func on_awoc_edited(awoc: AWOCResourceControllerBase):
-	awoc_edited.emit(awoc)
+var awoc_manager_resource_controller: AWOCManagerResourceController
 
-func populate_manage_resources_container():
+func emit_awoc_edited(awoc_resource_controller: AWOCResourceController):
+	awoc_edited.emit(awoc_resource_controller)
+
+func populate_resource_controls_area():
 	super()
-	for awoc_name in dictionary:
-		var controller: AWOCResourceControllerBase = AWOCResourceControllerBase.new(awoc_name, dictionary, dictionary[awoc_name], "")
-		var control = AWOCControl.new(controller)
-		manage_resources_vbox.add_child(control.main_panel_container)
-		control.resource_renamed.connect(on_resource_renamed)
-		control.resource_deleted.connect(on_resource_deleted)
-		control.awoc_edited.connect(on_awoc_edited)
+	for awoc_name in awoc_manager_resource_controller.get_dictionary():
+		var awoc_control = AWOCControl.new(awoc_manager_resource_controller, awoc_name)
+		awoc_control.control_reset.connect(emit_control_reset)
+		awoc_control.awoc_edited.connect(emit_awoc_edited)
+		control_panel_container_vbox.add_child(awoc_control.main_panel_container)
+
+func create_controls():
+	tab_button = create_manage_resources_toggle_button("Manage AWOCs")
+	super()
+	
+func _init(am_resource_controller: AWOCManagerResourceController):
+	awoc_manager_resource_controller = am_resource_controller
+	super(am_resource_controller.get_dictionary())

@@ -1,20 +1,18 @@
 @tool
 class_name AWOCControlBase extends Node
 
-const NAME_MIN_CHAR = 4
-const image_base_dir: String = "res://addons/awoc/images/godot_icons/"
-
 var main_panel_container: PanelContainer
-var main_margin_container: MarginContainer
+signal controls_reset()
 
-static func is_valid_name(name: String) -> bool:
-	if name.length() < NAME_MIN_CHAR:
-		return false
-	if !name.is_valid_filename():
-		return false
-	return true
-
+static func is_valid_path(path: String) -> bool:
+	var dir = DirAccess.open(path)
+	if dir:
+		return true
+	return false
+	
 static func is_avatar_file(path: String) -> bool:
+	if !is_valid_path(path):
+		return false
 	var file_name = path.get_file()
 	if file_name:
 		var name_split: PackedStringArray = file_name.split(".")
@@ -34,6 +32,16 @@ static func is_image_file(path: String) -> bool:
 					return true
 	return false
 	
+func is_valid_name(name: String) -> bool:
+	if name.length() < AWOCPlugin.NAME_MIN_CHAR:
+		return false
+	if !name.is_valid_filename():
+		return false
+	return true
+
+func reset_controls():
+	pass
+
 func validate_inputs():
 	pass
 
@@ -47,6 +55,18 @@ func _on_add_button_pressed():
 	pass
 	
 func _on_browse_button_pressed():
+	pass
+	
+func _on_path_selected(dir: String):
+	pass
+	
+func _on_add_new_resource_button_pressed():
+	pass
+	
+func _on_new_resource_toggle_button_toggled(toggled_on: bool):
+	pass
+	
+func _on_manage_resources_button_toggled(toggled_on: bool):
 	pass
 	
 func _on_delete_confirmed():
@@ -70,12 +90,63 @@ func _on_rename_button_pressed():
 func _on_delete_button_pressed():
 	pass
 	
-func _on_path_selected(dir: String):
-	pass
-
-func _on_add_new_resource_button_pressed():
-	pass
+func create_rename_confirmation_dialog(r_name: String) -> ConfirmationDialog:
+	var confirmation_dialog: ConfirmationDialog = create_confirmation_dialog("Rename " + r_name + "?", "Are you sure you wish to rename " + r_name + "? This can not be undone.")
+	confirmation_dialog.confirmed.connect(_on_rename_confirmed)
+	return confirmation_dialog
 	
+func create_delete_confirmation_dialog(r_name: String) -> ConfirmationDialog:
+	var confirmation_dialog: ConfirmationDialog = create_confirmation_dialog("Delete " + r_name + "?", "Are you sure you wish to delete " + r_name + "? This can not be undone.")
+	confirmation_dialog.confirmed.connect(_on_delete_confirmed)
+	return confirmation_dialog
+
+func create_rename_button() -> Button:
+	var button: Button = create_small_button()
+	button.icon = preload(AWOCPlugin.IMAGE_BASE_DIR + "Save.svg")
+	button.pressed.connect(_on_rename_button_pressed)
+	return button
+	
+func create_delete_button() -> Button:
+	var button: Button = create_small_button()
+	button.icon = preload(AWOCPlugin.IMAGE_BASE_DIR + "Remove.svg")
+	button.pressed.connect(_on_delete_button_pressed)
+	return button
+	
+func create_edit_button() -> Button:
+	var button: Button = create_small_button()
+	button.icon = preload(AWOCPlugin.IMAGE_BASE_DIR + "Edit.svg")
+	button.pressed.connect(_on_edit_button_pressed)
+	return button
+	
+func create_show_button() -> Button:
+	var button: Button = create_small_button()
+	button.icon = preload(AWOCPlugin.IMAGE_BASE_DIR + "GuiVisibilityVisible.svg")
+	button.pressed.connect(_on_show_button_pressed)
+	return button
+	
+func create_hide_button() -> Button:
+	var button: Button = create_small_button()
+	button.icon = preload(AWOCPlugin.IMAGE_BASE_DIR + "GuiVisibilityHidden.svg")
+	button.pressed.connect(_on_hide_button_pressed)
+	return button
+	
+func create_new_resource_toggle_button(button_text: String) -> Button:
+	var button = create_toggle_button(button_text)
+	button.toggled.connect(_on_new_resource_toggle_button_toggled)
+	return button
+	
+func create_manage_resources_toggle_button(button_text: String) -> Button:
+	var button = create_toggle_button(button_text)
+	button.toggled.connect(_on_manage_resources_button_toggled)
+	return button
+	
+func create_add_new_resource_button(button_text: String) -> Button:
+	var button = Button.new()
+	button.text = button_text
+	button.disabled = true
+	button.pressed.connect(_on_add_new_resource_button_pressed)
+	return button
+
 func create_option_button() -> OptionButton:
 	var option_button: OptionButton = OptionButton.new()
 	option_button.set_h_size_flags(Control.SizeFlags.SIZE_EXPAND_FILL)
@@ -87,16 +158,6 @@ func create_confirmation_dialog(title: String, text: String) -> ConfirmationDial
 	confirmation_dialog.dialog_text = text
 	confirmation_dialog.set_initial_position(FileDialog.WINDOW_INITIAL_POSITION_CENTER_MAIN_WINDOW_SCREEN)
 	confirmation_dialog.visible = false
-	return confirmation_dialog
-	
-func create_rename_confirmation_dialog(r_name: String) -> ConfirmationDialog:
-	var confirmation_dialog: ConfirmationDialog = create_confirmation_dialog("Rename " + r_name + "?", "Are you sure you wish to rename " + r_name + "? This can not be undone.")
-	confirmation_dialog.confirmed.connect(_on_rename_confirmed)
-	return confirmation_dialog
-	
-func create_delete_confirmation_dialog(r_name: String) -> ConfirmationDialog:
-	var confirmation_dialog: ConfirmationDialog = create_confirmation_dialog("Delete " + r_name + "?", "Are you sure you wish to delete " + r_name + "? This can not be undone.")
-	confirmation_dialog.confirmed.connect(_on_delete_confirmed)
 	return confirmation_dialog
 	
 func create_line_edit(placeholder: String, text: String = "") -> LineEdit:
@@ -116,61 +177,30 @@ func create_name_line_edit(placeholder: String, text: String = "") -> LineEdit:
 	line_edit.text_changed.connect(_on_name_line_edit_text_changed)
 	return line_edit
 	
+func create_toggle_button(button_text: String) -> Button:
+	var button: Button = Button.new()
+	button.text = button_text
+	button.toggle_mode = true
+	return button
+	
 func create_small_button() -> Button:
 	var button: Button = Button.new()
 	button.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	button.custom_minimum_size.x = 31
 	button.custom_minimum_size.y = 31
 	return button
-
-func create_add_new_resource_button(button_text: String) -> Button:
-	var button = Button.new()
-	button.text = button_text
-	button.disabled = true
-	button.pressed.connect(_on_add_new_resource_button_pressed)
-	return button
 	
 func create_add_button() -> Button:
 	var button: Button = create_small_button()
-	button.icon = preload(image_base_dir + "Add.svg")
+	button.icon = preload(AWOCPlugin.IMAGE_BASE_DIR + "Add.svg")
 	button.pressed.connect(_on_add_button_pressed)
 	button.disabled = true
 	return button
 	
 func create_browse_button() -> Button:
 	var button: Button = create_small_button()
-	button.icon = preload(image_base_dir + "Folder.svg")
+	button.icon = preload(AWOCPlugin.IMAGE_BASE_DIR + "Folder.svg")
 	button.pressed.connect(_on_browse_button_pressed)
-	return button
-	
-func create_rename_button() -> Button:
-	var button: Button = create_small_button()
-	button.icon = preload(image_base_dir + "Save.svg")
-	button.pressed.connect(_on_rename_button_pressed)
-	return button
-	
-func create_delete_button() -> Button:
-	var button: Button = create_small_button()
-	button.icon = preload(image_base_dir + "Remove.svg")
-	button.pressed.connect(_on_delete_button_pressed)
-	return button
-	
-func create_edit_button() -> Button:
-	var button: Button = create_small_button()
-	button.icon = preload(image_base_dir + "Edit.svg")
-	button.pressed.connect(_on_edit_button_pressed)
-	return button
-	
-func create_show_button() -> Button:
-	var button: Button = create_small_button()
-	button.icon = preload(image_base_dir + "GuiVisibilityVisible.svg")
-	button.pressed.connect(_on_show_button_pressed)
-	return button
-	
-func create_hide_button() -> Button:
-	var button: Button = create_small_button()
-	button.icon = preload(image_base_dir + "GuiVisibilityHidden.svg")
-	button.pressed.connect(_on_hide_button_pressed)
 	return button
 	
 func create_file_dialog(title: String) -> FileDialog:
@@ -218,7 +248,6 @@ func create_margin_container(top: int, left: int, bottom: int, right: int) -> Ma
 func create_label(text: String) -> Label:
 	var label = Label.new()
 	label.text = text
-	#label.set_h_size_flags(Control.SizeFlags.SIZE_EXPAND_FILL)
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD
@@ -249,13 +278,12 @@ func create_scroll_container() -> ScrollContainer:
 	scroll_container.set_v_size_flags(Control.SizeFlags.SIZE_EXPAND_FILL)
 	return scroll_container
 	
-func create_container() -> Container:
-	var container: Container = Container.new()
-	container.set_anchors_preset(Control.PRESET_FULL_RECT)
-	return container
-	
 func create_controls():
 	pass
 	
 func parent_controls():
 	pass
+	
+func _init():
+	create_controls()
+	parent_controls()

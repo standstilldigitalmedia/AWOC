@@ -1,55 +1,73 @@
 @tool
 class_name AWOCNewHideSlotControl extends AWOCNewResourceControlBase
 
-var available_slots_option_button: OptionButton
-var add_resource_button: Button
-var slot_controller: AWOCResourceControllerBase
+var awoc_resource_controller: AWOCResourceController
+var hide_slots_array: Array
+var slot_name: String
+var hide_slot_option_button: OptionButton
+var create_new_resource_button: Button
 
-func populate_available_slots_option_button():
-	available_slots_option_button.clear()
-	for slot in slot_controller.resource.hide_slot_dictionary:
+func get_available_hide_slots() -> Array:
+	var return_array: Array
+	for slot in awoc_resource_controller.get_slots_dictionary():
 		var found: bool = false
-		if slot == slot_controller.resource_name:
+		if slot == slot_name:
 			found = true
 		else:
-			for hideslot in slot_controller.hide_slot_array:
-				if hideslot == slot:
+			for a in hide_slots_array.size():
+				if hide_slots_array[a] == slot:
 					found = true
+					break
 		if !found:
-			available_slots_option_button.add_item(slot)
-	available_slots_option_button.selected = -1
+			return_array.append(slot)
+	return return_array
 
-func reset_inputs():
-	populate_available_slots_option_button()
-	add_resource_button.disabled = true
-		
-func _on_available_slots_option_button_item_selected(index: int):
-	if index < 0:
-		add_resource_button.disabled = true
+func on_hide_slot_selected(index: int):
+	if index != -1:
+		create_new_resource_button.disabled = false
+
+func set_tab_button_disabled():
+	if get_available_hide_slots().size() < 1:
+		tab_button.disabled = true
+		hide_control_panel_container()
+	elif awoc_resource_controller.get_slots_dictionary().size() > 0:
+		tab_button.disabled = false
 	else:
-		add_resource_button.disabled = false
-		
-func _on_add_button_pressed():
-	slot_controller.add_hide_slot(available_slots_option_button.get_item_text(available_slots_option_button.get_selected_id()))
-	slot_controller.save_resource()
-	reset_inputs()
-	resource_created.emit()
+		tab_button.disabled = true
+		hide_control_panel_container()
 	
+func populate_option_button():
+	var avaliable_slots_array: Array = get_available_hide_slots()
+	hide_slot_option_button.clear()
+	for slot in avaliable_slots_array:
+		hide_slot_option_button.add_item(slot)
+	hide_slot_option_button.selected = -1
+	if !hide_slot_option_button.item_selected.is_connected(on_hide_slot_selected):
+		hide_slot_option_button.item_selected.connect(on_hide_slot_selected)
+
+func reset_controls():
+	populate_option_button()
+	set_tab_button_disabled()
+	create_new_resource_button.disabled = true
+	
+func _on_add_new_resource_button_pressed():
+	hide_slots_array.append(hide_slot_option_button.get_item_text(hide_slot_option_button.selected))
+	control_reset.emit()
+
 func create_controls():
-	main_panel_container = create_panel_container(0.0,0.0,0.0,0.0)
-	available_slots_option_button = create_option_button()
-	available_slots_option_button.item_selected.connect(_on_available_slots_option_button_item_selected)
-	available_slots_option_button.text = "Select a Slot"
-	add_resource_button = create_add_button()
-	reset_inputs()
+	tab_button = create_new_resource_toggle_button("New Hide Slot")
+	create_new_resource_button = create_add_new_resource_button("Add Hide Slot")
+	hide_slot_option_button = create_option_button()
+	super()
 	
 func parent_controls():
-	var hbox: HBoxContainer = create_hbox(10)
-	hbox.add_child(available_slots_option_button)
-	hbox.add_child(add_resource_button)
-	main_panel_container.add_child(hbox)
+	super()
+	control_panel_container_vbox.add_child(hide_slot_option_button)
+	control_panel_container_vbox.add_child(create_new_resource_button)
 
-func _init(s_controller: AWOCResourceControllerBase):
-	slot_controller = s_controller
-	create_controls()
-	parent_controls()
+func _init(a_resource_controller: AWOCResourceController, hs_array: Array, s_name: String):
+	awoc_resource_controller = a_resource_controller
+	hide_slots_array = hs_array
+	slot_name = s_name
+	super()
+	reset_controls()

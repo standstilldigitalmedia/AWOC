@@ -1,3 +1,4 @@
+@tool
 class_name AWOCMesh extends AWOCResourceBase
 
 @export var surface_array: Array
