@@ -21,7 +21,7 @@ func hide_control_panel_container():
 	tab_button.set_pressed_no_signal(false)
 
 func create_controls():
-	main_panel_container = create_transparent_panel_container()
+	set_transparent_panel_container()
 	control_panel_container = create_simi_transparent_panel_container()
 	control_panel_margin_container = create_margin_container(10,5,10,5)
 	control_panel_container_vbox = create_vbox(10)
@@ -32,7 +32,7 @@ func parent_controls():
 	var vbox = create_vbox(0)
 	vbox.add_child(tab_button)
 	vbox.add_child(control_panel_container)
-	main_panel_container.add_child(vbox)
+	add_child(vbox)
 	
 func _init():
 	super()

@@ -18,7 +18,7 @@ func _on_delete_button_pressed():
 	delete_confirmation_dialog.visible = true
 
 func create_controls():
-	main_panel_container = create_transparent_panel_container()
+	set_transparent_panel_container()
 	name_line_edit = create_name_line_edit(hide_slot_name)
 	name_line_edit.editable = false
 	delete_button = create_delete_button()
@@ -30,7 +30,7 @@ func parent_controls():
 	hbox.add_child(name_line_edit)
 	hbox.add_child(delete_button)
 	hbox.add_child(delete_confirmation_dialog)
-	main_panel_container.add_child(hbox)
+	add_child(hbox)
 	super()
 
 func _init(hs_name: String, hs_array: Array):

@@ -39,7 +39,7 @@ func create_controls():
 func parent_controls():
 	super()
 	control_panel_container_vbox.add_child(name_line_edit)
-	control_panel_container_vbox.add_child(hide_slots_tab.main_panel_container)
+	control_panel_container_vbox.add_child(hide_slots_tab)
 	control_panel_container_vbox.add_child(create_new_resource_button)
 
 func _init(a_resource_controller: AWOCResourceController):

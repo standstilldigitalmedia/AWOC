@@ -20,6 +20,11 @@ func add_new_awoc(awoc_name: String, path: String):
 	save_awoc_manager()
 	
 func remove_awoc(awoc_name: String):
+	var awoc: AWOC = load(ResourceUID.get_id_path(awoc_manager_resource.awoc_uid_dictionary[awoc_name]))
+	if awoc.skeleton_uid != 0:
+		remove_resource_from_disk(awoc.skeleton_uid)
+	for mesh in awoc.mesh_uids_dictionary:
+		remove_resource_from_disk(awoc.mesh_uids_dictionary[mesh])
 	remove_disk_resource(awoc_name, awoc_manager_resource.awoc_uid_dictionary[awoc_name], awoc_manager_resource.awoc_uid_dictionary)
 	save_awoc_manager()
 	
@@ -35,7 +40,7 @@ func get_dictionary() -> Dictionary:
 
 func load_awoc_manager():
 	if FileAccess.file_exists(awoc_manager_path):
-		awoc_manager_resource = load_resource("AWOC Manager", ResourceLoader.get_resource_uid(awoc_manager_path))
+		awoc_manager_resource = load(awoc_manager_path)
 	else:
 		awoc_manager_resource = AWOCManager.new()
 		create_resource_on_disk(awoc_manager_resource, "awoc_manager", awoc_manager_path.get_base_dir())

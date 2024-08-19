@@ -14,7 +14,7 @@ func populate_resource_controls_area():
 		var awoc_control = AWOCControl.new(awoc_manager_resource_controller, awoc_name)
 		awoc_control.control_reset.connect(emit_control_reset)
 		awoc_control.awoc_edited.connect(emit_awoc_edited)
-		control_panel_container_vbox.add_child(awoc_control.main_panel_container)
+		control_panel_container_vbox.add_child(awoc_control)
 
 func create_controls():
 	tab_button = create_manage_resources_toggle_button("Manage AWOCs")

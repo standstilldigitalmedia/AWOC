@@ -36,7 +36,7 @@ func _on_name_line_edit_text_changed(new_text: String):
 		rename_button.disabled = true
 
 func create_controls():
-	main_panel_container = create_transparent_panel_container()
+	set_transparent_panel_container()
 	name_line_edit = create_name_line_edit("AWOC Name", awoc_name)
 	rename_button = create_rename_button()
 	delete_button = create_delete_button()
@@ -53,7 +53,7 @@ func parent_controls():
 	hbox.add_child(edit_button)
 	hbox.add_child(rename_confimation_dialog)
 	hbox.add_child(delete_confirmation_dialog)
-	main_panel_container.add_child(hbox)
+	add_child(hbox)
 	super()
 
 func _init(am_controller: AWOCManagerResourceController, a_name: String):

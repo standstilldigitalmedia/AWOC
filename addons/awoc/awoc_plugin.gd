@@ -10,7 +10,7 @@ var plugin
 var dock: Control
 var awoc_manager: AWOCManager
 var tool_menu_set: String
-		
+
 func create_tool_menu():
 	var popup = PopupMenu.new()
 	popup.add_item("Delete AWOC Manager", 0)
@@ -24,6 +24,9 @@ func destroy_tool_menu():
 		
 func create_dock():
 	dock = Control.new()
+	var avatar_file = load("res://test_model.glb")
+	var avatar = avatar_file.instantiate()
+	#dock.add_child(AWOCPreviewControl.new(avatar))
 	dock.add_child(AWOCEditor.new().scroll_container)
 	dock.name = "AWOC"
 	add_control_to_dock(DOCK_SLOT_LEFT_UR, dock)

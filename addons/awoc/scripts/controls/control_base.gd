@@ -1,7 +1,6 @@
 @tool
-class_name AWOCControlBase extends Node
+class_name AWOCControlBase extends PanelContainer
 
-var main_panel_container: PanelContainer
 signal controls_reset()
 
 static func is_valid_path(path: String) -> bool:
@@ -11,9 +10,10 @@ static func is_valid_path(path: String) -> bool:
 	return false
 	
 static func is_avatar_file(path: String) -> bool:
-	if !is_valid_path(path):
-		return false
+	var file_path = path.get_base_dir()
 	var file_name = path.get_file()
+	if !is_valid_path(file_path):
+		return false
 	if file_name:
 		var name_split: PackedStringArray = file_name.split(".")
 		if name_split.size() > 1:
@@ -49,6 +49,12 @@ func _on_name_line_edit_text_changed(new_text: String):
 	pass
 
 func _on_path_line_edit_text_changed(new_text: String):
+	pass
+	
+func _on_multi_mesh_line_edit_text_changed(new_text: String):
+	pass
+
+func _on_single_mesh_line_edit_text_changed(new_text: String):
 	pass
 	
 func _on_add_button_pressed():
@@ -88,6 +94,9 @@ func _on_rename_button_pressed():
 	pass
 	
 func _on_delete_button_pressed():
+	pass
+	
+func _on_tab_selected(index: int):
 	pass
 	
 func create_rename_confirmation_dialog(r_name: String) -> ConfirmationDialog:
@@ -177,6 +186,18 @@ func create_name_line_edit(placeholder: String, text: String = "") -> LineEdit:
 	line_edit.text_changed.connect(_on_name_line_edit_text_changed)
 	return line_edit
 	
+func create_multi_mesh_line_edit() -> LineEdit:
+	var line_edit = create_line_edit("Avatar File", "")
+	line_edit.set_script(load("res://addons/awoc/scripts/control_overrides/multiple_mesh_control_override.gd"))
+	line_edit.text_changed.connect(_on_multi_mesh_line_edit_text_changed)
+	return line_edit
+	
+func create_single_mesh_line_edit() -> LineEdit:
+	var line_edit = create_line_edit("Single Mesh Node", "")
+	line_edit.set_script(load("res://addons/awoc/scripts/control_overrides/single_mesh_control_override.gd"))
+	line_edit.text_changed.connect(_on_single_mesh_line_edit_text_changed)
+	return line_edit
+	
 func create_toggle_button(button_text: String) -> Button:
 	var button: Button = Button.new()
 	button.text = button_text
@@ -254,6 +275,20 @@ func create_label(text: String) -> Label:
 	label.set_h_size_flags(Control.SizeFlags.SIZE_EXPAND_FILL)
 	return label
 	
+func set_panel_container(r: float, g: float, b: float, a: float):
+	var panel_styleBox: StyleBoxFlat = get_theme_stylebox("panel").duplicate()
+	panel_styleBox.set("bg_color", Color(r,g,b,a))
+	add_theme_stylebox_override("panel", panel_styleBox)
+	set_anchors_preset(Control.PRESET_FULL_RECT)
+	set_h_size_flags(Control.SizeFlags.SIZE_EXPAND_FILL)
+	set_v_size_flags(Control.SizeFlags.SIZE_EXPAND_FILL)
+	
+func set_transparent_panel_container():
+	set_panel_container(0.0,0.0,0.0,0.0)
+	
+func set_simi_transparent_panel_container():
+	set_panel_container(1.0,1.0,1.0,0.05)
+	
 func create_panel_container(r: float, g: float, b: float, a: float) -> PanelContainer:
 	var panel_container: PanelContainer = PanelContainer.new()
 	var panel_styleBox: StyleBoxFlat = panel_container.get_theme_stylebox("panel").duplicate()
@@ -277,6 +312,11 @@ func create_scroll_container() -> ScrollContainer:
 	scroll_container.set_h_size_flags(Control.SizeFlags.SIZE_EXPAND_FILL)
 	scroll_container.set_v_size_flags(Control.SizeFlags.SIZE_EXPAND_FILL)
 	return scroll_container
+	
+func create_tab_container() -> TabContainer:
+	var tab_container: TabContainer = TabContainer.new()
+	tab_container.tab_selected.connect(_on_tab_selected)
+	return tab_container
 	
 func create_controls():
 	pass
