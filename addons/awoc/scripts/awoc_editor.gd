@@ -39,6 +39,7 @@ func show_welcome():
 		tab_bar_tab.visible = false
 	welcome_tab.reset_tab()
 	welcome_tab.visible = true
+	preview_control.visible = false
 	
 func show_tab_bar_tab():
 	if tab_bar_tab == null and selected_awoc_controller != null:

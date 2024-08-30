@@ -15,7 +15,8 @@ func add_disk_resource_to_dictionary(res_name: String, uid: int, dictionary: Dic
 	if dictionary.has(res_name):
 		push_error("A resource named " + res_name + " already exists.")
 		return
-	dictionary[res_name] = uid
+	dictionary[res_name] = AWOCResourceReference.new()
+	dictionary[res_name].resource_uid = uid
 	
 func create_resource_on_disk(resource: Resource, res_name: String, path: String) -> int:
 	if path == null or path.length() < 1:

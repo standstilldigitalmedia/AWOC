@@ -5,6 +5,11 @@ var awoc_resource_controller: AWOCResourceController
 var preview_control: AWOCPreviewControl
 var mesh_list: Array
 
+func reset_controls():
+	preview_control.visible = false
+	mesh_list = Array()
+	super()
+
 func _on_show_mesh(mesh_name: String):
 	mesh_list.append(mesh_name)
 	preview_control.set_subject(awoc_resource_controller.instatiate_avatar_from_mesh_list(mesh_list))

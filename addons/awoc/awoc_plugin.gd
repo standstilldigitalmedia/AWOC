@@ -11,6 +11,10 @@ var dock: Control
 var awoc_manager: AWOCManager
 var tool_menu_set: String
 
+func _build():
+	var awoc_manager_controller = AWOCManagerResourceController.new()
+	
+
 func create_tool_menu():
 	var popup = PopupMenu.new()
 	popup.add_item("Delete AWOC Manager", 0)

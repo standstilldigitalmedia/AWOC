@@ -33,7 +33,6 @@ func create_controls():
 	create_new_resource_button = create_add_new_resource_button("Create Slot")
 	hide_slots_array = Array()
 	hide_slots_tab = AWOCHideSlotsTab.new(awoc_resource_controller, hide_slots_array, "")
-	
 	super()
 	
 func parent_controls():

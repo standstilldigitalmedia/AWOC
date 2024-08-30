@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://ce5nthgp1gfom"]
+
+[ext_resource type="Script" path="res://test_images/image_test.gd" id="1_phcs5"]
+[ext_resource type="Texture2D" uid="uid://desvjdnyn1jhf" path="res://test_images/alphagray8.png" id="2_2rd77"]
+
+[node name="Node2D" type="Node2D" node_paths=PackedStringArray("sprite")]
+script = ExtResource("1_phcs5")
+sprite = NodePath("Sprite2D")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_2rd77")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_2rd77")

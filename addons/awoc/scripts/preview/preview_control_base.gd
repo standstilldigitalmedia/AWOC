@@ -99,11 +99,6 @@ func create_directional_light() -> DirectionalLight3D:
 	light.rotation.x = 0.0
 	return light
 	
-func create_grid_container() -> GridContainer:
-	var container: GridContainer = GridContainer.new()
-	container.columns = 3
-	return container
-	
 func create_movement_button() -> Button:
 	var button: Button = create_small_button()
 	button.button_up.connect(_on_button_up)
