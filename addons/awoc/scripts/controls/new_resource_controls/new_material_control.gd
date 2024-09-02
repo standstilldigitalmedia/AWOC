@@ -21,6 +21,8 @@ var occlusion_image_control: AWOCImageControl
 var roughness_image_control: AWOCImageControl
 var metallic_image_control: AWOCImageControl
 var create_new_resource_button: Button
+var overlay_tab: AWOCOverlaysTab
+var overlays_dictionary: Dictionary
 
 func reset_controls():
 	name_line_edit.text = ""
@@ -30,6 +32,8 @@ func reset_controls():
 	roughness_image_control.reset_controls()
 	metallic_image_control.reset_controls()
 	create_new_resource_button.disabled = true
+	overlay_tab.reset_tab()
+	overlays_dictionary = {}
 
 func validate_inputs():
 	if !is_valid_name(name_line_edit.text):
@@ -82,6 +86,7 @@ func _on_add_new_resource_button_pressed():
 		var metallic_resource_reference: AWOCResourceReference = AWOCResourceReference.new()
 		metallic_resource_reference.resource_uid = ResourceLoader.get_resource_uid(metallic_image_control.path_line_edit.text)
 		material_res.image_dictionary["metallic"] = metallic_resource_reference
+	material_res.overlays_dictionary = overlays_dictionary
 	awoc_resource_controller.add_new_material(name_line_edit.text, material_res)
 	reset_controls()
 
@@ -96,7 +101,7 @@ func _on_orm_checked(toggled_on: bool):
 		metallic_checkbox.set_pressed_no_signal(false)
 		
 func _on_apply_settings_pressed():
-	awoc_resource_controller.apply_settings(orm_checkbox.button_pressed , occlusion_checkbox.button_pressed , roughness_checkbox.button_pressed , metallic_checkbox.button_pressed)
+	awoc_resource_controller.set_material_settings(orm_checkbox.button_pressed, occlusion_checkbox.button_pressed, roughness_checkbox.button_pressed, metallic_checkbox.button_pressed)
 	show_new_material_controls()
 	
 func create_new_material_controls():
@@ -107,6 +112,7 @@ func create_new_material_controls():
 	roughness_image_control = AWOCImageControl.new("Roughness")
 	metallic_image_control = AWOCImageControl.new("Metallic")
 	create_new_resource_button = create_add_new_resource_button("Create Material")
+	overlay_tab = AWOCOverlaysTab.new("",overlays_dictionary,awoc_resource_controller)
 	
 func parent_new_material_controls():
 	for child in control_panel_container_vbox.get_children():
@@ -122,7 +128,7 @@ func parent_new_material_controls():
 		control_panel_container_vbox.add_child(roughness_image_control)
 	if material_settings_array[METALLIC]:
 		control_panel_container_vbox.add_child(metallic_image_control)
-	control_panel_container_vbox.add_child(AWOCOverlaysTab.new({}))
+	control_panel_container_vbox.add_child(overlay_tab)
 	control_panel_container_vbox.add_child(create_new_resource_button)
 	
 func create_material_setttings_controls():
@@ -174,12 +180,10 @@ func set_new_material_listeners():
 	metallic_image_control.validate.connect(validate_inputs)
 	
 func show_new_material_controls():
-	create_new_material_controls()
 	parent_new_material_controls()
 	set_new_material_listeners()
 
 func show_material_settings():
-	create_material_setttings_controls()
 	parent_material_setttings_controls()
 	set_material_setttings_listeners()
 		
@@ -189,6 +193,8 @@ func create_controls():
 		
 func _init(a_resource_controller: AWOCResourceController):
 	awoc_resource_controller = a_resource_controller
+	create_material_setttings_controls()
+	create_new_material_controls()
 	super()
 	if awoc_resource_controller.get_material_settings()[ALBEDO]:
 		show_new_material_controls()

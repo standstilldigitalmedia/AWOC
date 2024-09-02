@@ -77,7 +77,7 @@ func rename_resource_on_disk(old_name: String, new_name: String, uid: int):
 	dir.rename(old_path, new_path)
 	ResourceUID.set_id(uid, new_path)
 	
-func load_resource(res_name: String, uid: int) -> Resource:
+static func load_resource(res_name: String, uid: int) -> Resource:
 	if uid != 0:
 		var file_path = ResourceUID.get_id_path(uid)
 		if !FileAccess.file_exists(file_path):

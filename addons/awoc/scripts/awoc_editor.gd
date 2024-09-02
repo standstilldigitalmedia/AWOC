@@ -42,9 +42,8 @@ func show_welcome():
 	preview_control.visible = false
 	
 func show_tab_bar_tab():
-	if tab_bar_tab == null and selected_awoc_controller != null:
-		tab_bar_tab = AWOCTabBarTab.new(selected_awoc_controller, preview_control)
-		main_margin_container_vbox.add_child(tab_bar_tab)
+	tab_bar_tab = AWOCTabBarTab.new(selected_awoc_controller, preview_control)
+	main_margin_container_vbox.add_child(tab_bar_tab)
 	tab_bar_tab.reset_tab()
 	tab_bar_tab.visible = true
 	if welcome_tab != null:
