@@ -4,7 +4,7 @@ class_name AWOCManageResourcesControlBase extends AWOCTabControlBase
 var dictionary: Dictionary
 
 func emit_control_reset():
-	control_reset.emit()
+	controls_reset.emit()
 
 func populate_resource_controls_area():
 	for child in control_panel_container_vbox.get_children():

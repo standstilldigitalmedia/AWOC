@@ -27,11 +27,9 @@ func _on_image_browse_pressed():
 func _on_image_file_selected(path: String):
 	path_line_edit.text = path
 	validate_inputs()
-	validate.emit()
 	
 func _on_path_line_edit_text_changed(new_text: String):
 	validate_inputs()
-	validate.emit()
 	
 func create_controls():
 	controls_vbox = create_vbox(5)

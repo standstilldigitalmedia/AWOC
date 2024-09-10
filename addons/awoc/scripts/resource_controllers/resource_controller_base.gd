@@ -11,12 +11,14 @@ func add_resource_to_dictionary(res_name: String, dictionary: Dictionary, resour
 		return
 	dictionary[res_name] = resource
 	
-func add_disk_resource_to_dictionary(res_name: String, uid: int, dictionary: Dictionary):
+func add_disk_resource_to_dictionary(res_name: String, uid: int, dictionary: Dictionary, path: String):
 	if dictionary.has(res_name):
 		push_error("A resource named " + res_name + " already exists.")
 		return
 	dictionary[res_name] = AWOCResourceReference.new()
 	dictionary[res_name].resource_uid = uid
+	var full_path: String = path + "/" + res_name + ".res"
+	dictionary[res_name].path = full_path
 	
 func create_resource_on_disk(resource: Resource, res_name: String, path: String) -> int:
 	if path == null or path.length() < 1:
@@ -88,7 +90,7 @@ static func load_resource(res_name: String, uid: int) -> Resource:
 	
 func create_disk_resource(resource: AWOCResourceBase, resource_name: String, path: String, dictionary: Dictionary):
 	var uid: int = create_resource_on_disk(resource, resource_name, path)
-	add_disk_resource_to_dictionary(resource_name, uid, dictionary)
+	add_disk_resource_to_dictionary(resource_name, uid, dictionary, path)
 	
 func remove_disk_resource(resource_name: String, uid: int, dictionary: Dictionary):
 	remove_resource_from_disk(uid)

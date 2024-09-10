@@ -16,8 +16,8 @@ func reset_tab():
 func set_tab_listeners():
 	new_resource_control.show_control.connect(manage_resources_control.hide_control_panel_container)
 	manage_resources_control.show_control.connect(new_resource_control.hide_control_panel_container)
-	new_resource_control.control_reset.connect(reset_controls)
-	manage_resources_control.control_reset.connect(reset_controls)
+	new_resource_control.controls_reset.connect(reset_controls)
+	manage_resources_control.controls_reset.connect(reset_controls)
 	
 func parent_controls():
 	var vbox = create_vbox(10)

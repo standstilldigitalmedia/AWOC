@@ -22,6 +22,6 @@ func _init(a_resource_controller: AWOCResourceController, hs_array: Array, s_nam
 	slot_name = s_name
 	new_resource_control = AWOCNewHideSlotControl.new(awoc_resource_controller, hide_slots_array, slot_name)
 	manage_resources_control = AWOCManageHideSlotsControl.new(hide_slots_array)
-	new_resource_control.control_reset.connect(emit_control_reset)
-	manage_resources_control.control_reset.connect(emit_control_reset)
+	new_resource_control.controls_reset.connect(emit_control_reset)
+	manage_resources_control.controls_reset.connect(emit_control_reset)
 	super()

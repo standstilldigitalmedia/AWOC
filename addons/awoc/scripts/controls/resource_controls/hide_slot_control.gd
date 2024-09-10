@@ -12,7 +12,7 @@ func _on_delete_confirmed():
 		if hide_slot_array[a] == hide_slot_name:
 			hide_slot_array.remove_at(a)
 			break
-	control_reset.emit()
+	controls_reset.emit()
 	
 func _on_delete_button_pressed():
 	delete_confirmation_dialog.visible = true

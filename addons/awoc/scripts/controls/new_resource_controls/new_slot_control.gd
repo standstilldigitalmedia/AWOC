@@ -25,7 +25,7 @@ func _on_name_line_edit_text_changed(new_text: String):
 	
 func _on_add_new_resource_button_pressed():
 	awoc_resource_controller.add_new_slot(name_line_edit.text, hide_slots_array)
-	control_reset.emit()
+	controls_reset.emit()
 
 func create_controls():
 	tab_button = create_new_resource_toggle_button("New Slot")

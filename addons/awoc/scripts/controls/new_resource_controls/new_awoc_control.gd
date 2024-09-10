@@ -38,7 +38,7 @@ func _on_path_selected(dir: String):
 	
 func _on_add_new_resource_button_pressed():
 	awoc_manager_resource_controller.add_new_awoc(name_line_edit.text, path_line_edit.text)
-	control_reset.emit()
+	controls_reset.emit()
 
 func create_controls():
 	tab_button = create_new_resource_toggle_button("New AWOC")

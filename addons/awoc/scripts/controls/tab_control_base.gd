@@ -2,7 +2,6 @@
 class_name AWOCTabControlBase extends AWOCControlBase
 
 signal show_control()
-signal control_reset()
 
 var tab_button: Button
 var control_panel_margin_container: MarginContainer

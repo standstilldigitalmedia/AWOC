@@ -3,7 +3,6 @@ class_name AWOCNewOverlayControl extends AWOCNewResourceControlBase
 
 var awoc_resource_controller: AWOCResourceController
 var material_name: String
-var overlays_dictionary: Dictionary
 var overlay_type_option_button: OptionButton
 var name_line_edit: LineEdit
 var create_new_resource_button: Button
@@ -27,6 +26,9 @@ func reset_controls():
 	create_new_resource_button.disabled = true
 	set_overlay_type_option_button()
 	overlay_type_option_button.selected = -1
+	image_control.reset_controls()
+	dynamic_color_image_control.reset_controls()
+	shared_color_image_control.reset_controls()
 	
 func validate_inputs():
 	if !is_valid_name(name_line_edit.text):
@@ -54,21 +56,21 @@ func _on_path_line_edit_text_changed(new_text: String):
 	validate_inputs()
 	
 func _on_add_new_resource_button_pressed():
-	"""var overlay_resource: AWOCOverlay = AWOCOverlay.new()
+	var overlay_resource: AWOCOverlay = AWOCOverlay.new()
 	var image_reference: AWOCResourceReference = AWOCResourceReference.new()
 	var path: String = ResourceUID.get_id_path(awoc_resource_controller.awoc_uid).get_base_dir() + "/overlays"
 	match overlay_type_option_button.selected:
 		0:
-			image_reference.resource_uid = ResourceLoader.get_resource_uid(image_path_line_edit.text)
-			
+			image_reference.resource_uid = ResourceLoader.get_resource_uid(image_control.path_line_edit.text)
 		1:
-			overlay_resource.dynamic_color = dynamic_color_picker_button.color
+			image_reference.resource_uid = ResourceLoader.get_resource_uid(dynamic_color_image_control.path_line_edit.text)
+			overlay_resource.dynamic_color = dynamic_color_image_control.color_picker_button.color
 		2:
-			overlay_resource.shared_color = shared_color_option_button.get_item_text(shared_color_option_button.selected)
-			
+			image_reference.resource_uid = ResourceLoader.get_resource_uid(shared_color_image_control.path_line_edit.text)
+			overlay_resource.shared_color = shared_color_image_control.shared_color_option_button.get_item_text(shared_color_image_control.shared_color_option_button.selected)	
 	overlay_resource.overlay_image_reference = image_reference
-	awoc_resource_controller.add_new_overlay(name_line_edit.text, material_name,overlays_dictionary, overlay_resource)
-	control_reset.emit()"""
+	awoc_resource_controller.add_new_overlay(name_line_edit.text, material_name, overlay_resource)
+	controls_reset.emit()
 	
 func _on_overlay_type_changed(index: int):
 	overlay_type_option_button.selected = index
@@ -113,9 +115,8 @@ func parent_controls():
 	control_panel_container_vbox.add_child(name_line_edit)
 	control_panel_container_vbox.add_child(create_new_resource_button)
 
-func _init(ar_controller: AWOCResourceController, mat_name: String, o_dictionary: Dictionary):
+func _init(ar_controller: AWOCResourceController, mat_name: String):
 	awoc_resource_controller = ar_controller
 	material_name = mat_name
-	overlays_dictionary = o_dictionary
 	super()
 	reset_controls()

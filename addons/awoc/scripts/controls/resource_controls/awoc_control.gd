@@ -14,11 +14,11 @@ var delete_confirmation_dialog: ConfirmationDialog
 
 func _on_delete_confirmed():
 	awoc_manager_controller.remove_awoc(awoc_name)
-	control_reset.emit()
+	controls_reset.emit()
 	
 func _on_rename_confirmed():
 	awoc_manager_controller.rename_awoc(awoc_name, name_line_edit.text)
-	control_reset.emit()
+	controls_reset.emit()
 	
 func _on_edit_button_pressed():
 	awoc_edited.emit(awoc_manager_controller.get_awoc_controller(awoc_name))

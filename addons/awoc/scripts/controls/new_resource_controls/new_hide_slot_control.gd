@@ -52,7 +52,7 @@ func reset_controls():
 	
 func _on_add_new_resource_button_pressed():
 	hide_slots_array.append(hide_slot_option_button.get_item_text(hide_slot_option_button.selected))
-	control_reset.emit()
+	controls_reset.emit()
 
 func create_controls():
 	tab_button = create_new_resource_toggle_button("New Hide Slot")

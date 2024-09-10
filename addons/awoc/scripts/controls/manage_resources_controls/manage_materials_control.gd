@@ -3,11 +3,14 @@ class_name AWOCManageMaterialsControl extends AWOCManageResourcesControlBase
 
 var awoc_resource_controller: AWOCResourceController
 
+func set_tab_button_disabled():
+	super()
+
 func populate_resource_controls_area():
 	super()
 	for material_name in awoc_resource_controller.get_materials_dictionary():
 		var material_control = AWOCMaterialControl.new(awoc_resource_controller,material_name)
-		material_control.control_reset.connect(emit_control_reset)
+		material_control.controls_reset.connect(emit_control_reset)
 		control_panel_container_vbox.add_child(material_control)
 
 func create_controls():

@@ -12,11 +12,11 @@ var delete_confirmation_dialog: ConfirmationDialog
 
 func _on_delete_confirmed():
 	awoc_resource_controller.remove_color(color_name)
-	control_reset.emit()
+	controls_reset.emit()
 	
 func _on_rename_confirmed():
 	awoc_resource_controller.rename_color(color_name, name_line_edit.text)
-	control_reset.emit()
+	controls_reset.emit()
 	
 func _on_rename_button_pressed():
 	rename_confimation_dialog.visible = true

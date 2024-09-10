@@ -15,11 +15,11 @@ var hide_slot_panel_container: PanelContainer
 
 func _on_delete_confirmed():
 	awoc_resource_controller.remove_slot(slot_name)
-	control_reset.emit()
+	controls_reset.emit()
 	
 func _on_rename_confirmed():
 	awoc_resource_controller.rename_slot(slot_name, name_line_edit.text)
-	control_reset.emit()
+	controls_reset.emit()
 	
 func _on_rename_button_pressed():
 	rename_confimation_dialog.visible = true

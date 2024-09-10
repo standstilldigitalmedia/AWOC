@@ -6,8 +6,8 @@ var awoc_uid: int
 
 func save_awoc():
 	ResourceSaver.save(awoc_resource, ResourceUID.get_id_path(awoc_uid))
-	scan()
 	awoc_resource.emit_changed()
+	scan()
 	
 func add_new_slot(slot_name: String, hide_slots_array: Array):
 	var new_slot_resource: AWOCSlot = AWOCSlot.new()
@@ -91,7 +91,7 @@ func instatiate_avatar_from_mesh_list(mesh_name_list: Array) -> Node3D:
 		push_error("There was a problem serializing the AWOC skeleton.")
 		return null
 	for name in mesh_name_list:
-		var mesh_resource = load_resource(name, awoc_resource.meshes_dictionary[name].resource_uid)
+		var mesh_resource = awoc_resource.get_mesh_by_name(name)
 		mesh_resource.deserialize_mesh(skeleton)
 	avatar_node.add_child(skeleton)
 	return avatar_node
@@ -121,6 +121,12 @@ func change_color(color_name: String, color: Color):
 	awoc_resource.colors_dictionary[color_name] = color
 	save_awoc()
 	
+func change_material_image(material_name: String, image_index: String, new_path: String):
+	var material: AWOCMaterial = awoc_resource.get_material_by_name(material_name)
+	material.image_dictionary[image_index].resource_uid = ResourceLoader.get_resource_uid(new_path)
+	ResourceSaver.save(material, ResourceUID.get_id_path(get_materials_dictionary()[material_name].resource_uid))
+	material.emit_changed()
+	
 func add_new_material(material_name: String, material: AWOCMaterial):
 	var path: String = ResourceUID.get_id_path(awoc_uid).get_base_dir() + "/materials"
 	create_disk_resource(material,material_name,path, awoc_resource.materials_dictionary)
@@ -134,27 +140,18 @@ func rename_material(old_name: String, new_name: String):
 	rename_disk_resource(old_name, new_name, awoc_resource.materials_dictionary[old_name].resource_uid, awoc_resource.materials_dictionary)
 	save_awoc()
 	
-func set_material_settings(orm: bool, occlusion: bool, roughness: bool, metallic: bool):
-	if awoc_resource.material_settings_array == null or awoc_resource.material_settings_array.size() < 1:
-		awoc_resource.material_settings_array = Array()
-		awoc_resource.material_settings_array.append(true)
-		awoc_resource.material_settings_array.append(orm)
-		awoc_resource.material_settings_array.append(occlusion)
-		awoc_resource.material_settings_array.append(roughness)
-		awoc_resource.material_settings_array.append(metallic)
-	else:
-		awoc_resource.material_settings_array[AWOCNewMaterialControl.ALBEDO] = true
-		awoc_resource.material_settings_array[AWOCNewMaterialControl.ORM] = orm
-		awoc_resource.material_settings_array[AWOCNewMaterialControl.OCCLUSION] = occlusion
-		awoc_resource.material_settings_array[AWOCNewMaterialControl.ROUGHNESS] = roughness
-		awoc_resource.material_settings_array[AWOCNewMaterialControl.METALLIC] = metallic
+func set_material_settings(albedo: bool, orm: bool, occlusion: bool, roughness: bool, metallic: bool):
+	awoc_resource.material_settings_dictionary["albedo"] = albedo
+	awoc_resource.material_settings_dictionary["orm"] = orm
+	awoc_resource.material_settings_dictionary["occlusion"] = occlusion
+	awoc_resource.material_settings_dictionary["roughness"] = roughness
+	awoc_resource.material_settings_dictionary["metallic"] = metallic
 	save_awoc()
 	
-func add_new_overlay(overlay_name: String, material_name: String, overlays_dictionary: Dictionary, overlay_resource: AWOCOverlay):
-	add_resource_to_dictionary(overlay_name, overlays_dictionary,overlay_resource)
-	if material_name != "":
-		var material: AWOCMaterial = awoc_resource.get_material_by_name(material_name)
-		ResourceSaver.save(material, ResourceUID.get_id_path(get_materials_dictionary()[material_name].resource_uid))
+func add_new_overlay(overlay_name: String, material_name: String, overlay_resource: AWOCOverlay):
+	var material: AWOCMaterial = awoc_resource.get_material_by_name(material_name)
+	add_resource_to_dictionary(overlay_name, material.overlays_dictionary,overlay_resource)
+	ResourceSaver.save(material, ResourceUID.get_id_path(get_materials_dictionary()[material_name].resource_uid))
 	
 func get_slots_dictionary() -> Dictionary:
 	return awoc_resource.get_slots_dictionary()
@@ -168,8 +165,11 @@ func get_colors_dictionary() -> Dictionary:
 func get_materials_dictionary() -> Dictionary:
 	return awoc_resource.get_materials_dictionary()
 	
-func get_material_settings() -> Array:
-	return awoc_resource.get_material_settings()
+func get_material_by_name(mat_name: String):
+	return awoc_resource.get_material_by_name(mat_name)
+	
+func get_material_settings() -> Dictionary:
+	return awoc_resource.material_settings_dictionary
 
 func _init(a_resource: AWOC, a_uid: int):
 	awoc_resource = a_resource
