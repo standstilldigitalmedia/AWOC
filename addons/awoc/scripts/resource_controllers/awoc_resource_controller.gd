@@ -148,10 +148,39 @@ func set_material_settings(albedo: bool, orm: bool, occlusion: bool, roughness: 
 	awoc_resource.material_settings_dictionary["metallic"] = metallic
 	save_awoc()
 	
+func get_overlay_by_name(mat_name: String, overlay_name: String) -> AWOCOverlay:
+	var material = get_material_by_name(mat_name)
+	if material.overlays_dictionary.has(overlay_name):
+		return material.overlays_dictionary[overlay_name]
+	return null
+	
+func update_overlay(material_name: String, overlay_name: String, image_path: String, dynamic_color: Color, shared_color: String):
+	var awoc_material: AWOCMaterial = get_material_by_name(material_name)
+	var awoc_overlay: AWOCOverlay = awoc_material.overlays_dictionary[overlay_name]
+	awoc_overlay.overlay_image_reference.resource_uid = ResourceLoader.get_resource_uid(image_path)
+	awoc_overlay.dynamic_color = dynamic_color
+	awoc_overlay.shared_color = shared_color
+	ResourceSaver.save(awoc_material, ResourceUID.get_id_path(get_materials_dictionary()[material_name].resource_uid))
+	awoc_material.emit_changed()
+	
 func add_new_overlay(overlay_name: String, material_name: String, overlay_resource: AWOCOverlay):
 	var material: AWOCMaterial = awoc_resource.get_material_by_name(material_name)
 	add_resource_to_dictionary(overlay_name, material.overlays_dictionary,overlay_resource)
 	ResourceSaver.save(material, ResourceUID.get_id_path(get_materials_dictionary()[material_name].resource_uid))
+	material.emit_changed()
+	
+func remove_overlay(material_name: String, overlay_name: String):
+	var material: AWOCMaterial = get_material_by_name(material_name)
+	remove_resource_from_dictionary(material.overlays_dictionary,overlay_name)
+	ResourceSaver.save(material, ResourceUID.get_id_path(get_materials_dictionary()[material_name].resource_uid))
+	material.emit_changed()	
+	
+func rename_overlay(material_name: String, overlay_name: String, new_name: String):
+	printerr("mat name " + material_name + " overlay name " + overlay_name + " new_name " + new_name)
+	var material: AWOCMaterial = get_material_by_name(material_name)
+	rename_resource_in_dictionary(overlay_name, new_name,material.overlays_dictionary)
+	ResourceSaver.save(material, ResourceUID.get_id_path(get_materials_dictionary()[material_name].resource_uid))
+	material.emit_changed()	
 	
 func get_slots_dictionary() -> Dictionary:
 	return awoc_resource.get_slots_dictionary()

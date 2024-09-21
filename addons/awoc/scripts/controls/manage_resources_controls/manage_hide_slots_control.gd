@@ -14,7 +14,7 @@ func populate_resource_controls_area():
 	super()
 	for a in hide_slots_array.size():
 		var hide_slots_control = AWOCHideSlotControl.new(hide_slots_array[a], hide_slots_array)
-		hide_slots_control.control_reset.connect(emit_control_reset)
+		hide_slots_control.controls_reset.connect(emit_control_reset)
 		control_panel_container_vbox.add_child(hide_slots_control)
 
 func create_controls():

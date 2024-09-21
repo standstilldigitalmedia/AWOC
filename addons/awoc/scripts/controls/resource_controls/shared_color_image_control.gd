@@ -4,6 +4,13 @@ class_name AWOCSharedColorImageControl extends AWOCImageControl
 var shared_color_option_button: OptionButton
 var colors_dictionary: Dictionary
 
+func validate_inputs():
+	if is_image_file(path_line_edit.text):
+		texture_rect.texture = AWOCImageControl.load_image(path_line_edit.text)
+	else:
+		texture_rect.set_texture(AWOCImageControl.load_image("res://addons/awoc/images/no_image.png"))
+	validate.emit()
+
 func _on_shared_color_changed(index: int):
 	shared_color_option_button.selected = index
 	validate_inputs()

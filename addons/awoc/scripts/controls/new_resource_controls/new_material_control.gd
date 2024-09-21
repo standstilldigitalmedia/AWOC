@@ -17,8 +17,8 @@ var occlusion_image_control: AWOCImageControl
 var roughness_image_control: AWOCImageControl
 var metallic_image_control: AWOCImageControl
 var create_new_resource_button: Button
-var overlay_tab: AWOCOverlaysTab
-var overlays_dictionary: Dictionary
+#var overlay_tab: AWOCOverlaysTab
+#var overlays_dictionary: Dictionary
 
 func show_material_settings():
 	settings_vbox_container.visible = true
@@ -36,8 +36,8 @@ func reset_controls():
 	roughness_image_control.reset_controls()
 	metallic_image_control.reset_controls()
 	create_new_resource_button.disabled = true
-	overlays_dictionary = Dictionary()
-	overlay_tab = AWOCOverlaysTab.new("",overlays_dictionary,awoc_resource_controller)
+	#overlays_dictionary = Dictionary()
+	#overlay_tab = AWOCOverlaysTab.new("",overlays_dictionary,awoc_resource_controller)
 	if awoc_resource_controller.get_material_settings().has("albedo") and awoc_resource_controller.get_material_settings()["albedo"] == true:
 		show_new_material_controls()
 	else:
@@ -95,7 +95,7 @@ func _on_add_new_resource_button_pressed():
 		var metallic_resource_reference: AWOCResourceReference = AWOCResourceReference.new()
 		metallic_resource_reference.resource_uid = ResourceLoader.get_resource_uid(metallic_image_control.path_line_edit.text)
 		material_res.image_dictionary["metallic"] = metallic_resource_reference
-	material_res.overlays_dictionary = overlays_dictionary
+	#material_res.overlays_dictionary = overlays_dictionary
 	awoc_resource_controller.add_new_material(name_line_edit.text, material_res)
 	controls_reset.emit()
 
@@ -122,7 +122,7 @@ func create_new_material_controls():
 	roughness_image_control = AWOCImageControl.new("Roughness")
 	metallic_image_control = AWOCImageControl.new("Metallic")
 	create_new_resource_button = create_add_new_resource_button("Create Material")
-	overlay_tab = AWOCOverlaysTab.new("",overlays_dictionary,awoc_resource_controller)
+	#overlay_tab = AWOCOverlaysTab.new("",overlays_dictionary,awoc_resource_controller)
 	new_material_vbox_container = create_vbox(5)
 	
 func parent_new_material_controls():
@@ -137,7 +137,7 @@ func parent_new_material_controls():
 		new_material_vbox_container.add_child(roughness_image_control)
 	if material_settings_dictionary["metallic"] == true:
 		new_material_vbox_container.add_child(metallic_image_control)
-	new_material_vbox_container.add_child(overlay_tab)
+	#new_material_vbox_container.add_child(overlay_tab)
 	new_material_vbox_container.add_child(create_new_resource_button)
 	
 func create_material_setttings_controls():
