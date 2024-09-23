@@ -17,7 +17,7 @@ func populate_resource_controls_area():
 	var mat: AWOCMaterial = awoc_resource_controller.get_material_by_name(material_name)
 	for overlay_name in mat.overlays_dictionary:
 		var overlay_control = AWOCOverlayControl.new(awoc_resource_controller, material_name, overlay_name)
-		overlay_control.controls_reset.connect(emit_control_reset)
+		overlay_control.controls_reset.connect(emit_controls_reset)
 		control_panel_container_vbox.add_child(overlay_control)
 
 func create_controls():

@@ -11,10 +11,6 @@ var dock: Control
 var awoc_manager: AWOCManager
 var tool_menu_set: String
 
-func _build():
-	var awoc_manager_controller = AWOCManagerResourceController.new()
-	
-
 func create_tool_menu():
 	var popup = PopupMenu.new()
 	popup.add_item("Delete AWOC Manager", 0)
@@ -28,8 +24,8 @@ func destroy_tool_menu():
 		
 func create_dock():
 	dock = Control.new()
-	var avatar_file = load("res://test_model.glb")
-	var avatar = avatar_file.instantiate()
+	#var avatar_file = load("res://test_model.glb")
+	#var avatar = avatar_file.instantiate()
 	#dock.add_child(AWOCPreviewControl.new(avatar))
 	dock.add_child(AWOCEditor.new().scroll_container)
 	dock.name = "AWOC"
@@ -50,7 +46,7 @@ func destroy_inspector_plugin():
 		
 func _enter_tree() -> void:
 	if Engine.is_editor_hint():
-		create_tool_menu()
+		#create_tool_menu()
 		#create_inspector_plugin()
 		create_dock()
 
@@ -58,4 +54,4 @@ func _exit_tree() -> void:
 	if Engine.is_editor_hint():
 		destroy_dock()
 		#destroy_inspector_plugin()
-		destroy_tool_menu()
+		#destroy_tool_menu()

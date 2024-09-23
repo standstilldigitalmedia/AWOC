@@ -12,7 +12,7 @@ func populate_resource_controls_area():
 	super()
 	for awoc_name in awoc_manager_resource_controller.get_dictionary():
 		var awoc_control = AWOCControl.new(awoc_manager_resource_controller, awoc_name)
-		awoc_control.controls_reset.connect(emit_control_reset)
+		awoc_control.controls_reset.connect(emit_controls_reset)
 		awoc_control.awoc_edited.connect(emit_awoc_edited)
 		control_panel_container_vbox.add_child(awoc_control)
 

@@ -10,7 +10,7 @@ func populate_resource_controls_area():
 	super()
 	for material_name in awoc_resource_controller.get_materials_dictionary():
 		var material_control = AWOCMaterialControl.new(awoc_resource_controller,material_name)
-		material_control.controls_reset.connect(emit_control_reset)
+		material_control.controls_reset.connect(emit_controls_reset)
 		control_panel_container_vbox.add_child(material_control)
 
 func create_controls():

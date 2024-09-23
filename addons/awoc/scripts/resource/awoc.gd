@@ -8,6 +8,8 @@ class_name AWOC extends AWOCResourceBase
 @export var colors_dictionary: Dictionary
 @export var materials_dictionary: Dictionary
 @export var material_settings_dictionary: Dictionary
+@export var recipes_dictionary: Dictionary
+@export var default_recipes_dictionary: Dictionary
 
 func get_slot_by_name(name: String) -> AWOCSlot:
 	return AWOCResourceControllerBase.load_resource(name, slots_dictionary[name].resource_uid)
@@ -29,6 +31,14 @@ func get_material_by_name(mat_name: String) -> AWOCMaterial:
 			return load(materials_dictionary[mat_name].path)
 	return null
 	
+func get_recipe_by_name(recipe_name: String) -> AWOCRecipe:
+	if recipes_dictionary.has(recipe_name):
+		if ResourceUID.has_id(recipes_dictionary[recipe_name].resource_uid):
+			return AWOCResourceControllerBase.load_resource(recipe_name, recipes_dictionary[recipe_name].resource_uid)
+		else:
+			return load(recipes_dictionary[recipe_name].path)
+	return null
+	
 func get_slots_dictionary() -> Dictionary:
 	return slots_dictionary
 	
@@ -40,3 +50,9 @@ func get_colors_dictionary() -> Dictionary:
 	
 func get_materials_dictionary() -> Dictionary:
 	return materials_dictionary
+	
+func get_recipes_dictionary() -> Dictionary:
+	return recipes_dictionary
+	
+func get_default_recipe_dictionary() -> Dictionary:
+	return default_recipes_dictionary

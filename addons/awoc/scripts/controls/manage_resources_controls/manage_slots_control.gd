@@ -7,7 +7,7 @@ func populate_resource_controls_area():
 	super()
 	for slot_name in awoc_resource_controller.get_slots_dictionary():
 		var slot_control = AWOCSlotControl.new(awoc_resource_controller, slot_name)
-		slot_control.controls_reset.connect(emit_control_reset)
+		slot_control.controls_reset.connect(emit_controls_reset)
 		control_panel_container_vbox.add_child(slot_control)
 
 func create_controls():

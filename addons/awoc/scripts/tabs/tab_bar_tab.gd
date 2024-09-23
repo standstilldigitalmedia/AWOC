@@ -7,6 +7,7 @@ var slots_tab: AWOCSlotsTab
 var meshes_tab: AWOCMeshesTab
 var colors_tab: AWOCColorsTab
 var materials_tab: AWOCMaterialsTab
+var recipes_tab: AWOCRecipesTab
 var tab_label: Label
 var tab_container: TabContainer
 var tab_panel_container: PanelContainer
@@ -26,6 +27,8 @@ func _on_tab_selected(index: int):
 			colors_tab.reset_tab()
 		3:
 			materials_tab.reset_tab()
+		4:
+			recipes_tab.reset_tab()
 
 func create_controls():
 	set_transparent_panel_container()
@@ -36,6 +39,7 @@ func create_controls():
 	meshes_tab = AWOCMeshesTab.new(awoc_resource_controller, preview_control)
 	colors_tab = AWOCColorsTab.new(awoc_resource_controller)
 	materials_tab = AWOCMaterialsTab.new(awoc_resource_controller)
+	recipes_tab = AWOCRecipesTab.new(awoc_resource_controller, preview_control)
 	
 func parent_controls():
 	var inner_vbox = create_vbox(0)
@@ -49,10 +53,12 @@ func parent_controls():
 	tab_container.add_child(meshes_tab)
 	tab_container.add_child(colors_tab)
 	tab_container.add_child(materials_tab)
+	tab_container.add_child(recipes_tab)
 	tab_container.set_tab_title(0, "Slots")
 	tab_container.set_tab_title(1, "Meshes")
 	tab_container.set_tab_title(2, "Colors")
 	tab_container.set_tab_title(3, "Materials")
+	tab_container.set_tab_title(4, "Recipes")
 
 func _init(ar_controller: AWOCResourceController, preview: AWOCPreviewControl):
 	preview_control = preview

@@ -34,6 +34,8 @@ func remove_awoc(awoc_name: String):
 		remove_resource_from_disk(awoc.meshes_dictionary[mesh].resource_uid)
 	for material in awoc.materials_dictionary:
 		remove_resource_from_disk(awoc.materials_dictionary[material].resource_uid)
+	for recipe in awoc.recipes_dictionary:
+		remove_resource_from_disk(awoc.recipes_dictionary[recipe].resource_uid)
 	remove_disk_resource(awoc_name, awoc_manager_resource.awocs_dictionary[awoc_name].resource_uid, awoc_manager_resource.awocs_dictionary)
 	save_awoc_manager()
 	

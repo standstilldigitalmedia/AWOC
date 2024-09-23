@@ -3,7 +3,7 @@ class_name AWOCManageResourcesControlBase extends AWOCTabControlBase
 
 var dictionary: Dictionary
 
-func emit_control_reset():
+func emit_controls_reset():
 	controls_reset.emit()
 
 func populate_resource_controls_area():
