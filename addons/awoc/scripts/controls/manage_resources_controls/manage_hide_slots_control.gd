@@ -1,7 +1,7 @@
 @tool
 class_name AWOCManageHideSlotsControl extends AWOCManageResourcesControlBase
 
-var hide_slots_array: Array
+var hide_slots_array: Array[String]
 
 func set_tab_button_disabled():
 	if hide_slots_array.size() > 0:
@@ -21,6 +21,6 @@ func create_controls():
 	tab_button = create_manage_resources_toggle_button("Manage Hide Slots")
 	super()
 	
-func _init(hs_array: Array):
+func _init(hs_array: Array[String]):
 	hide_slots_array = hs_array
 	super({})

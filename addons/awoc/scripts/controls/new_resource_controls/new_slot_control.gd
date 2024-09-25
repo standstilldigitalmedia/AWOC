@@ -5,13 +5,12 @@ var awoc_resource_controller: AWOCResourceController
 var name_line_edit: LineEdit
 var create_new_resource_button: Button
 var hide_slots_tab: AWOCHideSlotsTab
-var hide_slots_array: Array
+var hide_slots_array: Array[String]
 
 func reset_controls():
 	name_line_edit.text = ""
 	create_new_resource_button.disabled = true
-	hide_slots_array = Array()
-	hide_slots_tab.hide_slots_array = hide_slots_array
+	hide_slots_array.clear()
 	hide_slots_tab.reset_controls()
 
 func validate_inputs():
@@ -31,7 +30,6 @@ func create_controls():
 	tab_button = create_new_resource_toggle_button("New Slot")
 	name_line_edit = create_name_line_edit("Slot Name")
 	create_new_resource_button = create_add_new_resource_button("Create Slot")
-	hide_slots_array = Array()
 	hide_slots_tab = AWOCHideSlotsTab.new(awoc_resource_controller, hide_slots_array, "")
 	super()
 	

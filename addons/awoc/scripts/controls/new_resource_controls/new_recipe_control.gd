@@ -29,8 +29,8 @@ func set_slots_option_button():
 	if slots_option_button == null:
 		slots_option_button = create_option_button()
 	slots_option_button.clear()
-	for slot in awoc_resource_controller.get_slots_dictionary():
-		slots_option_button.add_item(slot)
+	for slot in awoc_resource_controller.get_slots_array():
+		slots_option_button.add_item(slot.slot_name)
 	slots_option_button.selected = -1
 
 func reset_controls():
@@ -62,9 +62,11 @@ func _on_add_new_resource_button_pressed():
 	var material_resource_reference: AWOCResourceReference = AWOCResourceReference.new()
 	material_resource_reference.resource_uid = awoc_resource_controller.get_materials_dictionary()[materials_option_button.get_item_text(materials_option_button.selected)].resource_uid
 	new_recipe.material_resource_reference = material_resource_reference
-	awoc_resource_controller.add_new_recipe(name_line_edit.text, new_recipe)
 	if default_checkbox.button_pressed:
-		awoc_resource_controller.add_default_recipe(new_recipe)
+		new_recipe.default = true
+	else:
+		new_recipe.default = false
+	awoc_resource_controller.add_new_recipe(name_line_edit.text, new_recipe)
 	controls_reset.emit()
 
 func create_controls():

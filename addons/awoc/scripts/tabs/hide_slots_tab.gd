@@ -4,7 +4,7 @@ class_name AWOCHideSlotsTab extends AWOCTabBase
 signal control_reset()
 
 var awoc_resource_controller: AWOCResourceController
-var hide_slots_array: Array
+var hide_slots_array: Array[String]
 var slot_name: String
 
 func reset_controls():
@@ -16,7 +16,7 @@ func reset_controls():
 func emit_control_reset():
 	control_reset.emit()
 
-func _init(a_resource_controller: AWOCResourceController, hs_array: Array, s_name: String):
+func _init(a_resource_controller: AWOCResourceController, hs_array: Array[String], s_name: String):
 	awoc_resource_controller = a_resource_controller
 	hide_slots_array = hs_array
 	slot_name = s_name

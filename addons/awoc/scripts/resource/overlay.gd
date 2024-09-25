@@ -7,7 +7,6 @@ class_name AWOCOverlay extends AWOCResourceBase
 @export var overlay_strength: float
 
 func create_overlay_image(color_dictionary: Dictionary) -> Image:
-	overlay_strength = 0.5
 	var return_image = Image.new()
 	var overlay_image = AWOCImage.load_image(ResourceUID.get_id_path(overlay_image_reference.resource_uid))
 	return_image.convert(Image.FORMAT_RGBA8)

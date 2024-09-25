@@ -9,42 +9,69 @@ func save_awoc():
 	awoc_resource.emit_changed()
 	scan()
 	
-func add_new_slot(slot_name: String, hide_slots_array: Array):
+func add_new_slot(slot_name: String, hide_slots_array: Array[String]):
+	var existing_slot: AWOCSlot = awoc_resource.get_slot_by_name(slot_name)
+	if existing_slot != null:
+		printerr("Slot " + slot_name + " already exists.")
+		return
 	var new_slot_resource: AWOCSlot = AWOCSlot.new()
-	new_slot_resource.hide_slots_array = hide_slots_array
-	add_resource_to_dictionary(slot_name, awoc_resource.slots_dictionary, new_slot_resource)
+	for a in hide_slots_array.size():
+		new_slot_resource.hide_slots_array.append(hide_slots_array[a])
+	new_slot_resource.slot_name = slot_name
+	awoc_resource.slots_array.append(new_slot_resource)
 	save_awoc()
 	
 func remove_slot(slot_name: String):
-	for slot in awoc_resource.slots_dictionary:
-		var hide_slot_array: Array = awoc_resource.slots_dictionary[slot].hide_slots_array
-		for a in hide_slot_array.size():
-			if hide_slot_array[a] == slot_name:
-				hide_slot_array.remove_at(a)
-				break		
-	remove_resource_from_dictionary(awoc_resource.slots_dictionary, slot_name)
-	save_awoc()
+	var existing_slot: AWOCSlot = awoc_resource.get_slot_by_name(slot_name)
+	if existing_slot == null:
+		printerr("Slot " + slot_name + " does not exist.")
+		return
+	awoc_resource.slots_array.remove_at(awoc_resource.get_slot_index_by_name(slot_name))
+	for slot in get_slots_array():
+		for a in slot.hide_slots_array.size():
+			if slot.hide_slots_array[a] == slot_name:
+				slot.hide_slots_array.remove_at(a)
+				save_awoc()
+				break
+	for recipe in get_recipes_dictionary():
+		var recipe_resource: AWOCRecipe = get_recipe_by_name(recipe)
+		if recipe_resource.slot_name == slot_name:
+			recipe_resource.slot_name = ""
+			ResourceSaver.save(recipe_resource,ResourceUID.get_id_path(get_recipes_dictionary()[recipe].resource_uid))
+			recipe_resource.emit_changed()
 	
 func rename_slot(old_name: String, new_name: String):
-	for slot in awoc_resource.slots_dictionary:
-		var hide_slot_array: Array = awoc_resource.slots_dictionary[slot].hide_slots_array
-		for a in hide_slot_array.size():
-			if hide_slot_array[a] == old_name:
-				hide_slot_array[a] = new_name
-				break		
-	rename_resource_in_dictionary(old_name, new_name, awoc_resource.slots_dictionary)
+	var existing_slot: AWOCSlot = awoc_resource.get_slot_by_name(old_name)
+	if existing_slot == null:
+		printerr("Slot " + old_name + " does not exist.")
+		return
+	awoc_resource.get_slot_by_name(old_name).slot_name = new_name
+	for slot in get_slots_array():
+		for a in slot.hide_slots_array.size():
+			if slot.hide_slots_array[a] == old_name:
+				slot.hide_slots_array[a] = new_name
+	for recipe in get_recipes_dictionary():
+		var recipe_resource: AWOCRecipe = get_recipe_by_name(recipe)
+		if recipe_resource.slot_name == old_name:
+			recipe_resource.slot_name = new_name
+			ResourceSaver.save(recipe_resource,ResourceUID.get_id_path(get_recipes_dictionary()[recipe].resource_uid))
+			recipe_resource.emit_changed()
 	save_awoc()
 	
 func add_new_hide_slot(slot_name: String, hide_slot_name: String):
-	awoc_resource.slots_dictionary[slot_name].hide_slot_array.append(hide_slot_name)
+	var existing_slot: AWOCSlot = awoc_resource.get_slot_by_name(slot_name)
+	if existing_slot == null:
+		printerr("Slot " + slot_name + " does not exist.")
+		return
+	awoc_resource.get_slot_by_name(slot_name).hide_slots_array.append(hide_slot_name)
 	save_awoc()
 	
 func remove_hide_slot(slot_name: String, hide_slot_name: String):
-	var hide_slot_array: Array = awoc_resource.slots_dictionary[slot_name].hide_slots_array
-	for a in hide_slot_array.size():
-		if hide_slot_array[a] == hide_slot_name:
-			hide_slot_array.remove_at(a)
-			break
+	var existing_slot: AWOCSlot = awoc_resource.get_slot_by_name(slot_name)
+	if existing_slot == null:
+		printerr("Slot " + slot_name + " does not exist.")
+		return
+	existing_slot.hide_slots_array.erase(awoc_resource.get_hide_slot_index_by_name(slot_name, hide_slot_name))
 	save_awoc()
 	
 func create_avatar(avatar_path: String):
@@ -163,6 +190,13 @@ func update_overlay(material_name: String, overlay_name: String, image_path: Str
 	ResourceSaver.save(awoc_material, ResourceUID.get_id_path(get_materials_dictionary()[material_name].resource_uid))
 	awoc_material.emit_changed()
 	
+func update_overlay_strength(material_name: String, overlay_name: String, strength: float):
+	var awoc_material: AWOCMaterial = get_material_by_name(material_name)
+	var awoc_overlay: AWOCOverlay = awoc_material.overlays_dictionary[overlay_name]
+	awoc_overlay.overlay_strength = strength
+	ResourceSaver.save(awoc_material, ResourceUID.get_id_path(get_materials_dictionary()[material_name].resource_uid))
+	awoc_material.emit_changed()
+	
 func add_new_overlay(overlay_name: String, material_name: String, overlay_resource: AWOCOverlay):
 	var material: AWOCMaterial = awoc_resource.get_material_by_name(material_name)
 	add_resource_to_dictionary(overlay_name, material.overlays_dictionary,overlay_resource)
@@ -195,19 +229,34 @@ func rename_recipe(old_name: String, new_name: String):
 	rename_disk_resource(old_name, new_name, get_recipes_dictionary()[old_name].resource_uid, get_recipes_dictionary())
 	save_awoc()
 	
-func add_default_recipe(recipe: AWOCRecipe):
-	var default_recipes_dictionary: Dictionary = get_default_recipes_dictionary()
-	if default_recipes_dictionary.has(recipe.slot_name):
-		default_recipes_dictionary.erase(recipe.slot_name)
-	default_recipes_dictionary[recipe.slot_name] = recipe
-	save_awoc()
+func get_default_recipe_array() -> Array[String]:
+	return awoc_resource.get_default_recipe_array()
 	
-func remove_default_recipe(recipe: AWOCRecipe):
-	get_default_recipes_dictionary().erase(recipe.slot_name)
-	save_awoc()
+func make_recipe_default(new_recipe_name: String):
+	var default_recipe_array: Array[String] = get_default_recipe_array()
+	var new_recipe_resource: AWOCRecipe = get_recipe_by_name(new_recipe_name)
+	for array_recipe_name in default_recipe_array:
+		var array_recipe_resource: AWOCRecipe = get_recipe_by_name(array_recipe_name)
+		if new_recipe_resource.slot_name == array_recipe_resource.slot_name:
+			array_recipe_resource.default = false
+			ResourceSaver.save(array_recipe_resource, ResourceUID.get_id_path(get_recipes_dictionary()[array_recipe_name].resource_uid))
+			array_recipe_resource.emit_changed()
+			break
+	new_recipe_resource.default = true
+	ResourceSaver.save(new_recipe_resource, ResourceUID.get_id_path(get_recipes_dictionary()[new_recipe_name].resource_uid))
+	new_recipe_resource.emit_changed()
 	
-func get_slots_dictionary() -> Dictionary:
-	return awoc_resource.get_slots_dictionary()
+func remove_recipe_default(recipe_name: String):
+	var recipe_resource: AWOCRecipe = get_recipe_by_name(recipe_name)
+	recipe_resource.default = false
+	ResourceSaver.save(recipe_resource, ResourceUID.get_id_path(get_recipes_dictionary()[recipe_name].resource_uid))
+	recipe_resource.emit_changed()
+	
+func get_slots_array() -> Array[AWOCSlot]:
+	return awoc_resource.get_slots_array()
+	
+func get_slot_by_name(slot_name: String) -> AWOCSlot:
+	return awoc_resource.get_slot_by_name(slot_name)
 	
 func get_meshes_dictionary() -> Dictionary:
 	return awoc_resource.get_meshes_dictionary()
@@ -229,9 +278,6 @@ func get_recipes_dictionary() -> Dictionary:
 	
 func get_recipe_by_name(recipe_name: String):
 	return awoc_resource.get_recipe_by_name(recipe_name)
-	
-func get_default_recipes_dictionary() -> Dictionary:
-	return awoc_resource.default_recipes_dictionary
 
 func _init(a_resource: AWOC, a_uid: int):
 	awoc_resource = a_resource

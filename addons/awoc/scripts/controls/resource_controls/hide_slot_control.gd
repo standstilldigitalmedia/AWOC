@@ -2,7 +2,7 @@
 class_name AWOCHideSlotControl extends AWOCResourceControlBase
 
 var hide_slot_name: String
-var hide_slot_array: Array
+var hide_slot_array: Array[String]
 var name_line_edit: LineEdit
 var delete_button: Button
 var delete_confirmation_dialog: ConfirmationDialog
@@ -33,7 +33,7 @@ func parent_controls():
 	add_child(hbox)
 	super()
 
-func _init(hs_name: String, hs_array: Array):
+func _init(hs_name: String, hs_array: Array[String]):
 	hide_slot_name = hs_name
 	hide_slot_array = hs_array
 	super()

@@ -2,24 +2,24 @@
 class_name AWOCNewHideSlotControl extends AWOCNewResourceControlBase
 
 var awoc_resource_controller: AWOCResourceController
-var hide_slots_array: Array
+var hide_slots_array: Array[String]
 var slot_name: String
 var hide_slot_option_button: OptionButton
 var create_new_resource_button: Button
 
-func get_available_hide_slots() -> Array:
-	var return_array: Array
-	for slot in awoc_resource_controller.get_slots_dictionary():
+func get_available_hide_slots() -> Array[String]:
+	var return_array: Array[String]
+	for slot in awoc_resource_controller.get_slots_array():
 		var found: bool = false
-		if slot == slot_name:
+		if slot.slot_name == slot_name:
 			found = true
 		else:
 			for a in hide_slots_array.size():
-				if hide_slots_array[a] == slot:
+				if hide_slots_array[a] == slot.slot_name:
 					found = true
 					break
 		if !found:
-			return_array.append(slot)
+			return_array.append(slot.slot_name)
 	return return_array
 
 func on_hide_slot_selected(index: int):
@@ -30,7 +30,7 @@ func set_tab_button_disabled():
 	if get_available_hide_slots().size() < 1:
 		tab_button.disabled = true
 		hide_control_panel_container()
-	elif awoc_resource_controller.get_slots_dictionary().size() > 0:
+	elif awoc_resource_controller.get_slots_array().size() > 0:
 		tab_button.disabled = false
 	else:
 		tab_button.disabled = true
@@ -65,7 +65,7 @@ func parent_controls():
 	control_panel_container_vbox.add_child(hide_slot_option_button)
 	control_panel_container_vbox.add_child(create_new_resource_button)
 
-func _init(a_resource_controller: AWOCResourceController, hs_array: Array, s_name: String):
+func _init(a_resource_controller: AWOCResourceController, hs_array: Array[String], s_name: String):
 	awoc_resource_controller = a_resource_controller
 	hide_slots_array = hs_array
 	slot_name = s_name

@@ -1,6 +1,7 @@
 @tool
 class_name AWOCOverlayControl extends AWOCResourceControlBase
 
+@onready var blank_image = preload("res://addons/awoc/images/blank.png")
 var awoc_resource_controller: AWOCResourceController
 var overlay_name: String
 var material_name: String
@@ -16,6 +17,9 @@ var image_control: AWOCImageControl
 var dynamic_color_image_control: AWOCDynamicColorImageControl
 var shared_color_image_control: AWOCSharedColorImageControl
 var overlay_type_option_button: OptionButton
+var overlay_strength_slider: HSlider
+var overlay_strength_line_edit: LineEdit
+var old_overlay_strength: String = "1"
 
 func validate_inputs():
 	image_control.validate_inputs()
@@ -102,6 +106,31 @@ func _on_dynamic_color_image_control_validate():
 func _on_shared_color_image_control_validate():
 	if shared_color_image_control.shared_color_option_button.selected >= 0:
 		awoc_resource_controller.update_overlay(material_name, overlay_name, shared_color_image_control.path_line_edit.text, Color(0,0,0,0),shared_color_image_control.shared_color_option_button.get_item_text(shared_color_image_control.shared_color_option_button.selected))
+		
+func _on_overlay_strength_slider_changed(value: float):
+	overlay_strength_line_edit.text = str(value)
+	old_overlay_strength = str(value)
+	
+func _on_overlay_strength_line_edit_text_change(new_text: String):
+	if new_text == "":
+		pass
+	elif !new_text.is_valid_float():
+		overlay_strength_line_edit.text = old_overlay_strength
+	elif float(overlay_strength_line_edit.text) > 1:
+		overlay_strength_line_edit.text = "1"
+		old_overlay_strength = "1"
+	elif float(overlay_strength_line_edit.text) < 0:
+		overlay_strength_line_edit.text = "0"
+		old_overlay_strength = "0"
+	else:
+		old_overlay_strength = new_text
+	overlay_strength_line_edit.caret_column = overlay_strength_line_edit.text.length()
+	overlay_strength_slider.set_value_no_signal(float(overlay_strength_line_edit.text))
+	awoc_resource_controller.update_overlay_strength(material_name, overlay_name, overlay_strength_slider.value)
+	
+func _on_overlay_strength_slider_end(value_changed: bool):
+	if value_changed:
+		awoc_resource_controller.update_overlay_strength(material_name, overlay_name, overlay_strength_slider.value)
 	
 func create_controls():
 	name_line_edit = create_name_line_edit("Overlay Name", overlay_name)
@@ -147,6 +176,18 @@ func create_controls():
 	image_control.path_line_edit.text = image_path
 	dynamic_color_image_control.path_line_edit.text = image_path
 	shared_color_image_control.path_line_edit.text = image_path
+	overlay_strength_slider = HSlider.new()
+	overlay_strength_slider.min_value = 0.0
+	overlay_strength_slider.max_value = 1.0
+	overlay_strength_slider.set_value_no_signal(1.0)
+	overlay_strength_slider.value_changed.connect(_on_overlay_strength_slider_changed)
+	overlay_strength_slider.drag_ended.connect(_on_overlay_strength_slider_end)
+	overlay_strength_slider.set_h_size_flags(Control.SizeFlags.SIZE_EXPAND_FILL)
+	overlay_strength_slider.step = 0.001
+	overlay_strength_line_edit = LineEdit.new()
+	overlay_strength_line_edit.placeholder_text = "Strength"
+	overlay_strength_line_edit.text = "1"
+	overlay_strength_line_edit.text_changed.connect(_on_overlay_strength_line_edit_text_change)
 	
 func parent_controls():
 	var outer_vbox: VBoxContainer = create_vbox(0)
@@ -166,6 +207,15 @@ func parent_controls():
 	inner_vbox.add_child(image_control)
 	inner_vbox.add_child(dynamic_color_image_control)
 	inner_vbox.add_child(shared_color_image_control)
+	var strength_hbox: HBoxContainer = create_hbox(5)
+	strength_hbox.add_child(create_label("Overlay strength:"))
+	var vbox: VBoxContainer = VBoxContainer.new()
+	vbox.set_h_size_flags(Control.SizeFlags.SIZE_EXPAND_FILL)
+	vbox.alignment = BoxContainer.ALIGNMENT_CENTER
+	vbox.add_child(overlay_strength_slider)
+	strength_hbox.add_child(vbox)
+	strength_hbox.add_child(overlay_strength_line_edit)
+	inner_vbox.add_child(strength_hbox)
 	outer_vbox.add_child(hbox)
 	overlay_panel_margin_container.add_child(inner_vbox)
 	overlay_panel_container.add_child(overlay_panel_margin_container)

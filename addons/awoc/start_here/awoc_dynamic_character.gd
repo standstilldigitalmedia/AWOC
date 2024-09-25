@@ -4,29 +4,23 @@ class_name AWOCDynamicCharacter extends CanvasLayer
 @export var awoc_resource: AWOC
 @export var texture_rect: TextureRect
 var recipe_list_dictionary: Dictionary
-var default_recipe_list: Dictionary
-var slots_dictionary: Dictionary
+
+func get_default_recipes():
+	pass
 
 func create_material_albedo():
-	var first_material: AWOCMaterial = load(ResourceUID.get_id_path(recipe_list_dictionary["first slot"].material_resource_reference.resource_uid))
+	var first_material: AWOCMaterial = load(ResourceUID.get_id_path(awoc_resource.get_recipe_by_name("new recipe").material_resource_reference.resource_uid))
 	texture_rect.texture = ImageTexture.create_from_image(first_material.get_albedo_with_overlays(awoc_resource.colors_dictionary))
 	return 
 
-func populate_slots_dictionary():
-	slots_dictionary = {}
-	var counter: int = 0
-	for slot in awoc_resource.slots_dictionary:
-		slots_dictionary[slot] = counter
-		counter += 1
-
 func unequip_recipe(recipe_name):
 	var recipe_resource: AWOCRecipe = awoc_resource.get_recipe_by_name(recipe_name)
-	for slot in recipe_list_dictionary:
+	"""for slot in recipe_list_dictionary:
 		if recipe_list_dictionary[slot] == recipe_resource:
 			recipe_list_dictionary.erase(slot)
 			if default_recipe_list.has(slot) and default_recipe_list[slot] != recipe_list_dictionary[slot]:
 				recipe_list_dictionary[slot] = default_recipe_list[slot]
-			break
+			break"""
 			
 func equip_recipe(recipe_name):
 	var recipe: AWOCRecipe = awoc_resource.get_recipe_by_name(recipe_name)
@@ -35,13 +29,9 @@ func equip_recipe(recipe_name):
 	recipe_list_dictionary[recipe.slot_name] = recipe
 
 func _ready():
-	default_recipe_list = awoc_resource.get_default_recipe_dictionary()
-	for recipe in default_recipe_list:
-		recipe_list_dictionary[recipe] = default_recipe_list[recipe]
-	populate_slots_dictionary()
 	create_material_albedo()
 
-"""func load_list_of_recipe_resources(recipe_name_list: Array) -> Array:
+func load_list_of_recipe_resources(recipe_name_list: Array) -> Array:
 	var return_array: Array = Array()
 	for recipe in recipe_name_list:
 		if awoc_resource.get_recipes_dictionary().has(recipe):
@@ -59,7 +49,7 @@ func get_used_slots_array(recipe_resource_list: Array[AWOCRecipe]) -> Array:
 
 func instantiate_avatar_from_recipe_list(recipe_name_list: Array):
 	var recipe_resource_list: Array = load_list_of_recipe_resources(recipe_name_list)
-	if recipe_list_array.size() < 1:
+	"""if recipe_list_array.size() < 1:
 		return
 	var skeleton: Skeleton3D = awoc_resource.get_skeleton().deserialize_skeleton()
 	if skeleton == null:

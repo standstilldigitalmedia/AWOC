@@ -53,7 +53,7 @@ func create_controls():
 	hide_button.visible = false
 	rename_confimation_dialog = create_rename_confirmation_dialog(slot_name)
 	delete_confirmation_dialog = create_delete_confirmation_dialog(slot_name)
-	hide_slots_tab = AWOCHideSlotsTab.new(awoc_resource_controller, awoc_resource_controller.get_slots_dictionary()[slot_name].hide_slots_array, slot_name)
+	hide_slots_tab = AWOCHideSlotsTab.new(awoc_resource_controller, awoc_resource_controller.get_slot_by_name(slot_name).hide_slots_array, slot_name)
 	hide_slot_panel_container = create_simi_transparent_panel_container()
 	hide_slot_panel_container.visible = false
 	super()
