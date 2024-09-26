@@ -31,12 +31,14 @@ func remove_slot(slot_name: String):
 		for a in slot.hide_slots_array.size():
 			if slot.hide_slots_array[a] == slot_name:
 				slot.hide_slots_array.remove_at(a)
+				printerr("Slot " + slot.slot_name + " will no longer hide slot " + slot.hide_slots_array[a] + ".")
 				save_awoc()
 				break
 	for recipe in get_recipes_dictionary():
 		var recipe_resource: AWOCRecipe = get_recipe_by_name(recipe)
 		if recipe_resource.slot_name == slot_name:
 			recipe_resource.slot_name = ""
+			printerr("Recipe " + recipe + " is invalidated. Please assign a new slot to this recipe.")
 			ResourceSaver.save(recipe_resource,ResourceUID.get_id_path(get_recipes_dictionary()[recipe].resource_uid))
 			recipe_resource.emit_changed()
 	
@@ -104,25 +106,6 @@ func rename_mesh(old_name: String, new_name: String):
 	rename_disk_resource(old_name, new_name,awoc_resource.meshes_dictionary[old_name].resource_uid,awoc_resource.meshes_dictionary)
 	save_awoc()
 	
-func instatiate_avatar_from_mesh_list(mesh_name_list: Array) -> Node3D:
-	if awoc_resource.skeleton_resource_reference.resource_uid < 1:
-		push_error("AWOC must have a skeleton.")
-		return null
-	if awoc_resource.meshes_dictionary.size() < mesh_name_list.size():
-		push_error("You are trying to instantiate more meshes than this AWOC has available.")
-		return null
-	var avatar_node = Node3D.new()
-	var skeleton_resource = load_resource("Skeleton", awoc_resource.skeleton_resource_reference.resource_uid)
-	var skeleton: Skeleton3D = skeleton_resource.deserialize_skeleton()
-	if skeleton == null:
-		push_error("There was a problem serializing the AWOC skeleton.")
-		return null
-	for name in mesh_name_list:
-		var mesh_resource = awoc_resource.get_mesh_by_name(name)
-		mesh_resource.deserialize_mesh(skeleton)
-	avatar_node.add_child(skeleton)
-	return avatar_node
-	
 func add_new_color(color_name: String, color: Color):
 	if awoc_resource.colors_dictionary.has(color_name):
 		printerr("Color " + color_name + " already exists.")
@@ -174,6 +157,13 @@ func set_material_settings(albedo: bool, orm: bool, occlusion: bool, roughness: 
 	awoc_resource.material_settings_dictionary["roughness"] = roughness
 	awoc_resource.material_settings_dictionary["metallic"] = metallic
 	save_awoc()
+	
+func set_image_width_and_height(path: String):
+	if awoc_resource.image_width < 1:
+		var image: Image = AWOCImage.load_image(path)
+		awoc_resource.image_width = image.get_width()
+		awoc_resource.image_height = image.get_height()
+		save_awoc()
 	
 func get_overlay_by_name(mat_name: String, overlay_name: String) -> AWOCOverlay:
 	var material = get_material_by_name(mat_name)

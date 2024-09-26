@@ -3,20 +3,18 @@ class_name AWOCManageRecipesControl extends AWOCManageResourcesControlBase
 
 var awoc_resource_controller: AWOCResourceController
 var preview_control: AWOCPreviewControl
-var recipe_list: Array
+var dynamic_character: AWOCDynamicCharacter
 
 func _on_show_recipe(recipe_name: String):
-	recipe_list.append(recipe_name)
-	#preview_control.set_subject(awoc_resource_controller.instatiate_avatar_from_mesh_list(mesh_list))
 	preview_control.visible = true
+	if dynamic_character == null:
+		dynamic_character = AWOCDynamicCharacter.new()
+		dynamic_character.init_dynamic_character(awoc_resource_controller.awoc_resource)
+		preview_control.set_subject(dynamic_character)
+	dynamic_character.equip_recipe(recipe_name)
 	
 func _on_hide_recipe(mesh_name: String):
-	recipe_list.erase(mesh_name)
-	"""if mesh_list.size() < 1:
-		preview_control.set_subject(null)
-		preview_control.visible = false
-	else:
-		preview_control.set_subject(awoc_resource_controller.instatiate_avatar_from_mesh_list(mesh_list))"""
+	pass
 
 func populate_resource_controls_area():
 	super()

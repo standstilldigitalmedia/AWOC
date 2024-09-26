@@ -1,7 +1,6 @@
 @tool
 class_name AWOCOverlayControl extends AWOCResourceControlBase
 
-@onready var blank_image = preload("res://addons/awoc/images/blank.png")
 var awoc_resource_controller: AWOCResourceController
 var overlay_name: String
 var material_name: String

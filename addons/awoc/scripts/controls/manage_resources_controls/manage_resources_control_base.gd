@@ -30,4 +30,3 @@ func _on_manage_resources_button_toggled(toggled_on: bool):
 func _init(dict: Dictionary):
 	dictionary = dict
 	super()
-	reset_controls()

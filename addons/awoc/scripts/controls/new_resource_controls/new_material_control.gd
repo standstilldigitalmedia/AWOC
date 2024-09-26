@@ -77,6 +77,7 @@ func _on_add_new_resource_button_pressed():
 	var material_res: AWOCMaterial = AWOCMaterial.new()
 	var material_settings_dictionary: Dictionary = awoc_resource_controller.get_material_settings()
 	var albedo_resource_reference: AWOCResourceReference = AWOCResourceReference.new()
+	awoc_resource_controller.set_image_width_and_height(albedo_image_control.path_line_edit.text)
 	albedo_resource_reference.resource_uid = ResourceLoader.get_resource_uid(albedo_image_control.path_line_edit.text)
 	material_res.image_dictionary["albedo"] = albedo_resource_reference
 	if material_settings_dictionary["orm"] == true:

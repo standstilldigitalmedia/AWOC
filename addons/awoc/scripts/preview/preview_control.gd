@@ -43,13 +43,10 @@ var subject_rotation: Vector3
 var camera_position: Vector3
 
 func set_subject(sub: Node3D):
-	if subject != null: 
-		subject.queue_free()
-	if sub != null:
-		subject = sub
-		subject.position = Vector3(0.0,0.0,0.0)
-		subject.rotation = subject_rotation
-		sub_viewport.add_child(subject)
+	subject = sub
+	subject.position = Vector3(0.0,0.0,0.0)
+	subject.rotation = subject_rotation
+	sub_viewport.add_child(subject)
 
 func _on_x_checkbox_toggled(toggled_on: bool):
 	if toggled_on:
@@ -238,9 +235,25 @@ func set_panel_style():
 	set_h_size_flags(Control.SizeFlags.SIZE_EXPAND_FILL)
 	set_v_size_flags(Control.SizeFlags.SIZE_EXPAND_FILL)
 	
+func reset():
+	x_checkbox.set_pressed_no_signal(true)
+	y_checkbox.set_pressed_no_signal(false)
+	z_checkbox.set_pressed_no_signal(false)
+	move_speed = 5
+	zoom_speed = 10
+	rotate_speed = 3
+	move_speed_slider.value = move_speed
+	zoom_speed_slider.value = zoom_speed
+	rotate_speed_slider.value = rotate_speed
+	camera_position = Vector3(0.0,0.917,2.135)
+	subject_rotation = Vector3(0.0,0.0,0.0)
+	main_camera.position = camera_position
+	if subject != null:
+		subject.queue_free()
+	
 func _init():
 	camera_position = Vector3(0.0,0.917,2.135)
 	subject_rotation = Vector3(0.0,0.0,0.0)
 	set_panel_style()
 	super()
-	x_checkbox.set_pressed_no_signal(true)
+	

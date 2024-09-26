@@ -8,6 +8,8 @@ class_name AWOC extends AWOCResourceBase
 @export var colors_dictionary: Dictionary
 @export var materials_dictionary: Dictionary
 @export var material_settings_dictionary: Dictionary
+@export var image_width: int
+@export var image_height: int
 @export var recipes_dictionary: Dictionary
 
 func get_slot_index_by_name(name: String) -> int:
@@ -31,7 +33,12 @@ func get_hide_slot_index_by_name(slot_name: String, hide_slot_name: String):
 			return a
 	return -1
 	
-func get_skeleton() -> AWOCSkeleton:
+func get_skeleton() -> Skeleton3D:
+	if skeleton_resource_reference == null:
+		return null
+	return AWOCResourceControllerBase.load_resource("Skeleton", skeleton_resource_reference.resource_uid).deserialize_skeleton()
+	
+func get_skeleton_resource() -> AWOCSkeleton:
 	return AWOCResourceControllerBase.load_resource("Skeleton", skeleton_resource_reference.resource_uid)
 	
 func get_mesh_by_name(name: String) -> AWOCMesh:

@@ -33,13 +33,13 @@ func _on_show_button_pressed():
 	show_button.visible = false
 	hide_button.visible = true
 	controls_panel_container.visible = true
-	#show_recipe.emit(recipe_name)
+	show_recipe.emit(recipe_name)
 	
 func _on_hide_button_pressed():
 	show_button.visible = true
 	hide_button.visible = false
 	controls_panel_container.visible = false
-	#hide_recipe.emit(recipe_name)
+	hide_recipe.emit(recipe_name)
 	
 func _on_name_line_edit_text_changed(new_text: String):
 	if is_valid_name(name_line_edit.text):

@@ -6,7 +6,9 @@ class_name AWOCMaterial extends AWOCResourceBase
 
 func get_albedo_image() -> Image:
 	if image_dictionary.has("albedo") and image_dictionary["albedo"].resource_uid > 0:
-		return AWOCImage.load_image(ResourceUID.get_id_path(image_dictionary["albedo"].resource_uid))
+		var albedo_image = AWOCImage.load_image(ResourceUID.get_id_path(image_dictionary["albedo"].resource_uid))
+		albedo_image.convert(Image.FORMAT_RGBA8)
+		return albedo_image
 	return null
 	
 func get_orm_image() -> Image:
