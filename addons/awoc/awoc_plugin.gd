@@ -27,7 +27,7 @@ func create_dock():
 	#var avatar_file = load("res://test_model.glb")
 	#var avatar = avatar_file.instantiate()
 	#dock.add_child(AWOCPreviewControl.new(avatar))
-	dock.add_child(AWOCEditor.new().scroll_container)
+	dock.add_child(AWOCEditor.new())
 	dock.name = "AWOC"
 	add_control_to_dock(DOCK_SLOT_LEFT_UR, dock)
 	

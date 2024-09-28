@@ -125,11 +125,15 @@ func create_browse_button() -> Button:
 	button.pressed.connect(_on_browse_button_pressed)
 	return button
 	
-func create_color_picker_button() -> ColorPickerButton:
+func create_no_listener_color_picker_button() -> ColorPickerButton:
 	var button: ColorPickerButton = ColorPickerButton.new()
 	button.color = Color(0.0,0.0,0.0,1.0)
 	button.custom_minimum_size.x = 31
 	button.custom_minimum_size.y = 31
+	return button
+	
+func create_color_picker_button() -> ColorPickerButton:
+	var button: ColorPickerButton = create_no_listener_color_picker_button()
 	button.color_changed.connect(_on_color_picker_color_change)
 	return button
 	

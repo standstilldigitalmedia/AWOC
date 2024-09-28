@@ -49,18 +49,12 @@ func get_color_by_name(name: String) -> Color:
 	
 func get_material_by_name(mat_name: String) -> AWOCMaterial:
 	if materials_dictionary.has(mat_name):
-		if ResourceUID.has_id(materials_dictionary[mat_name].resource_uid):
-			return AWOCResourceControllerBase.load_resource(mat_name, materials_dictionary[mat_name].resource_uid)
-		else:
-			return load(materials_dictionary[mat_name].path)
+		return materials_dictionary[mat_name]
 	return null
 	
 func get_recipe_by_name(recipe_name: String) -> AWOCRecipe:
 	if recipes_dictionary.has(recipe_name):
-		if ResourceUID.has_id(recipes_dictionary[recipe_name].resource_uid):
-			return AWOCResourceControllerBase.load_resource(recipe_name, recipes_dictionary[recipe_name].resource_uid)
-		else:
-			return load(recipes_dictionary[recipe_name].path)
+		return recipes_dictionary[recipe_name]
 	return null
 	
 func get_slots_array() -> Array[AWOCSlot]:

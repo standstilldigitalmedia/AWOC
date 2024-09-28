@@ -5,11 +5,12 @@ class_name AWOCOverlay extends AWOCResourceBase
 @export var dynamic_color: Color
 @export var shared_color: String
 @export var overlay_strength: float
+var image: Image
 
-func create_overlay_image(color_dictionary: Dictionary) -> Image:
-	var return_image = Image.new()
+func create_overlay_image(color_dictionary: Dictionary):
+	image = Image.new()
 	var overlay_image = AWOCImage.load_image(ResourceUID.get_id_path(overlay_image_reference.resource_uid))
-	return_image.convert(Image.FORMAT_RGBA8)
+	image.convert(Image.FORMAT_RGBA8)
 	overlay_image.convert(Image.FORMAT_RGBA8)
 	var return_image_data = overlay_image.get_data()
 	var overlay_image_data = overlay_image.get_data()
@@ -30,9 +31,10 @@ func create_overlay_image(color_dictionary: Dictionary) -> Image:
 				return_image_data[a + 1] = color.g * 255
 				return_image_data[a + 2] = color.b * 255
 				return_image_data[a + 3] = overlay_strength * 255
-	return_image.set_data(overlay_image.get_width(), overlay_image.get_height(),false,Image.FORMAT_RGBA8,return_image_data)
-	return return_image
+	image.set_data(overlay_image.get_width(), overlay_image.get_height(),false,Image.FORMAT_RGBA8,return_image_data)
 
 func combine_albedo_with_overlay(color_dictionary: Dictionary, albedo_image: Image, invert: bool = false) -> Image:
-	albedo_image.blend_rect(create_overlay_image(color_dictionary),Rect2i(0,0,albedo_image.get_width(), albedo_image.get_height()),Vector2i(0,0))
+	if image == null:
+		create_overlay_image(color_dictionary)
+	albedo_image.blend_rect(image,Rect2i(0,0,albedo_image.get_width(), albedo_image.get_height()),Vector2i(0,0))
 	return albedo_image

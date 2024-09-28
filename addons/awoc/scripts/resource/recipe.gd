@@ -2,6 +2,6 @@
 class_name AWOCRecipe extends AWOCResourceBase
 
 @export var slot_name: String
-@export var mesh_resource_reference: AWOCResourceReference
-@export var material_resource_reference: AWOCResourceReference
+@export var mesh_name: String
+@export var material_name: String
 @export var default: bool

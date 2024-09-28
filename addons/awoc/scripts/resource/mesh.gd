@@ -31,9 +31,9 @@ func restore_original_uvs():
 
 		
 """#set offset to 0 for the left side tile. set offset to 1 or higher for each tile to the right of 0"""
-func scale_and_offest_uvs_in_surface_array(surf_array: Array, num_of_tiles: int, offset: int):
+func scale_and_offest_uvs_in_surface_array(num_of_tiles: int, offset: int):
 	var increment = 1.0 / float(num_of_tiles)
-	for surface in surf_array:
+	for surface in surface_array:
 		for uv in surface[Mesh.ARRAY_TEX_UV].size():
 			var uv_x_value = surface[Mesh.ARRAY_TEX_UV][uv].x
 			uv_x_value = uv_x_value / num_of_tiles

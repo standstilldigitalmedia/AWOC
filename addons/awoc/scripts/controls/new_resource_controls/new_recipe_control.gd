@@ -56,12 +56,8 @@ func _on_option_button_item_selected(index: int):
 func _on_add_new_resource_button_pressed():
 	var new_recipe: AWOCRecipe = AWOCRecipe.new()
 	new_recipe.slot_name = slots_option_button.get_item_text(slots_option_button.selected)
-	var mesh_resource_reference: AWOCResourceReference = AWOCResourceReference.new()
-	mesh_resource_reference.resource_uid = awoc_resource_controller.get_meshes_dictionary()[meshes_option_button.get_item_text(meshes_option_button.selected)].resource_uid
-	new_recipe.mesh_resource_reference = mesh_resource_reference
-	var material_resource_reference: AWOCResourceReference = AWOCResourceReference.new()
-	material_resource_reference.resource_uid = awoc_resource_controller.get_materials_dictionary()[materials_option_button.get_item_text(materials_option_button.selected)].resource_uid
-	new_recipe.material_resource_reference = material_resource_reference
+	new_recipe.mesh_name = meshes_option_button.get_item_text(meshes_option_button.selected)
+	new_recipe.material_name = materials_option_button.get_item_text(materials_option_button.selected)
 	if default_checkbox.button_pressed:
 		new_recipe.default = true
 	else:

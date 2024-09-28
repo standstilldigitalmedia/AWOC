@@ -39,7 +39,7 @@ func remove_slot(slot_name: String):
 		if recipe_resource.slot_name == slot_name:
 			recipe_resource.slot_name = ""
 			printerr("Recipe " + recipe + " is invalidated. Please assign a new slot to this recipe.")
-			ResourceSaver.save(recipe_resource,ResourceUID.get_id_path(get_recipes_dictionary()[recipe].resource_uid))
+			save_awoc()
 			recipe_resource.emit_changed()
 	
 func rename_slot(old_name: String, new_name: String):
@@ -56,7 +56,6 @@ func rename_slot(old_name: String, new_name: String):
 		var recipe_resource: AWOCRecipe = get_recipe_by_name(recipe)
 		if recipe_resource.slot_name == old_name:
 			recipe_resource.slot_name = new_name
-			ResourceSaver.save(recipe_resource,ResourceUID.get_id_path(get_recipes_dictionary()[recipe].resource_uid))
 			recipe_resource.emit_changed()
 	save_awoc()
 	
@@ -103,6 +102,9 @@ func remove_mesh(mesh_name: String):
 	save_awoc()
 	
 func rename_mesh(old_name: String, new_name: String):
+	for awoc_recipe: AWOCRecipe in get_recipes_dictionary():
+		if awoc_recipe.mesh_name == old_name:
+			awoc_recipe.mesh_name = new_name
 	rename_disk_resource(old_name, new_name,awoc_resource.meshes_dictionary[old_name].resource_uid,awoc_resource.meshes_dictionary)
 	save_awoc()
 	
@@ -134,20 +136,22 @@ func change_color(color_name: String, color: Color):
 func change_material_image(material_name: String, image_index: String, new_path: String):
 	var material: AWOCMaterial = awoc_resource.get_material_by_name(material_name)
 	material.image_dictionary[image_index].resource_uid = ResourceLoader.get_resource_uid(new_path)
-	ResourceSaver.save(material, ResourceUID.get_id_path(get_materials_dictionary()[material_name].resource_uid))
+	save_awoc()
 	material.emit_changed()
 	
 func add_new_material(material_name: String, material: AWOCMaterial):
-	var path: String = ResourceUID.get_id_path(awoc_uid).get_base_dir() + "/materials"
-	create_disk_resource(material,material_name,path, awoc_resource.materials_dictionary)
+	add_resource_to_dictionary(material_name, get_materials_dictionary(),material)
 	save_awoc()
 	
 func remove_material(material_name: String):
-	remove_disk_resource(material_name, awoc_resource.materials_dictionary[material_name].resource_uid, awoc_resource.materials_dictionary)
+	remove_resource_from_dictionary(get_materials_dictionary(),material_name)
 	save_awoc()
 	
 func rename_material(old_name: String, new_name: String):
-	rename_disk_resource(old_name, new_name, awoc_resource.materials_dictionary[old_name].resource_uid, awoc_resource.materials_dictionary)
+	rename_resource_in_dictionary(old_name, new_name, get_materials_dictionary())
+	for awoc_recipe: AWOCRecipe in get_recipes_dictionary():
+		if awoc_recipe.material_name == old_name:
+			awoc_recipe.material_name = new_name
 	save_awoc()
 	
 func set_material_settings(albedo: bool, orm: bool, occlusion: bool, roughness: bool, metallic: bool):
@@ -177,46 +181,45 @@ func update_overlay(material_name: String, overlay_name: String, image_path: Str
 	awoc_overlay.overlay_image_reference.resource_uid = ResourceLoader.get_resource_uid(image_path)
 	awoc_overlay.dynamic_color = dynamic_color
 	awoc_overlay.shared_color = shared_color
-	ResourceSaver.save(awoc_material, ResourceUID.get_id_path(get_materials_dictionary()[material_name].resource_uid))
+	save_awoc()
 	awoc_material.emit_changed()
 	
 func update_overlay_strength(material_name: String, overlay_name: String, strength: float):
 	var awoc_material: AWOCMaterial = get_material_by_name(material_name)
 	var awoc_overlay: AWOCOverlay = awoc_material.overlays_dictionary[overlay_name]
 	awoc_overlay.overlay_strength = strength
-	ResourceSaver.save(awoc_material, ResourceUID.get_id_path(get_materials_dictionary()[material_name].resource_uid))
+	save_awoc()
 	awoc_material.emit_changed()
 	
 func add_new_overlay(overlay_name: String, material_name: String, overlay_resource: AWOCOverlay):
 	var material: AWOCMaterial = awoc_resource.get_material_by_name(material_name)
 	add_resource_to_dictionary(overlay_name, material.overlays_dictionary,overlay_resource)
-	ResourceSaver.save(material, ResourceUID.get_id_path(get_materials_dictionary()[material_name].resource_uid))
+	save_awoc()
 	material.emit_changed()
 	
 func remove_overlay(material_name: String, overlay_name: String):
 	var material: AWOCMaterial = get_material_by_name(material_name)
 	remove_resource_from_dictionary(material.overlays_dictionary,overlay_name)
-	ResourceSaver.save(material, ResourceUID.get_id_path(get_materials_dictionary()[material_name].resource_uid))
+	save_awoc()
 	material.emit_changed()	
 	
 func rename_overlay(material_name: String, overlay_name: String, new_name: String):
 	printerr("mat name " + material_name + " overlay name " + overlay_name + " new_name " + new_name)
 	var material: AWOCMaterial = get_material_by_name(material_name)
 	rename_resource_in_dictionary(overlay_name, new_name,material.overlays_dictionary)
-	ResourceSaver.save(material, ResourceUID.get_id_path(get_materials_dictionary()[material_name].resource_uid))
+	save_awoc()
 	material.emit_changed()	
 	
 func add_new_recipe(recipe_name: String, recipe: AWOCRecipe):
-	var path: String = ResourceUID.get_id_path(awoc_uid).get_base_dir() + "/recipes"
-	create_disk_resource(recipe,recipe_name,path, get_recipes_dictionary())
+	add_resource_to_dictionary(recipe_name, get_recipes_dictionary(),recipe)
 	save_awoc()
 	
 func remove_recipe(recipe_name: String):
-	remove_disk_resource(recipe_name, get_recipes_dictionary()[recipe_name].resource_uid, get_recipes_dictionary())
+	remove_resource_from_dictionary(get_recipes_dictionary(),recipe_name)
 	save_awoc()
 	
 func rename_recipe(old_name: String, new_name: String):
-	rename_disk_resource(old_name, new_name, get_recipes_dictionary()[old_name].resource_uid, get_recipes_dictionary())
+	rename_resource_in_dictionary(old_name, new_name, get_recipes_dictionary())
 	save_awoc()
 	
 func get_default_recipe_array() -> Array[String]:
@@ -229,17 +232,17 @@ func make_recipe_default(new_recipe_name: String):
 		var array_recipe_resource: AWOCRecipe = get_recipe_by_name(array_recipe_name)
 		if new_recipe_resource.slot_name == array_recipe_resource.slot_name:
 			array_recipe_resource.default = false
-			ResourceSaver.save(array_recipe_resource, ResourceUID.get_id_path(get_recipes_dictionary()[array_recipe_name].resource_uid))
+			save_awoc()
 			array_recipe_resource.emit_changed()
 			break
 	new_recipe_resource.default = true
-	ResourceSaver.save(new_recipe_resource, ResourceUID.get_id_path(get_recipes_dictionary()[new_recipe_name].resource_uid))
+	save_awoc()
 	new_recipe_resource.emit_changed()
 	
 func remove_recipe_default(recipe_name: String):
 	var recipe_resource: AWOCRecipe = get_recipe_by_name(recipe_name)
 	recipe_resource.default = false
-	ResourceSaver.save(recipe_resource, ResourceUID.get_id_path(get_recipes_dictionary()[recipe_name].resource_uid))
+	save_awoc()
 	recipe_resource.emit_changed()
 	
 func get_slots_array() -> Array[AWOCSlot]:
@@ -248,8 +251,17 @@ func get_slots_array() -> Array[AWOCSlot]:
 func get_slot_by_name(slot_name: String) -> AWOCSlot:
 	return awoc_resource.get_slot_by_name(slot_name)
 	
+func get_slot_index_by_name(name: String) -> int:
+	return awoc_resource.get_slot_index_by_name(name)
+	
+func get_slot_array_size() -> int:
+	return awoc_resource.slots_array.size()
+	
 func get_meshes_dictionary() -> Dictionary:
 	return awoc_resource.get_meshes_dictionary()
+	
+func get_mesh_by_name(name: String) -> AWOCMesh:
+	return awoc_resource.get_mesh_by_name(name)
 	
 func get_colors_dictionary() -> Dictionary:
 	return awoc_resource.get_colors_dictionary()

@@ -25,10 +25,11 @@ func parent_controls():
 	var hbox: HBoxContainer = create_hbox(10)
 	main_margin_container_vbox.add_child(home_button)
 	main_margin_container_vbox.add_child(welcome_tab)
-	hbox.add_child(main_margin_container_vbox)
+	scroll_container.add_child(main_margin_container_vbox)
+	hbox.add_child(scroll_container)
 	hbox.add_child(preview_control)
 	add_child(hbox)
-	scroll_container.add_child(self)
+	#scroll_container.add_child(self)
 	
 func on_awoc_edited(awoc_resource_controller: AWOCResourceController):
 	selected_awoc_controller = awoc_resource_controller
