@@ -8,8 +8,27 @@ var new_resource_content_vbox := AWOCVBox.new(10)
 var manage_resources_button: AWOCToggleButton
 var manage_resources_panel_container := AWOCPanelContainer.new(false)
 var manage_resources_content_vbox := AWOCVBox.new(10)
+var resource_manager: AWOCEditorResourceManagerBase
+var create_resource_button: AWOCButton
 
 
+func populate_manage_resources() -> void:
+	pass
+	
+	
+func reset_controls() -> void:
+	populate_manage_resources()
+	create_resource_button.disabled = true
+	
+	
+func set_manage_button_disabled() -> void:
+	if resource_manager.has_resources():
+		manage_resources_button.disabled = false
+	else:
+		manage_resources_button.disabled = true
+		manage_resources_button.set_pressed_no_signal(false)
+		
+		
 func clear_manage_resources_area() -> void:
 	for child in manage_resources_content_vbox.get_children():
 		child.queue_free()
@@ -20,6 +39,8 @@ func reset_tab() -> void:
 	manage_resources_panel_container.visible = false
 	new_resource_button.set_pressed_no_signal(false)
 	manage_resources_button.set_pressed_no_signal(false)
+	reset_controls()
+	set_manage_button_disabled()
 	
 	
 func create_controls(new_resource_button_text: String, manage_resources_button_text: String) -> void:
@@ -78,3 +99,16 @@ func _on_manage_resources_button_toggled(toggled_on: bool) -> void:
 		new_resource_button.set_pressed_no_signal(false)
 	else:
 		manage_resources_panel_container.visible = false
+		
+		
+func _on_resource_renamed(old_name: String, new_name: String) -> void:
+	resource_manager.rename_resource(old_name, new_name)
+	reset_controls()
+	
+	
+func _on_resource_deleted(slot_name) -> void:
+	resource_manager.delete_resource(slot_name)
+	if resource_manager.has_resources():
+		reset_controls()
+	else:
+		reset_tab()

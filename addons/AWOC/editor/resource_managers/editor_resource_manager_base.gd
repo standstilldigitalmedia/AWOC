@@ -1,5 +1,5 @@
 @tool
-class_name AWOCEditorDictionaryResourceManager
+class_name AWOCEditorResourceManagerBase
 extends Resource
 
 var parent_resource: Resource
@@ -51,33 +51,29 @@ func validate_rename_res(old_name: String, new_name: String) -> bool:
 			push_error("A resource named " + new_name + " already exists.")
 			return false
 	return true
-	
-
-func add_disk_resource_to_dictionary(res_name: String, uid: int) -> bool:
-	if validate_new_res(res_name):
-		resource_dictionary[res_name] = uid
-		return true
-	return false
 		
 				
-func add_resource_to_dictionary(res_name: String, res: Resource) -> bool:
+func add_resource(res_name: String, res: Resource, path: String = "") -> bool:
 	if validate_new_res(res_name):
 		resource_dictionary[res_name] = res
+		save_parent_resource()
 		return true
 	return false
 	
 	
-func delete_resource_from_dictionary(res_name: String) -> bool:
+func delete_resource(res_name: String) -> bool:
 	if validate_delete_res(res_name):
 		resource_dictionary.erase(res_name)
+		save_parent_resource()
 		return true
 	return false
 	
 	
-func rename_resource_in_dictionary(old_name: String, new_name: String) -> bool:
+func rename_resource(old_name: String, new_name: String) -> bool:
 	if validate_rename_res(old_name, new_name):
 		resource_dictionary[new_name] = resource_dictionary[old_name]
 		resource_dictionary.erase(old_name)
+		save_parent_resource()
 		return true
 	return false
 	
@@ -89,7 +85,7 @@ func has_resources() -> bool:
 
 
 func get_dictionary() -> Dictionary:
-	return {"": null}
+	return resource_dictionary
 	
 	
 func get_sorted_name_array() -> Array[String]:
