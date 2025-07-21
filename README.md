@@ -182,3 +182,39 @@ Note that in the image above, only a few of the options are shown. The final ver
 
 
 Once we have applied our material settings, we can create new materials. We’ll first give our material a name. Then, we can begin to fill in the various images this material will use. You can either drag an image from your project or use the browse button to browse your project directory. Once an image is selected, a preview of the image will be shown instead of the words NO IMAGE. Once all of our images have been specified, we can click on Create Material. Note that I selected additional material properties for this image just to show how that would look but for the rest of this AWOC, I will only be using albedo.
+
+
+![Manage Materials](/images/manage_materials.png)
+
+
+Now that we have some materials, we can manage them. Here we can change the images we selected earlier. We can also add overlays to our material by clicking on the New Overlay Button.
+
+
+![New Overlay](/images/new_overlay.png)
+
+
+We'll first want to select an overlay type. If you've forgotten what each type means, scroll up to the 4th paragraph in the Materials section. 
+
+
+![Shared Color Overlay](/images/shared_color_overlay.png)
+
+
+Selecting Shared Color in the overlay type dropdown presents us with the Shared Color dropdown. This dropdown will be populated with the names of the colors you have created on the Colors Tab. Next, we select an appropritate image for our overlay. We can set an overlay strength using the slider or entering a decimal number manually. A strength of 1 means the the overlay will completely cover the image it is laying on top of with a solid color. A strength of 0 means the overlay will be invisible. This version of AWOC does not have a material preview, but the new version will. After we give our overlay a name, we can click on Create Overlay.
+
+
+![Image Overlay](/images/image_overlay.png)
+
+
+Selectng Image Overlay in the overlay type dropdown will give an option to select... you guessed it, an image for this overlay. We can also set the overlay strength. This works similarly to overlay strength for Shared Color overlays. 
+
+
+![Dynamic Color Overlay](/images/dynamic_color_overlay.png)
+
+
+Selecting Color in the overlay type dropdown will give us a color-picker button to select an inital color for this overlay. We also must set an image and name and we can adjust the overlay strength as we did in the other overlay types. 
+
+
+Now, we can finally move on to the Recipe Tab.
+
+
+![Recipes Tab](/images/recipes_tab.png)
