@@ -2,7 +2,7 @@
 Avatar Wardrobe Organizer and Colorer
 
 
-AWOC is currently being rewritten. If you look through the commits to this repository, you can find the original version under Prototype. I included this commit only as a reference. Feel free to browse the old code to get a sense of how you shouldn’t develop software. 
+AWOC is currently being rewritten. If you look through the commits to this repository, you can find the original version under Prototype all the way back at the second commit. I included this commit only as a reference. Feel free to browse the old code to get a sense of how you shouldn’t develop software. 
 
 
 As of this writing, the rewrite is far from complete but is going well. The following is from the prototype version. I’ve never shared my work with the community before. This is me, saying, “Hey. Look at what I did here.” I hope you find it useful.

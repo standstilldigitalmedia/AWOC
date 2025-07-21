@@ -13,6 +13,7 @@ func _init(awoc: AWOCResource, awoc_uid: int) -> void:
 		
 		
 func reset_controls() -> void:
+	path_editor.reset_controls()
 	super()
 	
 	
@@ -25,16 +26,15 @@ func parent_controls() -> void:
 func set_control_listeners() -> void:
 	super()
 	path_editor.validated.connect(_on_path_validated)
-	create_resource_button.pressed.connect(_on_add_meshes_button_pressed)
 	
 		
 func populate_manage_resources() -> void:
 	clear_manage_resources_area()
-	"""for slot_name in slot_manager.get_sorted_name_array():
-		var control := AWOCControl.new(slot_name)
-		control.rename.connect(_on_slot_renamed)
-		control.delete.connect(_on_slot_deleted)
-		manage_resources_content_vbox.add_child(control)"""
+	for mesh_name in resource_manager.get_sorted_name_array():
+		var control := AWOCMeshControl.new("Mesh Name",mesh_name, false)
+		control.rename.connect(_on_resource_renamed)
+		control.delete.connect(_on_resource_deleted)
+		manage_resources_content_vbox.add_child(control)
 	
 	
 func _on_path_validated(validated: bool) -> void:
@@ -46,9 +46,10 @@ func load_avatar(path: String) -> Node3D:
 	return avatar_file.instantiate()
 
 
-func _on_add_meshes_button_pressed() -> void:
+func _on_create_resource_button_pressed() -> void:
 	var avatar: Node3D = load_avatar(path_editor.get_asset_path())
 	var skeleton: Skeleton3D = resource_manager.add_skeleton(avatar)
 	for child in skeleton.get_children():
 		if child is MeshInstance3D:
 			resource_manager.add_mesh(child)
+	super()

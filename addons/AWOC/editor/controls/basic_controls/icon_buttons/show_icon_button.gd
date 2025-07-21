@@ -5,4 +5,4 @@ extends AWOCIconButton
 
 func _init() -> void:
 	super()
-	icon = load(AWOCGlobal.ICON_IMAGE_BASE_PATH + "GuiVisibllityVisible.svg")
+	icon = load(AWOCGlobal.ICON_IMAGE_BASE_PATH + "GuiVisibilityVisible.svg")

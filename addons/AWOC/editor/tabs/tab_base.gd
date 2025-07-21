@@ -17,7 +17,6 @@ func populate_manage_resources() -> void:
 	
 	
 func reset_controls() -> void:
-	populate_manage_resources()
 	create_resource_button.disabled = true
 	
 	
@@ -41,6 +40,7 @@ func reset_tab() -> void:
 	manage_resources_button.set_pressed_no_signal(false)
 	reset_controls()
 	set_manage_button_disabled()
+	populate_manage_resources()
 	
 	
 func create_controls(new_resource_button_text: String, manage_resources_button_text: String) -> void:
@@ -74,6 +74,7 @@ func parent_controls() -> void:
 func set_control_listeners() -> void:
 	new_resource_button.toggled.connect(_on_new_resource_button_toggled)
 	manage_resources_button.toggled.connect(_on_manage_resources_button_toggled)
+	create_resource_button.pressed.connect(_on_create_resource_button_pressed)
 	
 		
 func _init(new_resource_button_text: String, manage_resources_button_text: String) -> void:
@@ -103,7 +104,7 @@ func _on_manage_resources_button_toggled(toggled_on: bool) -> void:
 		
 func _on_resource_renamed(old_name: String, new_name: String) -> void:
 	resource_manager.rename_resource(old_name, new_name)
-	reset_controls()
+	populate_manage_resources()
 	
 	
 func _on_resource_deleted(slot_name) -> void:
@@ -112,3 +113,9 @@ func _on_resource_deleted(slot_name) -> void:
 		reset_controls()
 	else:
 		reset_tab()
+		
+		
+func _on_create_resource_button_pressed() -> void:
+	reset_controls()
+	set_manage_button_disabled()
+	populate_manage_resources()

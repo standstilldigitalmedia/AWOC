@@ -25,13 +25,12 @@ func set_control_listeners() -> void:
 	super()
 	path_editor.validated.connect(_on_path_editor_validated)
 	name_line_edit.text_changed.connect(_on_name_line_edit_text_changed)
-	create_resource_button.pressed.connect(_on_create_awoc_button_pressed)
 	
 		
 func populate_manage_resources() -> void:
 	clear_manage_resources_area()
 	for awoc_name in resource_manager.get_sorted_name_array():
-		var control := AWOCControl.new(awoc_name)
+		var control := AWOCControl.new("AWOC Name", awoc_name)
 		control.rename.connect(_on_resource_renamed)
 		control.delete.connect(_on_resource_deleted)
 		control.edit.connect(_on_awoc_edited)
@@ -56,14 +55,18 @@ func _on_name_line_edit_text_changed(new_text: String) -> void:
 	path_editor.validate()
 	
 	
-func _on_create_awoc_button_pressed() -> void:
+func _on_create_resource_button_pressed() -> void:
 	resource_manager.add_resource(name_line_edit.text, AWOCResource.new(), path_editor.get_asset_path())
-	reset_controls()
-	set_manage_button_disabled()
+	super()
 	
 	
 func _on_awoc_edited(awoc_name: String) -> void:
 	var awoc_uid: int = resource_manager.get_dictionary()[awoc_name]
 	var awoc: AWOCResource = load(ResourceUID.get_id_path(awoc_uid)) as AWOCResource
 	awoc_edited.emit(awoc_name, awoc, awoc_uid)
+	
+	
+func _on_resource_renamed(old_name: String, new_name: String) -> void:
+	resource_manager.rename_awoc(old_name, new_name)
+	
 	

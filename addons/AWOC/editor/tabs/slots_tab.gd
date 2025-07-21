@@ -26,13 +26,12 @@ func parent_controls() -> void:
 func set_control_listeners() -> void:
 	super()
 	name_line_edit.text_changed.connect(_on_name_line_edit_text_changed)
-	create_resource_button.pressed.connect(_on_create_slot_button_pressed)
 	
 		
 func populate_manage_resources() -> void:
 	clear_manage_resources_area()
 	for slot_name in resource_manager.get_sorted_name_array():
-		var control := AWOCControl.new(slot_name)
+		var control := AWOCSlotControl.new("Slot Name", slot_name, true)
 		control.rename.connect(_on_resource_renamed)
 		control.delete.connect(_on_resource_deleted)
 		manage_resources_content_vbox.add_child(control)
@@ -45,7 +44,6 @@ func _on_name_line_edit_text_changed(new_text: String) -> void:
 		create_resource_button.disabled = true
 	
 	
-func _on_create_slot_button_pressed() -> void:
+func _on_create_resource_button_pressed() -> void:
 	resource_manager.add_resource(name_line_edit.text, AWOCSlotResource.new())
-	reset_controls()
-	set_manage_button_disabled()
+	super()
