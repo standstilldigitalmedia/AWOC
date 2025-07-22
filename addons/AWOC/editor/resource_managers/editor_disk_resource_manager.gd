@@ -6,6 +6,7 @@ extends AWOCEditorResourceManagerBase
 func add_disk_resource_to_dictionary(res_name: String, uid: int) -> bool:
 	if validate_new_res(res_name):
 		resource_dictionary[res_name] = uid
+		save_parent_resource()
 		return true
 	return false
 	

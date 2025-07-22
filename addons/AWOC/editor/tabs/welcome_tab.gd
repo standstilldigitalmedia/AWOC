@@ -8,7 +8,7 @@ var name_line_edit := AWOCLineEdit.new("AWOC Name")
 var path_editor := AWOCPathEditor.new("Asset Creation Path")
 
 	
-func reset_controls() -> void:
+func reset_new_resource_controls() -> void:
 	name_line_edit.text = ""
 	path_editor.reset_controls()
 	super()
@@ -27,7 +27,7 @@ func set_control_listeners() -> void:
 	name_line_edit.text_changed.connect(_on_name_line_edit_text_changed)
 	
 		
-func populate_manage_resources() -> void:
+func reset_manage_resources_controls() -> void:
 	clear_manage_resources_area()
 	for awoc_name in resource_manager.get_sorted_name_array():
 		var control := AWOCControl.new("AWOC Name", awoc_name)
@@ -68,5 +68,5 @@ func _on_awoc_edited(awoc_name: String) -> void:
 	
 func _on_resource_renamed(old_name: String, new_name: String) -> void:
 	resource_manager.rename_awoc(old_name, new_name)
-	
+	reset_manage_resources_controls()
 	

@@ -12,7 +12,7 @@ func _init(awoc: AWOCResource, awoc_uid: int) -> void:
 	super("New Slot", "Manage Slots")
 		
 		
-func reset_controls() -> void:
+func reset_new_resource_controls() -> void:
 	name_line_edit.text = ""
 	super()
 		
@@ -28,7 +28,7 @@ func set_control_listeners() -> void:
 	name_line_edit.text_changed.connect(_on_name_line_edit_text_changed)
 	
 		
-func populate_manage_resources() -> void:
+func reset_manage_resources_controls() -> void:
 	clear_manage_resources_area()
 	for slot_name in resource_manager.get_sorted_name_array():
 		var control := AWOCSlotControl.new("Slot Name", slot_name, true)

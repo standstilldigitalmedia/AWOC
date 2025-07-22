@@ -2,8 +2,8 @@
 class_name AWOCShowHideControlBase
 extends AWOCResourceControlBase
 
-signal show(res_name: String)
-signal hide(res_name: String)
+signal show_control(res_name: String)
+signal hide_control(res_name: String)
 
 var show_button := AWOCShowIconButton.new()
 var hide_button := AWOCHideIconButton.new()
@@ -46,7 +46,7 @@ func _on_show_button_pressed() -> void:
 	hide_button.show()
 	if show_sub_controls:
 		sub_controls_panel_container.show()
-	show.emit(res_name)
+	show_control.emit(res_name)
 	
 	
 func _on_hide_button_pressed() -> void:
@@ -54,4 +54,4 @@ func _on_hide_button_pressed() -> void:
 	hide_button.hide()
 	if show_sub_controls:
 		sub_controls_panel_container.hide()
-	hide.emit(res_name)
+	hide_control.emit(res_name)

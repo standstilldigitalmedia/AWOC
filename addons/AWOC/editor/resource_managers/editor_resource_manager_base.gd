@@ -98,3 +98,4 @@ func get_sorted_name_array() -> Array[String]:
 	
 func save_parent_resource() -> void:
 	ResourceSaver.save(parent_resource, ResourceUID.get_id_path(parent_uid))
+	parent_resource.emit_changed()
