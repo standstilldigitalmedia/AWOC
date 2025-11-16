@@ -1,0 +1,34 @@
+[gd_scene load_steps=3 format=3 uid="uid://byd7gfpljhp2q"]
+
+[ext_resource type="Script" uid="uid://bhmlamwwohjyd" path="res://addons/AWOC/editor/UI_elements/main_editor_interface/main_editor_interface.gd" id="1_4oqix"]
+[ext_resource type="PackedScene" uid="uid://bojjuauhlxp21" path="res://addons/AWOC/editor/UI_elements/tabs/welcome_tab/welcome_tab.tscn" id="2_tv30v"]
+
+[node name="MainEditorInterface" type="HBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4oqix")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="HomeButton" type="Button" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "AWOC"
+
+[node name="TabBase" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_tv30v")]
+layout_mode = 2
+
+[node name="ScrollContainer2" type="ScrollContainer" parent="."]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer2"]
+layout_mode = 2

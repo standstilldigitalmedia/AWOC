@@ -14,3 +14,15 @@ export_credentials.cfg
 .mono/
 data_*/
 mono_crash.*.json
+obj/
+bin/
+
+#My specific ignores
+project.godot
+project.godot.uid_cache
+*.uid
+icon.svg
+icon.svg.import
+.DS_Store
+Thumbs.db
+*.local

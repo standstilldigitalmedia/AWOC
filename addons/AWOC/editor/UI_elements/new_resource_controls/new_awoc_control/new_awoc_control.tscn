@@ -1,0 +1,75 @@
+[gd_scene load_steps=3 format=3 uid="uid://ckpmm10wqmcga"]
+
+[ext_resource type="Script" uid="uid://00lbjuwxwrmh" path="res://addons/AWOC/editor/UI_elements/new_resource_controls/new_awoc_control/new_awoc_control.gd" id="1_gtotd"]
+[ext_resource type="Texture2D" uid="uid://5172a1nu4uib" path="res://addons/AWOC/editor/images/godot_icons/Folder.svg" id="2_qtvek"]
+
+[node name="NewAWOCControl" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+script = ExtResource("1_gtotd")
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 2
+
+[node name="Label" type="Label" parent="GridContainer"]
+layout_mode = 2
+text = "AWOC Name: "
+
+[node name="NameLineEdit" type="LineEdit" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "New AWOC Name"
+
+[node name="Label2" type="Label" parent="GridContainer"]
+layout_mode = 2
+text = "Asset Creation Path: "
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="AssetPathLineEdit" type="LineEdit" parent="GridContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Asset Creation Path"
+
+[node name="BrowseButton" type="Button" parent="GridContainer/HBoxContainer"]
+custom_minimum_size = Vector2(31, 0)
+layout_mode = 2
+icon = ExtResource("2_qtvek")
+icon_alignment = 1
+
+[node name="ErrorLabel" type="Label" parent="."]
+visible = false
+custom_minimum_size = Vector2(50, 10)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "Error"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="CreateButton" type="Button" parent="."]
+layout_mode = 2
+disabled = true
+text = "Create New AWOC"
+
+[node name="FileDialog" type="FileDialog" parent="."]
+title = "Open a Directory"
+initial_position = 1
+file_mode = 2
+show_hidden_files = true
+
+[connection signal="text_changed" from="GridContainer/NameLineEdit" to="." method="_on_name_line_edit_text_changed"]
+[connection signal="text_changed" from="GridContainer/HBoxContainer/AssetPathLineEdit" to="." method="_on_asset_path_line_edit_text_changed"]
+[connection signal="pressed" from="GridContainer/HBoxContainer/BrowseButton" to="." method="_on_browse_button_pressed"]
+[connection signal="pressed" from="CreateButton" to="." method="_on_create_button_pressed"]
+[connection signal="dir_selected" from="FileDialog" to="." method="_on_file_dialog_dir_selected"]
