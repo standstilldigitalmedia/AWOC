@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://dywd87ammcdk2"]
+
+[ext_resource type="PackedScene" uid="uid://c7mmm46yflmwh" path="res://addons/AWOC/editor/UI_elements/manage_resource_controls/base_manage_resource_control/base_manage_resource_control.tscn" id="1_3xtik"]
+[ext_resource type="Script" uid="uid://cxtm2jyt4nh8p" path="res://addons/AWOC/editor/UI_elements/manage_resource_controls/manage_awoc_control/manage_awoc_control.gd" id="2_ch0fl"]
+
+[node name="BaseManageResourceControl" instance=ExtResource("1_3xtik")]
+script = ExtResource("2_ch0fl")
+
+[node name="EditButton" type="Button" parent="MarginContainer/HBoxContainer" index="3"]
+layout_mode = 2
+
+[node name="DeleteConfirmationDialog" parent="." index="2"]
+script = ExtResource("2_ch0fl")
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer/EditButton" to="." method="_on_edit_button_pressed"]

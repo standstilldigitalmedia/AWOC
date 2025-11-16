@@ -28,3 +28,4 @@ Thumbs.db
 *.local
 addons/AWOC/begin_here/welcome.res
 testing/
+*.depren
