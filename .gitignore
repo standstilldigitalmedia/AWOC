@@ -26,3 +26,5 @@ icon.svg.import
 .DS_Store
 Thumbs.db
 *.local
+addons/AWOC/begin_here/welcome.res
+testing/

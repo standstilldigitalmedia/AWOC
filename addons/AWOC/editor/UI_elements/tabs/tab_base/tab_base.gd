@@ -9,11 +9,6 @@ extends VBoxContainer
 @onready var tab_label: Label = $TabLabel
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	new_resource_panel_container.hide()
-	manage_resource_panel_container.hide()
-
 func _on_new_resource_button_toggled(toggled_on: bool) -> void:
 	if toggled_on:
 		new_resource_panel_container.show()
@@ -30,3 +25,8 @@ func _on_manage_resource_button_toggled(toggled_on: bool) -> void:
 		new_resource_button.set_pressed_no_signal(false)
 	else:
 		manage_resource_panel_container.hide()
+		
+		
+func _ready() -> void:
+	new_resource_panel_container.hide()
+	manage_resource_panel_container.hide()

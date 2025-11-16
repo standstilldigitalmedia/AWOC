@@ -8,15 +8,20 @@ signal awoc_data_changed
 var current_awoc: AWOCResource = null
 
 
+func set_current_awoc(awoc: AWOCResource):
+	current_awoc = awoc
+	awoc_loaded.emit()
+	
+	
 func load_awoc(path: String):
 	current_awoc = load(path)
 	if current_awoc:
-		emit_signal("awoc_loaded")
+		awoc_loaded.emit()
 
 
 func close_awoc():
 	current_awoc = null
-	emit_signal("awoc_closed")
+	awoc_closed.emit()
 
 #
 func get_slot_names() -> Array[String]:
