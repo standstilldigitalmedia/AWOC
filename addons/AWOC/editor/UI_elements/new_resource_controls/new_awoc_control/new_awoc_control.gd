@@ -8,15 +8,26 @@ extends VBoxContainer
 @onready var error_label: Label = $ErrorLabel
 @onready var create_button: Button = $CreateButton
 @onready var file_dialog: FileDialog = $FileDialog
+
+
+func set_error(error_message: String = "") -> void:
+	if error_message.is_empty():
+		error_label.hide()
+	else:
+		error_label.text = error_message
+		error_label.show()
 	
 	
 func validate() -> void:
 	create_button.disabled = true
+	set_error()
 	if !AWOCValidator.is_valid_name(name_line_edit.text):
+		set_error("Please enter a valid name for your AWOC")
 		return
-	if !AWOCValidator.is_valid_path(asset_path_line_edit.text):
+	if !AWOCValidator.is_valid_directory_path(asset_path_line_edit.text):
+		set_error("Please enter a valid path for your AWOC")
 		return
-	create_button.disabled = false;
+	create_button.disabled = false
 	
 	
 func reset_inputs() -> void:
@@ -54,6 +65,12 @@ func _on_file_dialog_dir_selected(dir: String) -> void:
 	validate()
 	
 	
+func _on_file_dialog_canceled() -> void:
+	browse_button.disabled = false	
+	
+	
 func _ready() -> void:
 	error_label.hide()
 	create_button.disabled = true
+	file_dialog.file_mode = FileDialog.FILE_MODE_OPEN_DIR
+	file_dialog.access = FileDialog.ACCESS_RESOURCES

@@ -5,7 +5,7 @@ extends AWOCEditorDictionaryResourceManager
 func create_resource_on_disk(resource: Resource, res_name: String, path: String) -> bool:
 	if !validate_new_res(res_name):
 		return false
-	if !AWOCValidator.is_valid_path(path):
+	if !AWOCValidator.is_valid_directory_path(path):
 		push_error("Invalid path for resource creation.")
 		return false
 	var dir = DirAccess.open(path)
@@ -18,9 +18,12 @@ func create_resource_on_disk(resource: Resource, res_name: String, path: String)
 		
 
 func delete_resource_from_disk(res_name: String) -> bool:
-	var file_path: String = parent_resource_dictionary[res_name].get_path()
 	if !validate_delete_res(res_name):
 		return false
+	if !parent_resource_dictionary.has(res_name):
+		push_error("Resource not found in dictionary: " + res_name)
+		return false
+	var file_path: String = parent_resource_dictionary[res_name].get_path()
 	if !FileAccess.file_exists(file_path):
 		return false
 	var base_dir = file_path.get_base_dir()

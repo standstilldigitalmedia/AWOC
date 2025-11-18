@@ -85,9 +85,7 @@ func rename_resource_in_dictionary(old_name: String, new_name: String) -> bool:
 	
 
 func has_resources() -> bool:
-	if parent_resource_dictionary.size() > 0:
-		return true
-	return false
+	return parent_resource_dictionary.size() > 0
 
 
 func get_sorted_name_array() -> Array[String]:
@@ -100,3 +98,4 @@ func get_sorted_name_array() -> Array[String]:
 	
 func save_parent_resource() -> void:
 	ResourceSaver.save(parent_resource, ResourceUID.get_id_path(parent_uid))
+	AWOCEditorGlobal.scan.call_deferred()

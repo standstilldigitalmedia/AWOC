@@ -6,10 +6,14 @@ var uid: int
 var path: String
 
 func set_uid(new_uid: int) -> void:
+	if new_uid <= 0:
+		push_warning("Invalid UID: " + str(new_uid))
 	uid = new_uid
 
 	
 func set_path(new_path: String) -> void:
+	if new_path.is_empty():
+		push_warning("Empty path set for resource reference")
 	path = new_path
 
 

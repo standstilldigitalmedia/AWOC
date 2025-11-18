@@ -6,51 +6,30 @@ const NAME_MIN_CHAR: int = 4
 const NAME_MAX_CHAR: int = 50
 
 
-static func is_valid_path(path: String) -> bool:
+static func is_valid_directory_path(path: String) -> bool:
 	if path.is_empty():
 		return false
-	var base_path: String = path.get_base_dir()
-	var dir = DirAccess.open(base_path)
-	if dir:
-		return dir.dir_exists(base_path)
-	return false
+	return DirAccess.dir_exists_absolute(path)
 
 
-static func is_valid_parent_path(path: String) -> bool:
-	if path.is_empty():
+static func is_valid_parent_path(file_path: String) -> bool:
+	if file_path.is_empty():
 		return false
-	var base_path = path.get_base_dir()
-	if base_path.is_empty():
-		return false
-	if base_path == ".":
-		if !path.begins_with("res://") and !path.begins_with("user://"):
-			return false     
-	return DirAccess.dir_exists_absolute(base_path)
+	var parent_dir  = file_path.get_base_dir()
+	return !parent_dir.is_empty() and DirAccess.dir_exists_absolute(parent_dir)
 
 	
 static func is_avatar_file(path: String) -> bool:
-	var file_path = path.get_base_dir()
-	var file_name = path.get_file()
-	if !is_valid_path(file_path):
+	if !FileAccess.file_exists(path):
 		return false
-	if file_name:
-		var name_split: PackedStringArray = file_name.split(".")
-		if name_split.size() > 1:
-			if name_split[1] == "glb":
-				if FileAccess.file_exists(path):
-					return true
-	return false
+	return path.get_extension().to_lower() == "glb"
 	
 	
 static func is_image_file(path: String) -> bool:
-	var file_name = path.get_file()
-	if file_name:
-		var name_split: PackedStringArray = file_name.split(".")
-		if name_split.size() > 1:
-			if name_split[1] == "bmp" or name_split[1] == "jpg" or name_split[1] == "png" or name_split[1] == "tga":
-				if FileAccess.file_exists(path):
-					return true
-	return false
+	if !FileAccess.file_exists(path):
+		return false
+	var ext = path.get_extension().to_lower()
+	return ext in ["bmp", "jpg", "jpeg", "png", "tga"]
 	
 	
 static func is_valid_name(name: String) -> bool:

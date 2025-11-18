@@ -9,7 +9,4 @@ script = ExtResource("2_ch0fl")
 [node name="EditButton" type="Button" parent="MarginContainer/HBoxContainer" index="3"]
 layout_mode = 2
 
-[node name="DeleteConfirmationDialog" parent="." index="2"]
-script = ExtResource("2_ch0fl")
-
 [connection signal="pressed" from="MarginContainer/HBoxContainer/EditButton" to="." method="_on_edit_button_pressed"]

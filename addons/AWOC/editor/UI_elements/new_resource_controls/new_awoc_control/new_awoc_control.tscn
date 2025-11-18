@@ -72,4 +72,5 @@ show_hidden_files = true
 [connection signal="text_changed" from="GridContainer/HBoxContainer/AssetPathLineEdit" to="." method="_on_asset_path_line_edit_text_changed"]
 [connection signal="pressed" from="GridContainer/HBoxContainer/BrowseButton" to="." method="_on_browse_button_pressed"]
 [connection signal="pressed" from="CreateButton" to="." method="_on_create_button_pressed"]
+[connection signal="canceled" from="FileDialog" to="." method="_on_file_dialog_canceled"]
 [connection signal="dir_selected" from="FileDialog" to="." method="_on_file_dialog_dir_selected"]
