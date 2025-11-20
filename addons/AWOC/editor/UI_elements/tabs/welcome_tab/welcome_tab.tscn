@@ -1,12 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://bojjuauhlxp21"]
+[gd_scene load_steps=5 format=3 uid="uid://bojjuauhlxp21"]
 
 [ext_resource type="PackedScene" uid="uid://c8ipywjuf8whf" path="res://addons/AWOC/editor/UI_elements/tabs/tab_base/tab_base.tscn" id="1_c0k3j"]
+[ext_resource type="Script" uid="uid://pf8drnv6pvpq" path="res://addons/AWOC/editor/UI_elements/tabs/welcome_tab/welcome_tab.gd" id="2_5wpia"]
 [ext_resource type="PackedScene" uid="uid://ckpmm10wqmcga" path="res://addons/AWOC/editor/UI_elements/new_resource_controls/new_awoc_control/new_awoc_control.tscn" id="2_iqm6k"]
+[ext_resource type="PackedScene" uid="uid://8jaj8sscbg3l" path="res://addons/AWOC/editor/UI_elements/management_lists/awoc_management_list/awoc_management_list.tscn" id="3_71544"]
 
 [node name="TabBase" instance=ExtResource("1_c0k3j")]
-
-[node name="TabLabel" parent="." index="0"]
-text = "Welcome"
+script = ExtResource("2_5wpia")
 
 [node name="NewResourceButton" parent="VBoxContainer" index="0"]
 text = "New AWOC"
@@ -16,3 +16,6 @@ layout_mode = 2
 
 [node name="ManageResourcesButton" parent="VBoxContainer2" index="0"]
 text = "Manage AWOCS"
+
+[node name="ManagementListBase" parent="VBoxContainer2/ManageResourcesPanelContainer/MarginContainer" index="0" instance=ExtResource("3_71544")]
+layout_mode = 2

@@ -2,42 +2,87 @@
 class_name AWOCGlobalManager
 extends Node
 
-var awoc_resource_manager: AWOCEditorAWOCResourceManager
+var awoc_resource_manager: AWOCLibraryManager
 
-func _on_create_resource(data: Dictionary) -> void:
-	if !data.has("type") or data.get("type").is_empty():
+
+func has_awocs() -> bool:
+	return awoc_resource_manager.has_resources()
+	
+	
+func create_awoc(resource_name: String, additional_data: Dictionary) -> void:
+	var path = additional_data.get("path", "")
+	var new_awoc_error: AWOCResourceErrorMessage = awoc_resource_manager.add_new_awoc(resource_name, path)
+	if !new_awoc_error.is_successful():
+		SignalBus.resource_created.emit(AWOCResourceType.Type.AWOC, resource_name, new_awoc_error)
 		return
-	match data.get("type"):
-		"awoc":
-			var name = data.get("name", "")
-			if name.is_empty():
-				push_error("AWOC name required for AWOC creation")
-				return
-			var path = data.get("path", "")
-			if path.is_empty():
-				push_error("Path required for AWOC creation")
-				return
-			var new_awoc: AWOCResource = awoc_resource_manager.add_new_awoc(name, path)
-			if new_awoc == null:
-				push_error("New awoc could not be created")
-				return
-			AWOCState.set_current_awoc(new_awoc)
-		
-		
-func _on_rename_resource(resource_type: String, old_name: String, new_name: String) -> void:
+	var awoc_state = _get_awoc_state()
+	if !awoc_state:
+		SignalBus.resource_created.emit(AWOCResourceType.Type.AWOC, resource_name, AWOCResourceErrorMessage.new(null, "AWOC State could not be found"))
+		return
+	SignalBus.resource_created.emit(AWOCResourceType.Type.AWOC, resource_name, new_awoc_error)
+	
+	
+func rename_awoc(old_name: String, new_name: String) -> void:
+	var res_renamed: String = awoc_resource_manager.rename_awoc(old_name,new_name)
+	var success: bool = false
+	if res_renamed.is_empty():
+		success = true
+	SignalBus.resource_renamed.emit(AWOCResourceType.Type.AWOC, old_name, new_name, success, res_renamed)
+	
+	
+func delete_awoc(resource_name: String) -> void:
+	var res_deleted: String = awoc_resource_manager.delete_awoc(resource_name)
+	var success: bool = false
+	if res_deleted.is_empty():
+		success = true
+	SignalBus.resource_deleted.emit(AWOCResourceType.Type.AWOC, resource_name, success, res_deleted)
+
+
+func _get_signal_bus() -> Node:
+	return get_node_or_null("/root/SignalBus")
+	
+	
+func _get_awoc_state() -> Node:
+	return get_node_or_null("/root/AWOCState")
+	
+	
+func _on_create_resource(resource_type: AWOCResourceType.Type, resource_name: String, additional_data: Dictionary) -> void:
+	if resource_name.is_empty():
+		push_error("Must provide a resource name for resource creation")
+		return
 	match resource_type:
-		"awoc":
-			awoc_resource_manager.rename_awoc(old_name,new_name)
+		AWOCResourceType.Type.AWOC:
+			create_awoc(resource_name, additional_data)
+
+
+func _on_rename_resource(resource_type: AWOCResourceType.Type, old_name: String, new_name: String) -> void:
+	match resource_type:
+		AWOCResourceType.Type.AWOC:
+			rename_awoc(old_name, new_name)
 			
-		
-func _on_delete_resource(resource_type: String, resource_name: String) -> void:
+			
+func _on_delete_resource(resource_type: AWOCResourceType.Type, resource_name: String) -> void:
 	match resource_type:
-		"awoc":
-			awoc_resource_manager.delete_awoc(resource_name)
-		
-		
+		AWOCResourceType.Type.AWOC:
+			delete_awoc(resource_name)
+
+
 func _ready() -> void:
-	awoc_resource_manager = AWOCEditorAWOCResourceManager.new().load_welcome_resource_manager()
-	SignalBus.create_new_resource_requested.connect(_on_create_resource)
-	SignalBus.delete_resource_requested.connect(_on_delete_resource)
-	SignalBus.rename_resource_requested.connect(_on_rename_resource)
+	awoc_resource_manager = AWOCLibraryManager.new()
+	awoc_resource_manager = awoc_resource_manager.load_welcome_resource_manager()
+	var bus = _get_signal_bus()
+	if bus:
+		bus.create_new_resource_requested.connect(_on_create_resource)
+		bus.delete_resource_requested.connect(_on_delete_resource)
+		bus.rename_resource_requested.connect(_on_rename_resource)
+
+
+func _exit_tree() -> void:
+	var bus = _get_signal_bus()
+	if bus:
+		if bus.create_new_resource_requested.is_connected(_on_create_resource):
+			bus.create_new_resource_requested.disconnect(_on_create_resource)
+		if bus.delete_resource_requested.is_connected(_on_delete_resource):
+			bus.delete_resource_requested.disconnect(_on_delete_resource)
+		if bus.rename_resource_requested.is_connected(_on_rename_resource):
+			bus.rename_resource_requested.disconnect(_on_rename_resource)

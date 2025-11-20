@@ -2,11 +2,18 @@
 class_name AWOCEditorGlobal
 extends Node
 
+static var PLUGIN_PATH: String = "res://addons/AWOC/"
+static var _scan_pending: bool = false
 const SCAN_ON_FILE_CHANGE: bool = true
 const SEND_TO_RECYCLE: bool = false
-const WELCOME_RESOURCE_PATH: String = "res://addons/AWOC/begin_here/welcome.res"
 
 
-static func scan():
-	if SCAN_ON_FILE_CHANGE:
-		EditorInterface.get_resource_filesystem().scan()
+static func request_scan():
+	if not SCAN_ON_FILE_CHANGE or _scan_pending:
+		return
+	_scan_pending = true
+	Engine.get_main_loop().create_timer(0.3).timeout.connect(func():
+		if EditorInterface.get_resource_filesystem():
+			EditorInterface.get_resource_filesystem().scan()
+		_scan_pending = false
+	, CONNECT_ONE_SHOT)

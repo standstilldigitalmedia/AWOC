@@ -1,23 +1,31 @@
-[gd_scene load_steps=4 format=3 uid="uid://c7mmm46yflmwh"]
+[gd_scene load_steps=5 format=3 uid="uid://c7mmm46yflmwh"]
 
 [ext_resource type="Texture2D" uid="uid://3rpabhykqqia" path="res://addons/AWOC/editor/images/godot_icons/Save.svg" id="1_03q4o"]
-[ext_resource type="Script" uid="uid://bka77t2gcosqh" path="res://addons/AWOC/editor/UI_elements/manage_resource_controls/base_manage_resource_control/base_manage_resource_control.gd" id="1_pil60"]
+[ext_resource type="Script" uid="uid://bka77t2gcosqh" path="res://addons/AWOC/editor/UI_elements/management_rows/base_management_row/base_management_row.gd" id="1_pil60"]
 [ext_resource type="Texture2D" uid="uid://cvm08nb2yc481" path="res://addons/AWOC/editor/images/godot_icons/Remove.svg" id="2_pil60"]
 
-[node name="BaseManageResourceControl" type="PanelContainer"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hi055"]
+bg_color = Color(1, 1, 1, 0.039215688)
+
+[node name="BaseManageResourceControl" type="PanelContainer" node_paths=PackedStringArray("name_line_edit", "rename_button", "rename_confirm", "delete_confirm")]
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 31.0
 grow_horizontal = 2
 size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_hi055")
 script = ExtResource("1_pil60")
+name_line_edit = NodePath("MarginContainer/HBoxContainer/NameLineEdit")
+rename_button = NodePath("MarginContainer/HBoxContainer/RenameButton")
+rename_confirm = NodePath("RenameConfirmationDialog")
+delete_confirm = NodePath("DeleteConfirmationDialog")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 5
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2

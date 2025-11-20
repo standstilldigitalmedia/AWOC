@@ -1,15 +1,19 @@
-[gd_scene load_steps=3 format=3 uid="uid://byd7gfpljhp2q"]
+[gd_scene load_steps=4 format=3 uid="uid://byd7gfpljhp2q"]
 
 [ext_resource type="Script" uid="uid://bhmlamwwohjyd" path="res://addons/AWOC/editor/UI_elements/main_editor_interface/main_editor_interface.gd" id="1_4oqix"]
 [ext_resource type="PackedScene" uid="uid://bojjuauhlxp21" path="res://addons/AWOC/editor/UI_elements/tabs/welcome_tab/welcome_tab.tscn" id="2_tv30v"]
+[ext_resource type="PackedScene" uid="uid://bbubufxjfxgfk" path="res://addons/AWOC/editor/UI_elements/tab_container/tab_container.tscn" id="3_0syea"]
 
-[node name="MainEditorInterface" type="HBoxContainer"]
+[node name="MainEditorInterface" type="HBoxContainer" node_paths=PackedStringArray("tab_label", "welcome_tab", "tab_container")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_4oqix")
+tab_label = NodePath("ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/TabLabel")
+welcome_tab = NodePath("ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/WelcomeTab")
+tab_container = NodePath("ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/TabContainer")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 2
@@ -18,13 +22,35 @@ size_flags_horizontal = 3
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = 10
+size_flags_vertical = 3
 
 [node name="HomeButton" type="Button" parent="ScrollContainer/VBoxContainer"]
 layout_mode = 2
 text = "AWOC"
 
-[node name="TabBase" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_tv30v")]
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_right = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="TabLabel" type="Label" parent="ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(1, 0)
+layout_mode = 2
+text = "Welcome"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="WelcomeTab" parent="ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("2_tv30v")]
+layout_mode = 2
+
+[node name="TabContainer" parent="ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("3_0syea")]
 layout_mode = 2
 
 [node name="ScrollContainer2" type="ScrollContainer" parent="."]
@@ -32,3 +58,5 @@ layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer2"]
 layout_mode = 2
+
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/HomeButton" to="." method="_on_home_button_pressed"]
