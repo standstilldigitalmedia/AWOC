@@ -7,12 +7,14 @@ func create_resource_on_disk(resource: Resource, res_name: String, path: String)
 	var res_validated: String = validate_new_res(res_name)
 	if !res_validated.is_empty():
 		return res_validated
-	if !AWOCValidator.is_valid_directory_path(path):
+	if !AWOCValidator.is_valid_path_string(path):
 		return "Invalid path for resource creation."
 	var dir = DirAccess.open(path)
 	if !dir:
 		dir = DirAccess.open("res://")
-		dir.make_dir_recursive(path)
+		var err = dir.make_dir_recursive(path)
+		if err != OK:
+			return "Critical Error: Could not create directory '" + path + "'. Code: " + str(err)
 	var full_path: String = path + "/" + res_name + ".res"
 	ResourceSaver.save(resource, full_path)
 	var uid = ResourceLoader.get_resource_uid(full_path)
@@ -28,6 +30,13 @@ func delete_resource_from_disk(res_name: String) -> String:
 	if !parent_resource_dictionary.has(res_name):
 		return "Resource not found in dictionary: " + res_name
 	var file_path: String = parent_resource_dictionary[res_name].get_path()
+	var extension = file_path.get_extension().to_lower()
+	if extension == "gd" or extension == "tscn":
+		parent_resource_dictionary.erase(res_name)
+		save_parent_resource()
+		var error_msg = "CRITICAL: Attempted to delete source file (" + file_path + "). Removed dictionary reference only."
+		push_error(error_msg)
+		return error_msg
 	if !FileAccess.file_exists(file_path):
 		return "File does not exist: " + file_path
 	var base_dir = file_path.get_base_dir()
@@ -51,13 +60,15 @@ func delete_resource_from_disk(res_name: String) -> String:
 	return delete_resource_from_dictionary(res_name)
 
 
-func rename_resource_on_disk(old_name: String, new_name: String, uid: int) -> String:
+func rename_resource_on_disk(old_name: String, new_name: String) -> String:
 	var res_validated: String = validate_rename_res(old_name, new_name)
 	if !res_validated.is_empty():
 		return res_validated
-	var old_path: String = ResourceUID.get_id_path(uid)
+	var resource_ref: AWOCResourceReference = parent_resource_dictionary.get(old_name)
+	var resource_uid: int = resource_ref.get_uid()
+	var old_path: String = ResourceUID.get_id_path(resource_uid)
 	var new_path: String = old_path.get_base_dir() + "/" + new_name + ".res"
 	var dir: DirAccess = DirAccess.open("res://")
 	dir.rename(old_path, new_path)
-	ResourceUID.set_id(uid, new_path)
+	ResourceUID.set_id(resource_uid, new_path)
 	return rename_resource_in_dictionary(old_name, new_name)

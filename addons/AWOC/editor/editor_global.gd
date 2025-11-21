@@ -7,7 +7,8 @@ static var _scan_pending: bool = false
 const SCAN_ON_FILE_CHANGE: bool = true
 const SEND_TO_RECYCLE: bool = false
 
-
+	
+	
 static func request_scan():
 	if not SCAN_ON_FILE_CHANGE or _scan_pending:
 		return

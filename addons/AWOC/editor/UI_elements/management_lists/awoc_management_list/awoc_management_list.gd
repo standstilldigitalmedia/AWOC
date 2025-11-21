@@ -42,11 +42,10 @@ func _on_awoc_renamed(resource_type: AWOCResourceType.Type, old_name: String, ne
 
 func _ready() -> void:
 	set_error()
-	awoc_manager_library = AWOCLibraryManager.new()
-	awoc_manager_library = awoc_manager_library.load_welcome_resource_manager()
 	SignalBus.resource_created.connect(_on_awoc_created)
 	SignalBus.resource_deleted.connect(_on_awoc_deleted)
 	SignalBus.resource_renamed.connect(_on_awoc_renamed)
+	awoc_manager_library = AWOCManager.awoc_resource_manager
 	if awoc_manager_library == null:
 		set_error("Failed to load AWOC manager library")
 		return

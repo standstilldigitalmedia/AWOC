@@ -1,10 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://byd7gfpljhp2q"]
+[gd_scene load_steps=5 format=3 uid="uid://byd7gfpljhp2q"]
 
 [ext_resource type="Script" uid="uid://bhmlamwwohjyd" path="res://addons/AWOC/editor/UI_elements/main_editor_interface/main_editor_interface.gd" id="1_4oqix"]
 [ext_resource type="PackedScene" uid="uid://bojjuauhlxp21" path="res://addons/AWOC/editor/UI_elements/tabs/welcome_tab/welcome_tab.tscn" id="2_tv30v"]
 [ext_resource type="PackedScene" uid="uid://bbubufxjfxgfk" path="res://addons/AWOC/editor/UI_elements/tab_container/tab_container.tscn" id="3_0syea"]
+[ext_resource type="PackedScene" uid="uid://7v1ni6wfy8to" path="res://addons/AWOC/editor/UI_elements/preview/preview.tscn" id="4_nkex8"]
 
-[node name="MainEditorInterface" type="HBoxContainer" node_paths=PackedStringArray("tab_label", "welcome_tab", "tab_container")]
+[node name="MainEditorInterface" type="HBoxContainer" node_paths=PackedStringArray("tab_label", "welcome_tab", "tab_container", "preview_container")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -14,6 +15,7 @@ script = ExtResource("1_4oqix")
 tab_label = NodePath("ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/TabLabel")
 welcome_tab = NodePath("ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/WelcomeTab")
 tab_container = NodePath("ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/TabContainer")
+preview_container = NodePath("ScrollContainer2")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 2
@@ -51,12 +53,14 @@ autowrap_mode = 3
 layout_mode = 2
 
 [node name="TabContainer" parent="ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("3_0syea")]
+visible = false
 layout_mode = 2
 
 [node name="ScrollContainer2" type="ScrollContainer" parent="."]
 layout_mode = 2
+size_flags_horizontal = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer2"]
+[node name="Preview" parent="ScrollContainer2" instance=ExtResource("4_nkex8")]
 layout_mode = 2
 
 [connection signal="pressed" from="ScrollContainer/VBoxContainer/HomeButton" to="." method="_on_home_button_pressed"]

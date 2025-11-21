@@ -7,7 +7,8 @@ extends VBoxContainer
 
 func clear_children() -> void:
 	for child in content_container.get_children():
-		child.queue_free()
+		if !child.is_queued_for_deletion():
+			child.call_deferred("queue_free")
 		
 
 func set_error(error_message: String = "") -> void:

@@ -8,8 +8,18 @@ const VALID_IMAGE_EXTENSIONS: Array[String] = ["bmp", "jpg", "jpeg", "png", "tga
 const VALID_AVATAR_EXTENSIONS: Array[String] = ["glb"]
 
 
-static func is_valid_directory_path(path: String) -> bool:
+static func is_valid_path_string(path: String) -> bool:
+	if !path.begins_with("res://"):
+		return false
+	if path.contains(":") and path.find(":") != 3:
+		return false
 	if path.is_empty():
+		return false
+	return true
+	
+	
+static func is_valid_directory_path(path: String) -> bool:
+	if !is_valid_path_string(path):
 		return false
 	return DirAccess.dir_exists_absolute(path)
 	

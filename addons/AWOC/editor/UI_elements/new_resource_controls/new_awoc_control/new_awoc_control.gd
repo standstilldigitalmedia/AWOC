@@ -12,8 +12,11 @@ extends AWOCNewResourceControlBase
 func validate() -> void:
 	var name_is_valid = AWOCValidator.is_valid_name(name_line_edit.text)
 	var path_is_valid = AWOCValidator.is_valid_directory_path(asset_path_line_edit.text)
+	var name_exists = AWOCManager.awoc_exists(name_line_edit.text)
 	if not name_is_valid: 
 		set_error("Please enter a valid name for your AWOC")
+	elif name_exists:
+		set_error("An AWOC with that name already exists")
 	elif not path_is_valid: 
 		set_error("Please enter a valid path for your AWOC")
 	else: set_error() 

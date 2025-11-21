@@ -7,6 +7,14 @@ var parent_uid: int
 var parent_resource_dictionary: Dictionary
 
 
+func save_parent_resource() -> String:
+	var resource_saved:= ResourceSaver.save(parent_resource, ResourceUID.get_id_path(parent_uid))
+	if resource_saved != OK:
+		return error_string(resource_saved)
+	AWOCEditorGlobal.request_scan.call_deferred()
+	return ""
+	
+	
 func init_resource_manager(p_resource: Resource, p_uid: int, r_dictionary: Dictionary) -> void:
 	parent_resource = p_resource
 	parent_uid = p_uid
@@ -51,27 +59,33 @@ func add_disk_resource_to_dictionary(res_name: String, uid: int) -> String:
 	var resource_reference: AWOCResourceReference = AWOCResourceReference.new()
 	resource_reference.set_uid(uid)
 	parent_resource_dictionary[res_name] = resource_reference
+	var save_parent: String = save_parent_resource()
+	if !save_parent.is_empty():
+		return save_parent
 	return ""
 	
-
 
 func add_resource_to_dictionary(res_name: String, res: Resource) -> String:
 	var res_validated: String = validate_new_res(res_name)
 	if !res_validated.is_empty():
 		return res_validated
 	parent_resource_dictionary[res_name] = res
+	var save_parent: String = save_parent_resource()
+	if !save_parent.is_empty():
+		return save_parent
 	return ""
 	
-
 
 func delete_resource_from_dictionary(res_name: String) -> String:
 	var res_validated: String = validate_delete_res(res_name)
 	if !res_validated.is_empty():
 		return res_validated
 	parent_resource_dictionary.erase(res_name)
+	var save_parent: String = save_parent_resource()
+	if !save_parent.is_empty():
+		return save_parent
 	return ""
 	
-
 
 func rename_resource_in_dictionary(old_name: String, new_name: String) -> String:
 	var res_validated: String = validate_rename_res(old_name, new_name)
@@ -79,9 +93,11 @@ func rename_resource_in_dictionary(old_name: String, new_name: String) -> String
 		return res_validated
 	parent_resource_dictionary[new_name] = parent_resource_dictionary[old_name]
 	parent_resource_dictionary.erase(old_name)
+	var save_parent: String = save_parent_resource()
+	if !save_parent.is_empty():
+		return save_parent
 	return ""
 	
-
 
 func has_resources() -> bool:
 	return parent_resource_dictionary.size() > 0
@@ -93,11 +109,3 @@ func get_sorted_name_array() -> Array[String]:
 		return_array.append(name)
 	return_array.sort()
 	return return_array
-
-
-func save_parent_resource() -> String:
-	var resource_saved:= ResourceSaver.save(parent_resource, ResourceUID.get_id_path(parent_uid))
-	if resource_saved != OK:
-		return error_string(resource_saved)
-	AWOCEditorGlobal.request_scan.call_deferred()
-	return ""

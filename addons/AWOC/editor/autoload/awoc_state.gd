@@ -13,25 +13,29 @@ func has_current_awoc() -> bool:
 	return current_awoc != null
 	
 	
-func set_current_awoc(awoc_error_message: AWOCResourceErrorMessage):
+"""func set_current_awoc(awoc_error_message: AWOCResourceErrorMessage):
 	if awoc_error_message.is_successful() and awoc_error_message.has_resource():
 		current_awoc = awoc_error_message.resource
-		awoc_loaded.emit()
+		awoc_loaded.emit()"""
 
 
 func load_awoc(awoc_name: String) -> bool:
-	var awoc_library_manager: AWOCLibraryManager = AWOCLibraryManager.new()
-	awoc_library_manager = awoc_library_manager.load_welcome_resource_manager()
+	var awoc_library_manager: AWOCLibraryManager = AWOCManager.awoc_resource_manager
+	if !awoc_library_manager:
+		push_error("AWOCLibrary manager not set")
+		return false
 	var path: String = awoc_library_manager.get_awoc_path(awoc_name)
 	if !path.is_empty():
 		if !FileAccess.file_exists(path):
 			push_error("AWOC file not found: " + path)
 			return false
-		var loaded_awoc = load(path)
+		var loaded_awoc: AWOCResource = load(path) as AWOCResource
 		if !loaded_awoc or !loaded_awoc is AWOCResource:
 			push_error("Failed to load AWOC or invalid resource type: " + path)
 			return false
 		current_awoc = loaded_awoc
+		var current_awoc_uid: int = awoc_library_manager.get_awoc_uid(awoc_name)
+		AWOCManager.slot_resource_manager.init_resource_manager(current_awoc, current_awoc_uid, current_awoc.slot_dictionary)
 		awoc_loaded.emit(awoc_name)
 		return true
 	return false

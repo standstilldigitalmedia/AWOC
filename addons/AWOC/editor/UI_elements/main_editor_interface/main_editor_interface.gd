@@ -5,6 +5,7 @@ extends HBoxContainer
 @export var tab_label: Label
 @export var welcome_tab: VBoxContainer
 @export var tab_container: TabContainer
+@export var preview_container: ScrollContainer
 
 
 func _on_awoc_loaded(awoc_name: String) -> void:
@@ -15,6 +16,7 @@ func _on_awoc_loaded(awoc_name: String) -> void:
 
 func _ready() -> void:
 	tab_container.hide()
+	preview_container.hide()
 	AWOCState.awoc_loaded.connect(_on_awoc_loaded)
 
 
