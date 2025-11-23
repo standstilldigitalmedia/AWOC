@@ -6,5 +6,6 @@ enum Type
 {
 	AWOC,
 	Slot,
-	AWOCColor,
+	Color,
+	Mesh,
 }

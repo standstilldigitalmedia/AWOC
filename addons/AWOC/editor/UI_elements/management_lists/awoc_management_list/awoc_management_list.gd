@@ -16,35 +16,17 @@ func populate_control():
 		content_container.add_child(row_manager)
 		
 		
-func _on_awoc_created(resource_type: AWOCResourceType.Type, resource_name: String, result: AWOCResourceErrorMessage) -> void:
+func _on_resource_modified(resource_type: AWOCResourceType.Type, result: String) -> void:
 	if resource_type == AWOCResourceType.Type.AWOC:
-		if result.is_successful():
+		if result.is_empty():
 			populate_control()
 		else:
-			set_error(result.error_message)
-
-
-func _on_awoc_deleted(resource_type: AWOCResourceType.Type, resource_name: String, success: bool, error: String) -> void:
-	if resource_type == AWOCResourceType.Type.AWOC:
-		if success:
-			populate_control()
-		else:
-			set_error(error)
-			
-			
-func _on_awoc_renamed(resource_type: AWOCResourceType.Type, old_name: String, new_name: String, success: bool, error: String) -> void:
-	if resource_type == AWOCResourceType.Type.AWOC:
-		if success:
-			populate_control()
-		else:
-			set_error(error)
+			set_error(result)
 
 
 func _ready() -> void:
 	set_error()
-	SignalBus.resource_created.connect(_on_awoc_created)
-	SignalBus.resource_deleted.connect(_on_awoc_deleted)
-	SignalBus.resource_renamed.connect(_on_awoc_renamed)
+	SignalBus.resource_modified.connect(_on_resource_modified)
 	awoc_manager_library = AWOCManager.awoc_resource_manager
 	if awoc_manager_library == null:
 		set_error("Failed to load AWOC manager library")

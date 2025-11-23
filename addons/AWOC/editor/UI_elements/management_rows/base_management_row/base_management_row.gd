@@ -42,13 +42,9 @@ func _on_delete_button_pressed() -> void:
 
 
 func _on_rename_confirmation_dialog_confirmed() -> void:
-	var bus = AWOCManager._get_signal_bus()
-	if bus:
-		bus.rename_resource_requested.emit(resource_type, previous_name, name_line_edit.text)
+	SignalBus.rename_resource_requested.emit(resource_type, previous_name, name_line_edit.text)
 	
 	
 func _on_delete_confirmation_dialog_confirmed() -> void:
-	var bus = AWOCManager._get_signal_bus()
-	if bus:
-		bus.delete_resource_requested.emit(resource_type, previous_name)
+	SignalBus.delete_resource_requested.emit(resource_type, previous_name)
 	

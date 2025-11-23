@@ -1,0 +1,8 @@
+[configuration]
+
+entry_symbol = "awoc_library_init"
+compatibility_minimum = "4.5"
+
+[libraries]
+
+windows.debug.x86_64 = "res://addons/AWOC/bin/awoc.windows.template_debug.x86_64.dll"

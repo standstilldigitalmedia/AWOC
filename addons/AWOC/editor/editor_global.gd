@@ -4,6 +4,8 @@ extends Node
 
 static var PLUGIN_PATH: String = "res://addons/AWOC/"
 static var _scan_pending: bool = false
+const WELCOME_BASE_PATH: String = "begin_here/"
+const WELCOME_FILE_NAME: String = "welcome.res"
 const SCAN_ON_FILE_CHANGE: bool = true
 const SEND_TO_RECYCLE: bool = false
 

@@ -1,0 +1,62 @@
+[gd_scene load_steps=4 format=3 uid="uid://b1juudpnr2kar"]
+
+[ext_resource type="Script" uid="uid://c23bv5ex3vf4h" path="res://addons/AWOC/editor/UI_elements/new_resource_controls/new_mesh_control/new_mesh_control.gd" id="1_ubtd1"]
+[ext_resource type="Texture2D" uid="uid://5172a1nu4uib" path="res://addons/AWOC/editor/images/godot_icons/Folder.svg" id="2_ee5sh"]
+[ext_resource type="Script" uid="uid://cwcyyy1kn8hu2" path="res://addons/AWOC/editor/control_overrides/mesh_line_edit_override.gd" id="2_lpxug"]
+
+[node name="NewMeshControl" type="VBoxContainer" node_paths=PackedStringArray("model_path_line_edit", "model_path_browse_button", "add_mesh_button", "file_dialog", "error_label")]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 93.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+script = ExtResource("1_ubtd1")
+model_path_line_edit = NodePath("HBoxContainer/ModelPathLineEdit")
+model_path_browse_button = NodePath("HBoxContainer/ModelPathBrowseButton")
+add_mesh_button = NodePath("AddMeshesButton")
+file_dialog = NodePath("FileDialog")
+error_label = NodePath("ErrorLabel")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "Model Path: "
+
+[node name="ModelPathLineEdit" type="LineEdit" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Model Path"
+script = ExtResource("2_lpxug")
+
+[node name="ModelPathBrowseButton" type="Button" parent="HBoxContainer"]
+custom_minimum_size = Vector2(31, 0)
+layout_mode = 2
+icon = ExtResource("2_ee5sh")
+icon_alignment = 1
+
+[node name="ErrorLabel" type="Label" parent="."]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "error"
+horizontal_alignment = 1
+
+[node name="AddMeshesButton" type="Button" parent="."]
+layout_mode = 2
+disabled = true
+text = "Add Mesh(es)"
+
+[node name="FileDialog" type="FileDialog" parent="."]
+title = "Source Model File"
+initial_position = 1
+file_mode = 0
+
+[connection signal="text_changed" from="HBoxContainer/ModelPathLineEdit" to="." method="_on_model_path_line_edit_text_changed"]
+[connection signal="pressed" from="HBoxContainer/ModelPathBrowseButton" to="." method="_on_model_path_browse_button_pressed"]
+[connection signal="pressed" from="AddMeshesButton" to="." method="_on_add_meshes_button_pressed"]
+[connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]

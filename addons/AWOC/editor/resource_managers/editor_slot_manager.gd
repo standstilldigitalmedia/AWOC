@@ -16,9 +16,7 @@ func create_resource(resource_name: String, additional_data: Dictionary) -> Stri
 	var new_hide_slot_array: Array[String] = additional_data.get("hide_slot_array")
 	if new_hide_slot_array.size() > 0:
 		new_slot.hide_slot_array = new_hide_slot_array
-	AWOCState.current_awoc.slot_dictionary[resource_name] = new_slot
-	return ""
-
+	return add_resource_to_dictionary(resource_name, new_slot)
 
 
 func rename_resource(old_name: String, new_name: String) -> String:

@@ -29,3 +29,5 @@ Thumbs.db
 addons/AWOC/begin_here/welcome.res
 testing/
 *.depren
+bin/awoc.*.lib
+bin/awoc.*.exp

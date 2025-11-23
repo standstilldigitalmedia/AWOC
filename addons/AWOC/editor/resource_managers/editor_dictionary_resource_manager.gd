@@ -4,21 +4,21 @@ extends Resource
 
 var parent_resource: Resource
 var parent_uid: int
-var parent_resource_dictionary: Dictionary
+@export var parent_resource_dictionary: Dictionary
 
-
-func save_parent_resource() -> String:
-	var resource_saved:= ResourceSaver.save(parent_resource, ResourceUID.get_id_path(parent_uid))
-	if resource_saved != OK:
-		return error_string(resource_saved)
-	AWOCEditorGlobal.request_scan.call_deferred()
-	return ""
-	
 	
 func init_resource_manager(p_resource: Resource, p_uid: int, r_dictionary: Dictionary) -> void:
 	parent_resource = p_resource
 	parent_uid = p_uid
 	parent_resource_dictionary = r_dictionary
+	
+	
+func save_parent_resource() -> String:
+	var resource_saved:= ResourceSaver.save(parent_resource, ResourceUID.get_id_path(parent_uid))
+	if resource_saved != OK:
+		return error_string(resource_saved)  
+	AWOCEditorGlobal.request_scan.call_deferred()
+	return ""
 
 
 func validate_new_res(res_name: String) -> String:
@@ -102,6 +102,10 @@ func rename_resource_in_dictionary(old_name: String, new_name: String) -> String
 func has_resources() -> bool:
 	return parent_resource_dictionary.size() > 0
 	
+
+func has_named_resource(resource_name: String) -> bool:
+	return parent_resource_dictionary.has(resource_name)
+	
 	
 func get_sorted_name_array() -> Array[String]:
 	var return_array: Array[String] = []
@@ -109,3 +113,15 @@ func get_sorted_name_array() -> Array[String]:
 		return_array.append(name)
 	return_array.sort()
 	return return_array
+
+
+func create_resource(resource_name: String, additional_data: Dictionary) -> String:
+	return "create_resource must be overridden in derived class"
+
+
+func rename_resource(old_name: String, new_name: String) -> String:
+	return "rename_resource must be overridden in derived class"
+
+
+func delete_resource(resource_name: String) -> String:
+	return "delete_resource must be overridden in derived class"

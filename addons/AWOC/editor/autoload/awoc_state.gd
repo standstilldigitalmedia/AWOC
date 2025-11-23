@@ -7,17 +7,7 @@ signal awoc_closed
 signal awoc_data_changed 
 
 var current_awoc: AWOCResource = null
-
-
-func has_current_awoc() -> bool:
-	return current_awoc != null
-	
-	
-"""func set_current_awoc(awoc_error_message: AWOCResourceErrorMessage):
-	if awoc_error_message.is_successful() and awoc_error_message.has_resource():
-		current_awoc = awoc_error_message.resource
-		awoc_loaded.emit()"""
-
+var current_asset_path: String = "res://"
 
 func load_awoc(awoc_name: String) -> bool:
 	var awoc_library_manager: AWOCLibraryManager = AWOCManager.awoc_resource_manager
@@ -34,6 +24,7 @@ func load_awoc(awoc_name: String) -> bool:
 			push_error("Failed to load AWOC or invalid resource type: " + path)
 			return false
 		current_awoc = loaded_awoc
+		current_asset_path = path.get_base_dir()
 		var current_awoc_uid: int = awoc_library_manager.get_awoc_uid(awoc_name)
 		AWOCManager.slot_resource_manager.init_resource_manager(current_awoc, current_awoc_uid, current_awoc.slot_dictionary)
 		awoc_loaded.emit(awoc_name)
@@ -41,18 +32,6 @@ func load_awoc(awoc_name: String) -> bool:
 	return false
 	
 	
-func close_awoc():
+func unload_current_awoc():
 	current_awoc = null
 	awoc_closed.emit()
-#
-
-func get_slot_names() -> Array[String]:
-	if current_awoc:
-		return current_awoc.get_slots() 
-	return []
-	
-	
-func create_new_slot(slot_name: String):
-	if current_awoc:
-		current_awoc.add_slot(slot_name)
-		awoc_data_changed.emit()

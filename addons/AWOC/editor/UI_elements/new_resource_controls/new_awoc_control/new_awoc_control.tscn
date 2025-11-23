@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://00lbjuwxwrmh" path="res://addons/AWOC/editor/UI_elements/new_resource_controls/new_awoc_control/new_awoc_control.gd" id="1_gtotd"]
 [ext_resource type="Texture2D" uid="uid://5172a1nu4uib" path="res://addons/AWOC/editor/images/godot_icons/Folder.svg" id="2_qtvek"]
 
-[node name="NewAWOCControl" type="VBoxContainer" node_paths=PackedStringArray("error_label")]
+[node name="NewAWOCControl" type="VBoxContainer" node_paths=PackedStringArray("name_line_edit", "asset_path_line_edit", "browse_button", "create_button", "file_dialog", "error_label")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -11,6 +11,11 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 10
 script = ExtResource("1_gtotd")
+name_line_edit = NodePath("GridContainer/NameLineEdit")
+asset_path_line_edit = NodePath("GridContainer/HBoxContainer/AssetPathLineEdit")
+browse_button = NodePath("GridContainer/HBoxContainer/BrowseButton")
+create_button = NodePath("CreateButton")
+file_dialog = NodePath("FileDialog")
 error_label = NodePath("ErrorLabel")
 
 [node name="GridContainer" type="GridContainer" parent="."]
