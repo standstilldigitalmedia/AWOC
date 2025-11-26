@@ -2,10 +2,9 @@
 class_name AWOCResourceType
 extends RefCounted
 
-enum Type
-{
+enum Type {
 	AWOC,
-	Slot,
-	Color,
-	Mesh,
+	SLOT,
+	COLOR,
+	MESH,
 }

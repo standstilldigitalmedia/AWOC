@@ -12,7 +12,7 @@ func _on_awoc_loaded(awoc_name: String) -> void:
 	tab_label.text = awoc_name
 	welcome_tab.hide()
 	tab_container.show()
-	
+
 
 func _ready() -> void:
 	tab_container.hide()

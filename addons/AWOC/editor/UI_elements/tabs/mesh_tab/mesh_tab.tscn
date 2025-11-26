@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://b5ygbqulcy4pk"]
+[gd_scene load_steps=5 format=3 uid="uid://b5ygbqulcy4pk"]
 
 [ext_resource type="PackedScene" uid="uid://c8ipywjuf8whf" path="res://addons/AWOC/editor/UI_elements/tabs/tab_base/tab_base.tscn" id="1_celud"]
 [ext_resource type="Script" uid="uid://cgdr2ujchnvhh" path="res://addons/AWOC/editor/UI_elements/tabs/mesh_tab/mesh_tab.gd" id="2_vdf1q"]
 [ext_resource type="PackedScene" uid="uid://b1juudpnr2kar" path="res://addons/AWOC/editor/UI_elements/new_resource_controls/new_mesh_control/new_mesh_control.tscn" id="3_rstu6"]
+[ext_resource type="PackedScene" uid="uid://s2an45fu4hce" path="res://addons/AWOC/editor/UI_elements/management_lists/mesh_management_list/mesh_management_list.tscn" id="4_jl6cc"]
 
 [node name="MeshTab" instance=ExtResource("1_celud")]
 script = ExtResource("2_vdf1q")
@@ -12,3 +13,6 @@ layout_mode = 2
 
 [node name="ManageResourcesButton" parent="VBoxContainer2" index="0"]
 disabled = true
+
+[node name="MeshManagementList" parent="VBoxContainer2/ManageResourcesPanelContainer/MarginContainer" index="0" instance=ExtResource("4_jl6cc")]
+layout_mode = 2

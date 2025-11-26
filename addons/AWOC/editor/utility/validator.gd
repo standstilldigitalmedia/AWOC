@@ -12,7 +12,11 @@ static func is_valid_node_path(path: String) -> bool:
 	var clean_path = path.strip_edges()
 	if clean_path.is_empty():
 		return false
-	if clean_path.begins_with("res://") or clean_path.begins_with("user://") or clean_path.begins_with("uid://"):
+	if (
+		clean_path.begins_with("res://")
+		or clean_path.begins_with("user://")
+		or clean_path.begins_with("uid://")
+	):
 		return false
 	if ":" in clean_path:
 		return false
@@ -20,8 +24,8 @@ static func is_valid_node_path(path: String) -> bool:
 	if np.is_empty():
 		return false
 	return true
-		
-	
+
+
 static func is_valid_path_string(path: String) -> bool:
 	if !path.begins_with("res://"):
 		return false
@@ -30,18 +34,18 @@ static func is_valid_path_string(path: String) -> bool:
 	if path.is_empty():
 		return false
 	return true
-	
-	
+
+
 static func is_valid_directory_path(path: String) -> bool:
 	if !is_valid_path_string(path):
 		return false
 	return DirAccess.dir_exists_absolute(path)
-	
-	
+
+
 static func is_valid_parent_path(file_path: String) -> bool:
 	if file_path.is_empty():
 		return false
-	var parent_dir  = file_path.get_base_dir()
+	var parent_dir = file_path.get_base_dir()
 	return !parent_dir.is_empty() and DirAccess.dir_exists_absolute(parent_dir)
 
 

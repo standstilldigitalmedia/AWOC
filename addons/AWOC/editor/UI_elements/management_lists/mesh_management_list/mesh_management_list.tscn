@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://s2an45fu4hce"]
+
+[ext_resource type="PackedScene" uid="uid://bkyouqx2d08lp" path="res://addons/AWOC/editor/UI_elements/management_lists/management_list_base/management_list_base.tscn" id="1_cs4jm"]
+[ext_resource type="Script" uid="uid://bbcbsv326fxga" path="res://addons/AWOC/editor/UI_elements/management_lists/mesh_management_list/mesh_management_list.gd" id="2_16pa3"]
+
+[node name="MeshManagementList" instance=ExtResource("1_cs4jm")]
+script = ExtResource("2_16pa3")

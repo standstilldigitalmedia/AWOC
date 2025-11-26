@@ -15,7 +15,7 @@ script = ExtResource("1_4oqix")
 tab_label = NodePath("ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/TabLabel")
 welcome_tab = NodePath("ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/WelcomeTab")
 tab_container = NodePath("ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/TabContainer")
-preview_container = NodePath("ScrollContainer2")
+preview_container = NodePath("Preview")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 2
@@ -56,11 +56,8 @@ layout_mode = 2
 visible = false
 layout_mode = 2
 
-[node name="ScrollContainer2" type="ScrollContainer" parent="."]
+[node name="Preview" parent="." instance=ExtResource("4_nkex8")]
 layout_mode = 2
 size_flags_horizontal = 3
-
-[node name="Preview" parent="ScrollContainer2" instance=ExtResource("4_nkex8")]
-layout_mode = 2
 
 [connection signal="pressed" from="ScrollContainer/VBoxContainer/HomeButton" to="." method="_on_home_button_pressed"]

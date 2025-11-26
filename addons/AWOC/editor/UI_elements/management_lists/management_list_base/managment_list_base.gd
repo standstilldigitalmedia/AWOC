@@ -5,11 +5,12 @@ extends VBoxContainer
 @export var error_label: Label
 @export var content_container: VBoxContainer
 
+
 func clear_children() -> void:
 	for child in content_container.get_children():
 		if !child.is_queued_for_deletion():
 			child.call_deferred("queue_free")
-		
+
 
 func set_error(error_message: String = "") -> void:
 	if not error_label:

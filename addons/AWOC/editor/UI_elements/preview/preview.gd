@@ -1,6 +1,6 @@
 @tool
 class_name AWOCPreview
-extends PanelContainer
+extends ScrollContainer
 
 @export var sub_viewport: SubViewport
 @export var x_checkbox: CheckBox
@@ -12,7 +12,9 @@ extends PanelContainer
 @export var zoom_speed_slider: HSlider
 @export var rotate_speed_slider: HSlider
 
-var direction: Vector3  = Vector3.ZERO
+var preview_avatar: AWOCAvatar
+
+var direction: Vector3 = Vector3.ZERO
 var rotate: int = 0
 var move_speed: int = 5
 var zoom_speed: int = 10
@@ -23,7 +25,7 @@ var camera_position: Vector3
 
 func set_subject(sub: Node3D) -> void:
 	subject = sub
-	subject.position = Vector3(0.0,0.0,0.0)
+	subject.position = Vector3(0.0, 0.0, 0.0)
 	subject.rotation = subject_rotation
 	sub_viewport.add_child(subject)
 
@@ -34,30 +36,30 @@ func _on_x_checkbox_toggled(toggled_on: bool) -> void:
 		z_checkbox.set_pressed_no_signal(false)
 	else:
 		x_checkbox.set_pressed_no_signal(true)
-	
-		
+
+
 func _on_y_checkbox_toggled(toggled_on: bool) -> void:
 	if toggled_on:
 		x_checkbox.set_pressed_no_signal(false)
 		z_checkbox.set_pressed_no_signal(false)
 	else:
 		y_checkbox.set_pressed_no_signal(true)
-	
-		
+
+
 func _on_z_checkbox_toggled(toggled_on: bool) -> void:
 	if toggled_on:
 		x_checkbox.set_pressed_no_signal(false)
 		y_checkbox.set_pressed_no_signal(false)
 	else:
 		z_checkbox.set_pressed_no_signal(true)
-	
-		
+
+
 func _process(delta) -> void:
 	if direction != Vector3.ZERO and subject != null:
 		var new_position: Vector3 = main_camera.position
 		if direction.x > 0:
 			new_position.x = main_camera.position.x + (move_speed * delta)
-		elif  direction.x < 0:
+		elif direction.x < 0:
 			new_position.x = main_camera.position.x - (move_speed * delta)
 		if direction.y > 0:
 			new_position.y = main_camera.position.y + (move_speed * delta)
@@ -66,9 +68,9 @@ func _process(delta) -> void:
 		if direction.z > 0:
 			new_position.z = main_camera.position.z + (zoom_speed * delta)
 		elif direction.z < 0:
-			new_position.z = main_camera.position.z -(zoom_speed * delta)
-		main_camera.position = new_position;
-		
+			new_position.z = main_camera.position.z - (zoom_speed * delta)
+		main_camera.position = new_position
+
 	if rotate > 0:
 		if x_checkbox.is_pressed():
 			subject.rotate_x(rotate_speed * delta)
@@ -85,13 +87,13 @@ func _process(delta) -> void:
 			subject.rotate_z(-rotate_speed * delta)
 	if rotate != 0:
 		subject_rotation = subject.rotation
-	
-	
+
+
 func _on_button_up() -> void:
 	direction = Vector3.ZERO
 	rotate = 0
 
-	
+
 func _on_rotate_left_button_down() -> void:
 	rotate = 1
 
@@ -141,8 +143,8 @@ func _on_rotate_speed_h_slider_value_changed(value) -> void:
 
 func _on_zoom_speed_h_slider_value_changed(value) -> void:
 	zoom_speed = value
-	
-	
+
+
 func reset():
 	x_checkbox.set_pressed_no_signal(true)
 	y_checkbox.set_pressed_no_signal(false)
@@ -153,12 +155,31 @@ func reset():
 	move_speed_slider.value = move_speed
 	zoom_speed_slider.value = zoom_speed
 	rotate_speed_slider.value = rotate_speed
-	camera_position = Vector3(0.0,0.0,30.0)
-	subject_rotation = Vector3(0.0,0.0,0.0)
+	camera_position = Vector3(0.0, 0.0, 30.0)
+	subject_rotation = Vector3(0.0, 0.0, 0.0)
 	main_camera.position = camera_position
-	"""if subject != null:
-		subject.queue_free()"""
-		
-		
+
+
+func _on_show_mesh(mesh_name: String, show: bool) -> void:
+	# 1. Create the avatar if it doesn't exist
+	if not preview_avatar or not is_instance_valid(preview_avatar):
+		# Clean up old subject if it exists
+		if subject:
+			subject.queue_free()
+
+		preview_avatar = AWOCAvatar.new()
+		# Use the inherited 'set_subject' to handle positioning/viewport logic
+		set_subject(preview_avatar)
+
+		# Initialize with current data
+		preview_avatar.initialize_avatar(AWOCState.current_awoc)
+
+	# 2. Toggle the mesh
+	preview_avatar.toggle_mesh(mesh_name, show)
+	if show:
+		show()
+
+
 func _ready() -> void:
 	reset()
+	SignalBus.show_mesh.connect(_on_show_mesh)

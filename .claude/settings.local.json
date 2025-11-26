@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gdlint:*)",
+      "Bash(gdformat:*)",
+      "Bash(find:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

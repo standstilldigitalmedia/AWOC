@@ -25,26 +25,33 @@ func set_control(name: String, type: AWOCResourceType.Type) -> void:
 	validate()
 
 
-func _on_name_line_edit_text_changed(new_text: String) -> void:
+func _on_name_line_edit_text_changed(_new_text: String) -> void:
 	validate()
-	
-	
+
+
 func _on_rename_button_pressed() -> void:
 	rename_confirm.title = "Rename " + previous_name + "?"
-	rename_confirm.dialog_text = "Are you sure you wish to rename " + previous_name + " to " + name_line_edit.text + "? This can not be undone."
+	rename_confirm.dialog_text = (
+		"Are you sure you wish to rename "
+		+ previous_name
+		+ " to "
+		+ name_line_edit.text
+		+ "? This can not be undone."
+	)
 	rename_confirm.show()
-	
-	
+
+
 func _on_delete_button_pressed() -> void:
 	delete_confirm.title = "Delete " + previous_name + "?"
-	delete_confirm.dialog_text = "Are you sure you wish to delete " + previous_name + "? This can not be undone."
+	delete_confirm.dialog_text = (
+		"Are you sure you wish to delete " + previous_name + "? This can not be undone."
+	)
 	delete_confirm.show()
 
 
 func _on_rename_confirmation_dialog_confirmed() -> void:
 	SignalBus.rename_resource_requested.emit(resource_type, previous_name, name_line_edit.text)
-	
-	
+
+
 func _on_delete_confirmation_dialog_confirmed() -> void:
 	SignalBus.delete_resource_requested.emit(resource_type, previous_name)
-	

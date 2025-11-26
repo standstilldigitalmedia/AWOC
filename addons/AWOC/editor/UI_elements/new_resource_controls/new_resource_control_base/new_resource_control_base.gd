@@ -16,7 +16,7 @@ func set_error(error_message: String = "") -> void:
 		error_label.show()
 
 
-func validate() -> void: 
+func validate() -> void:
 	push_error("validate() must be overriden in derived class.")
 
 
