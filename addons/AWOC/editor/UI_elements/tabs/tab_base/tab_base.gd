@@ -8,6 +8,17 @@ extends VBoxContainer
 @onready var manage_resource_panel_container: PanelContainer = $VBoxContainer2/ManageResourcesPanelContainer
 
 
+func set_manage_button_type(resource_type: AWOCResourceType.Type) -> void:
+	var awoc_manager: AWOCGlobalManager = AWOCEditorGlobal.get_awoc_manager()
+	if !awoc_manager:
+		return
+	if awoc_manager.has_resources(resource_type):
+		manage_resources_button.disabled = false
+	else:
+		manage_resources_button.disabled = true
+		manage_resource_panel_container.hide()
+		
+		
 func set_manage_button_state() -> void:
 	push_error("set_manage_button_state must be overridden in derived class")
 
