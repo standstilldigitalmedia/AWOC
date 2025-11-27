@@ -1,9 +1,10 @@
 @tool
-class_name AWOCBaseManagementRow
+class_name AWOCRowManagementBase
 extends PanelContainer
 
 @export var name_line_edit: LineEdit
 @export var rename_button: Button
+@export var content_panel: PanelContainer
 @export var rename_confirm: ConfirmationDialog
 @export var delete_confirm: ConfirmationDialog
 
@@ -51,3 +52,4 @@ func _on_delete_confirmation_dialog_confirmed() -> void:
 	var signal_bus: AWOCGlobalSignalBus = AWOCEditorGlobal.get_signal_bus()
 	if signal_bus:
 		signal_bus.delete_resource_requested.emit(resource_type, previous_name)
+		

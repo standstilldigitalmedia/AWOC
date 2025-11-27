@@ -22,8 +22,8 @@ func update_plugin_path() -> void:
 func set_autoloader_paths() -> void:
 	main_editor_path = AWOCEditorGlobal.plugin_path.path_join("editor/UI_elements/main_editor_interface/main_editor_interface.tscn")
 	signal_bus_path = AWOCEditorGlobal.plugin_path.path_join("editor/autoload/global_signal_bus.gd")
-	awoc_state_path = AWOCEditorGlobal.plugin_path.path_join("editor/autoload/awoc_state.gd")
-	awoc_manager_path = AWOCEditorGlobal.plugin_path.path_join("editor/autoload/awoc_manager.gd")
+	awoc_state_path = AWOCEditorGlobal.plugin_path.path_join("editor/autoload/global_state.gd")
+	awoc_manager_path = AWOCEditorGlobal.plugin_path.path_join("editor/autoload/global_manager.gd")
 
 
 func load_autoload(name: String, path: String) -> void:

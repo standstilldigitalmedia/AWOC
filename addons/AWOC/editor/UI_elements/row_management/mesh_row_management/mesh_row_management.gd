@@ -1,6 +1,6 @@
 @tool
-class_name AWOCMeshManagementRow
-extends AWOCBaseManagementRow
+class_name AWOCMeshRowManagement
+extends AWOCRowManagementBase
 
 
 func _on_show_hide_button_toggled(toggled_on: bool) -> void:

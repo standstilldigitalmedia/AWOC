@@ -1,6 +1,6 @@
 @tool
-class_name AWOCRowManager
-extends AWOCBaseManagementRow
+class_name AWOCRowManagement
+extends AWOCRowManagementBase
 
 
 func _on_edit_button_pressed() -> void:

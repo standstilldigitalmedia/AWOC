@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://c8ipywjuf8whf" path="res://addons/AWOC/editor/UI_elements/tabs/tab_base/tab_base.tscn" id="1_c0k3j"]
 [ext_resource type="Script" uid="uid://qv37kcdr1es8" path="res://addons/AWOC/editor/UI_elements/tabs/welcome_tab/welcome_tab.gd" id="2_5wpia"]
 [ext_resource type="PackedScene" uid="uid://ckpmm10wqmcga" path="res://addons/AWOC/editor/UI_elements/new_resource_controls/new_awoc_control/new_awoc_control.tscn" id="2_iqm6k"]
-[ext_resource type="PackedScene" uid="uid://8jaj8sscbg3l" path="res://addons/AWOC/editor/UI_elements/management_lists/awoc_management_list/awoc_management_list.tscn" id="3_71544"]
+[ext_resource type="PackedScene" uid="uid://8jaj8sscbg3l" path="res://addons/AWOC/editor/UI_elements/list_management/awoc_list_management/awoc_list_management.tscn" id="3_71544"]
 
 [node name="TabBase" instance=ExtResource("1_c0k3j")]
 script = ExtResource("2_5wpia")

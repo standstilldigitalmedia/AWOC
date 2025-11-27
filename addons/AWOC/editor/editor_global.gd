@@ -11,9 +11,9 @@ static var _scan_pending: bool = false
 const AWOC_MANAGER_PATH: String = "/root/AWOCManager"
 const AWOC_STATE_PATH: String = "/root/AWOCState"
 const SIGNAL_BUS_PATH: String = "/root/SignalBus"
-const AWOC_ROW_PATH: String = "editor/UI_elements/management_rows/awoc_management_row/awoc_management_row.tscn"
-const MESH_ROW_PATH: String = "editor/UI_elements/management_rows/mesh_management_row/mesh_management_row.tscn"
-const SLOT_ROW_PATH: String = "editor/UI_elements/management_rows/slot_management_row/slot_management_row.tscn"
+const AWOC_ROW_PATH: String = "editor/UI_elements/row_management/awoc_row_management/awoc_row_management.tscn"
+const MESH_ROW_PATH: String = "editor/UI_elements/row_management/mesh_row_management/mesh_row_management.tscn"
+const SLOT_ROW_PATH: String = "editor/UI_elements/row_management/slot_row_management/slot_row_management.tscn"
 const ADDITIONAL_DATA_PATH: String = "path"
 
 

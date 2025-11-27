@@ -1,11 +1,11 @@
 @tool
-class_name AWOCMeshManagementList
-extends AWOCManagementListBase
+class_name AWOCMeshListManagement
+extends AWOCListManagementList
 
 
 func populate_control():
 	clear_children()
-	var mesh_row_manager_path: String = AWOCEditorGlobal.plugin_path.path_join("editor/UI_elements/management_rows/mesh_management_row/mesh_management_row.tscn")
+	var mesh_row_manager_path: String = AWOCEditorGlobal.plugin_path.path_join(AWOCEditorGlobal.MESH_ROW_PATH)
 	var awoc_manager: AWOCGlobalManager = AWOCEditorGlobal.get_awoc_manager()
 	if !awoc_manager:
 		return

@@ -1,15 +1,13 @@
 @tool
-class_name AWOCManagementList
-extends AWOCManagementListBase
+class_name AWOCListManagement
+extends AWOCListManagementList
 
 var awoc_manager_library: AWOCLibraryManager
 
 
 func populate_control():
 	clear_children()
-	var awoc_row_manager_path: String = AWOCEditorGlobal.plugin_path.path_join(
-		"editor/UI_elements/management_rows/awoc_management_row/awoc_row_manager.tscn"
-	)
+	var awoc_row_manager_path: String = AWOCEditorGlobal.plugin_path.path_join(AWOCEditorGlobal.AWOC_ROW_PATH)
 	var name_array = awoc_manager_library.get_sorted_name_array()
 	for awoc_name in name_array:
 		var row_manager_scene: PackedScene = load(awoc_row_manager_path)

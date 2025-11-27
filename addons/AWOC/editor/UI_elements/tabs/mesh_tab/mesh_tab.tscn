@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://c8ipywjuf8whf" path="res://addons/AWOC/editor/UI_elements/tabs/tab_base/tab_base.tscn" id="1_celud"]
 [ext_resource type="Script" uid="uid://by0j4gvs6ew03" path="res://addons/AWOC/editor/UI_elements/tabs/mesh_tab/mesh_tab.gd" id="2_vdf1q"]
 [ext_resource type="PackedScene" uid="uid://b1juudpnr2kar" path="res://addons/AWOC/editor/UI_elements/new_resource_controls/new_mesh_control/new_mesh_control.tscn" id="3_rstu6"]
-[ext_resource type="PackedScene" uid="uid://s2an45fu4hce" path="res://addons/AWOC/editor/UI_elements/management_lists/mesh_management_list/mesh_management_list.tscn" id="4_jl6cc"]
+[ext_resource type="PackedScene" uid="uid://s2an45fu4hce" path="res://addons/AWOC/editor/UI_elements/list_management/mesh_list_management/mesh_list_management.tscn" id="4_jl6cc"]
 
 [node name="MeshTab" instance=ExtResource("1_celud")]
 script = ExtResource("2_vdf1q")

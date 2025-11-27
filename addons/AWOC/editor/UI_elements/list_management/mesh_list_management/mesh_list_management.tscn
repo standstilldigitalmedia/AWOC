@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://s2an45fu4hce"]
+
+[ext_resource type="PackedScene" uid="uid://bkyouqx2d08lp" path="res://addons/AWOC/editor/UI_elements/list_management/list_management_base/list_management_base.tscn" id="1_cs4jm"]
+[ext_resource type="Script" uid="uid://glwxa0evrhnl" path="res://addons/AWOC/editor/UI_elements/list_management/mesh_list_management/mesh_list_management.gd" id="2_16pa3"]
+
+[node name="MeshManagementList" instance=ExtResource("1_cs4jm")]
+script = ExtResource("2_16pa3")
+
+[node name="ErrorLabel" parent="." index="0"]
+visible = false
