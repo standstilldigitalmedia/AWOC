@@ -1,6 +1,10 @@
-[gd_resource type="Resource" script_class="AWOCLibraryManager" load_steps=2 format=3 uid="uid://qkoh2bukessb"]
+[gd_resource type="Resource" script_class="AWOCLibraryManager" load_steps=3 format=3 uid="uid://qkoh2bukessb"]
 
-[ext_resource type="Script" uid="uid://b35ctqrqkyw8s" path="res://addons/AWOC/editor/resource_managers/awoc_library_manager.gd" id="1_c706m"]
+[ext_resource type="Script" uid="uid://dnd0rp5b141ij" path="res://addons/AWOC/editor/resource_managers/awoc_library_manager.gd" id="1_c706m"]
+[ext_resource type="Resource" uid="uid://cd0ykqr2fp4ev" path="res://testing/asdadasasd.tres" id="1_lvshn"]
 
 [resource]
 script = ExtResource("1_c706m")
+parent_resource_dictionary = {
+"asdadasasd": ExtResource("1_lvshn")
+}

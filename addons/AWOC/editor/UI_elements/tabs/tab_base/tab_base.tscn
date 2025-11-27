@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://c8ipywjuf8whf"]
 
-[ext_resource type="Script" uid="uid://hyyu7xom41y0" path="res://addons/AWOC/editor/UI_elements/tabs/tab_base/tab_base.gd" id="1_yu42b"]
+[ext_resource type="Script" uid="uid://b6qqckl2wv6a4" path="res://addons/AWOC/editor/UI_elements/tabs/tab_base/tab_base.gd" id="1_yu42b"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yu42b"]
 bg_color = Color(1, 1, 1, 0.039215688)

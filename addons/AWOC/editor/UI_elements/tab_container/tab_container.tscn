@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bbubufxjfxgfk"]
 
-[ext_resource type="Script" uid="uid://dh265wu4uqn2n" path="res://addons/AWOC/editor/UI_elements/tab_container/tab_container.gd" id="1_yyjnp"]
+[ext_resource type="Script" uid="uid://btb7j112xae3a" path="res://addons/AWOC/editor/UI_elements/tab_container/tab_container.gd" id="1_yyjnp"]
 [ext_resource type="PackedScene" uid="uid://b5ygbqulcy4pk" path="res://addons/AWOC/editor/UI_elements/tabs/mesh_tab/mesh_tab.tscn" id="2_l58uv"]
 
 [node name="TabContainer" type="TabContainer"]

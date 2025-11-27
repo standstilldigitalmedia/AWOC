@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://byd7gfpljhp2q"]
 
-[ext_resource type="Script" uid="uid://bhmlamwwohjyd" path="res://addons/AWOC/editor/UI_elements/main_editor_interface/main_editor_interface.gd" id="1_4oqix"]
+[ext_resource type="Script" uid="uid://cy5c6bsueadn3" path="res://addons/AWOC/editor/UI_elements/main_editor_interface/main_editor_interface.gd" id="1_4oqix"]
 [ext_resource type="PackedScene" uid="uid://bojjuauhlxp21" path="res://addons/AWOC/editor/UI_elements/tabs/welcome_tab/welcome_tab.tscn" id="2_tv30v"]
 [ext_resource type="PackedScene" uid="uid://bbubufxjfxgfk" path="res://addons/AWOC/editor/UI_elements/tab_container/tab_container.tscn" id="3_0syea"]
 [ext_resource type="PackedScene" uid="uid://7v1ni6wfy8to" path="res://addons/AWOC/editor/UI_elements/preview/preview.tscn" id="4_nkex8"]
@@ -57,6 +57,7 @@ visible = false
 layout_mode = 2
 
 [node name="Preview" parent="." instance=ExtResource("4_nkex8")]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 

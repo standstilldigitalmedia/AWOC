@@ -5,8 +5,7 @@ extends VBoxContainer
 @onready var new_resource_button: Button = $VBoxContainer/NewResourceButton
 @onready var new_resource_panel_container: PanelContainer = $VBoxContainer/NewResourcePanelContainer
 @onready var manage_resources_button: Button = $VBoxContainer2/ManageResourcesButton
-@onready
-var manage_resource_panel_container: PanelContainer = $VBoxContainer2/ManageResourcesPanelContainer
+@onready var manage_resource_panel_container: PanelContainer = $VBoxContainer2/ManageResourcesPanelContainer
 
 
 func set_manage_button_state() -> void:
@@ -39,5 +38,7 @@ func _on_resource_modified(_resource_type: AWOCResourceType.Type, result: String
 func _ready() -> void:
 	new_resource_panel_container.hide()
 	manage_resource_panel_container.hide()
-	SignalBus.resource_modified.connect(_on_resource_modified)
 	set_manage_button_state()
+	var signal_bus: AWOCGlobalSignalBus = AWOCEditorGlobal.get_signal_bus()
+	if signal_bus:
+		signal_bus.resource_modified.connect(_on_resource_modified)

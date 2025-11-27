@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://c7mmm46yflmwh"]
 
 [ext_resource type="Texture2D" uid="uid://3rpabhykqqia" path="res://addons/AWOC/editor/images/godot_icons/Save.svg" id="1_03q4o"]
-[ext_resource type="Script" uid="uid://bka77t2gcosqh" path="res://addons/AWOC/editor/UI_elements/management_rows/base_management_row/base_management_row.gd" id="1_pil60"]
+[ext_resource type="Script" uid="uid://dl6gj00ledsvk" path="res://addons/AWOC/editor/UI_elements/management_rows/base_management_row/base_management_row.gd" id="1_pil60"]
 [ext_resource type="Texture2D" uid="uid://cvm08nb2yc481" path="res://addons/AWOC/editor/images/godot_icons/Remove.svg" id="2_pil60"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hi055"]

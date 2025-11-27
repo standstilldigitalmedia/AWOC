@@ -13,7 +13,6 @@ extends ScrollContainer
 @export var rotate_speed_slider: HSlider
 
 var preview_avatar: AWOCAvatar
-
 var direction: Vector3 = Vector3.ZERO
 var rotate: int = 0
 var move_speed: int = 5
@@ -70,7 +69,6 @@ func _process(delta) -> void:
 		elif direction.z < 0:
 			new_position.z = main_camera.position.z - (zoom_speed * delta)
 		main_camera.position = new_position
-
 	if rotate > 0:
 		if x_checkbox.is_pressed():
 			subject.rotate_x(rotate_speed * delta)
@@ -161,20 +159,15 @@ func reset():
 
 
 func _on_show_mesh(mesh_name: String, show: bool) -> void:
-	# 1. Create the avatar if it doesn't exist
 	if not preview_avatar or not is_instance_valid(preview_avatar):
-		# Clean up old subject if it exists
 		if subject:
 			subject.queue_free()
-
 		preview_avatar = AWOCAvatar.new()
-		# Use the inherited 'set_subject' to handle positioning/viewport logic
 		set_subject(preview_avatar)
-
-		# Initialize with current data
-		preview_avatar.initialize_avatar(AWOCState.current_awoc)
-
-	# 2. Toggle the mesh
+		var awoc_state: AWOCGlobalState = AWOCEditorGlobal.get_awoc_state()
+		if !awoc_state:
+			return
+		preview_avatar.initialize_avatar(awoc_state.current_awoc)
 	preview_avatar.toggle_mesh(mesh_name, show)
 	if show:
 		show()
@@ -182,4 +175,6 @@ func _on_show_mesh(mesh_name: String, show: bool) -> void:
 
 func _ready() -> void:
 	reset()
-	SignalBus.show_mesh.connect(_on_show_mesh)
+	var signal_bus: AWOCGlobalSignalBus = AWOCEditorGlobal.get_signal_bus()
+	if signal_bus:
+		signal_bus.show_mesh.connect(_on_show_mesh)

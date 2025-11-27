@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://b1juudpnr2kar"]
 
-[ext_resource type="Script" uid="uid://c23bv5ex3vf4h" path="res://addons/AWOC/editor/UI_elements/new_resource_controls/new_mesh_control/new_mesh_control.gd" id="1_ubtd1"]
+[ext_resource type="Script" uid="uid://cegk1tie3ro6e" path="res://addons/AWOC/editor/UI_elements/new_resource_controls/new_mesh_control/new_mesh_control.gd" id="1_ubtd1"]
 [ext_resource type="Texture2D" uid="uid://5172a1nu4uib" path="res://addons/AWOC/editor/images/godot_icons/Folder.svg" id="2_ee5sh"]
-[ext_resource type="Script" uid="uid://cwcyyy1kn8hu2" path="res://addons/AWOC/editor/control_overrides/mesh_line_edit_override.gd" id="2_lpxug"]
+[ext_resource type="Script" uid="uid://drrhxoap36kgf" path="res://addons/AWOC/editor/control_overrides/mesh_line_edit_override.gd" id="2_lpxug"]
 
 [node name="NewMeshControl" type="VBoxContainer" node_paths=PackedStringArray("model_path_line_edit", "model_path_browse_button", "add_mesh_button", "file_dialog", "error_label")]
 anchors_preset = 10
@@ -52,9 +52,10 @@ disabled = true
 text = "Add Mesh(es)"
 
 [node name="FileDialog" type="FileDialog" parent="."]
-title = "Source Model File"
+title = "Open a File"
 initial_position = 1
 file_mode = 0
+filters = PackedStringArray("*.glb, *.gltf, *.fbx, *.obj, *.blend ; 3D Model Files")
 
 [connection signal="text_changed" from="HBoxContainer/ModelPathLineEdit" to="." method="_on_model_path_line_edit_text_changed"]
 [connection signal="pressed" from="HBoxContainer/ModelPathBrowseButton" to="." method="_on_model_path_browse_button_pressed"]

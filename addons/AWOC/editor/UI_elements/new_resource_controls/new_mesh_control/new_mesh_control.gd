@@ -40,9 +40,9 @@ func _on_file_dialog_file_selected(path: String) -> void:
 
 
 func _on_add_meshes_button_pressed() -> void:
-	SignalBus.create_new_resource_requested.emit(
-		AWOCResourceType.Type.MESH, "", {"path": model_path_line_edit.text}
-	)
+	var signal_bus: AWOCGlobalSignalBus = AWOCEditorGlobal.get_signal_bus()
+	if signal_bus:
+		signal_bus.create_new_resource_requested.emit(AWOCResourceType.Type.MESH, "", {"path": model_path_line_edit.text})
 
 
 func _ready() -> void:

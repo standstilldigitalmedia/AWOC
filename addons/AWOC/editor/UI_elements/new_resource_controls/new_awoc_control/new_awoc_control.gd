@@ -26,9 +26,10 @@ func reset_inputs() -> void:
 func validate() -> void:
 	var name_is_valid = AWOCValidator.is_valid_name(name_line_edit.text)
 	var path_is_valid = AWOCValidator.is_valid_directory_path(asset_path_line_edit.text)
-	var name_exists = AWOCManager.has_named_resource(
-		AWOCResourceType.Type.AWOC, name_line_edit.text
-	)
+	var awoc_manager: AWOCGlobalManager = AWOCEditorGlobal.get_awoc_manager()
+	if !awoc_manager:
+		return
+	var name_exists = awoc_manager.has_named_resource(AWOCResourceType.Type.AWOC, name_line_edit.text)
 	if not name_is_valid:
 		set_error("Please enter a valid name for your AWOC")
 	elif name_exists:
@@ -43,9 +44,10 @@ func validate() -> void:
 func _on_create_button_pressed() -> void:
 	disable_inputs(true)
 	var additional_data := {"path": asset_path_line_edit.text}
-	SignalBus.create_new_resource_requested.emit(
-		AWOCResourceType.Type.AWOC, name_line_edit.text, additional_data
-	)
+	var signal_bus: AWOCGlobalSignalBus = AWOCEditorGlobal.get_signal_bus()
+	if !signal_bus:
+		return
+	signal_bus.create_new_resource_requested.emit(AWOCResourceType.Type.AWOC, name_line_edit.text, additional_data)
 	reset_inputs()
 
 
@@ -92,4 +94,6 @@ func _ready() -> void:
 	create_button.disabled = true
 	file_dialog.file_mode = FileDialog.FILE_MODE_OPEN_DIR
 	file_dialog.access = FileDialog.ACCESS_RESOURCES
-	SignalBus.resource_modified.connect(_on_new_awoc_created)
+	var signal_bus: AWOCGlobalSignalBus = AWOCEditorGlobal.get_signal_bus()
+	if signal_bus:
+		signal_bus.resource_modified.connect(_on_new_awoc_created)

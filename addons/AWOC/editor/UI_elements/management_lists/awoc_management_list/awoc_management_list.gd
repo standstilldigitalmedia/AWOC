@@ -28,8 +28,14 @@ func _on_resource_modified(resource_type: AWOCResourceType.Type, result: String)
 
 func _ready() -> void:
 	set_error()
-	SignalBus.resource_modified.connect(_on_resource_modified)
-	awoc_manager_library = AWOCManager.awoc_resource_manager
+	var signal_bus: AWOCGlobalSignalBus = AWOCEditorGlobal.get_signal_bus()
+	if !signal_bus:
+		return
+	signal_bus.resource_modified.connect(_on_resource_modified)
+	var awoc_manager: AWOCGlobalManager = AWOCEditorGlobal.get_awoc_manager()
+	if !awoc_manager:
+		return
+	awoc_manager_library = awoc_manager.awoc_resource_manager
 	if awoc_manager_library == null:
 		set_error("Failed to load AWOC manager library")
 		return

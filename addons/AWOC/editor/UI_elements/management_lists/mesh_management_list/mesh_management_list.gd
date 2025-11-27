@@ -5,10 +5,11 @@ extends AWOCManagementListBase
 
 func populate_control():
 	clear_children()
-	var mesh_row_manager_path: String = AWOCEditorGlobal.plugin_path.path_join(
-		"editor/UI_elements/management_rows/mesh_management_row/mesh_management_row.tscn"
-	)
-	var name_array = AWOCManager.mesh_resource_manager.get_sorted_name_array()
+	var mesh_row_manager_path: String = AWOCEditorGlobal.plugin_path.path_join("editor/UI_elements/management_rows/mesh_management_row/mesh_management_row.tscn")
+	var awoc_manager: AWOCGlobalManager = AWOCEditorGlobal.get_awoc_manager()
+	if !awoc_manager:
+		return
+	var name_array = awoc_manager.mesh_resource_manager.get_sorted_name_array()
 	for mesh_name in name_array:
 		var row_manager_scene: PackedScene = load(mesh_row_manager_path)
 		var row_manager = row_manager_scene.instantiate()
@@ -26,5 +27,8 @@ func _on_resource_modified(resource_type: AWOCResourceType.Type, result: String)
 
 func _ready() -> void:
 	set_error()
-	SignalBus.resource_modified.connect(_on_resource_modified)
+	var signal_bus: AWOCGlobalSignalBus = AWOCEditorGlobal.get_signal_bus()
+	if !signal_bus:
+		return
+	signal_bus.resource_modified.connect(_on_resource_modified)
 	populate_control()

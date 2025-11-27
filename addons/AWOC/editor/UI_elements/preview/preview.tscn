@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://7v1ni6wfy8to"]
 
-[ext_resource type="Script" uid="uid://cgg8b8pbsdby" path="res://addons/AWOC/editor/UI_elements/preview/preview.gd" id="1_muc77"]
+[ext_resource type="Script" uid="uid://culkmgyaynbr" path="res://addons/AWOC/editor/UI_elements/preview/preview.gd" id="1_muc77"]
 [ext_resource type="Texture2D" uid="uid://byj3oxwu12btc" path="res://addons/AWOC/editor/images/godot_icons/RotateLeft.svg" id="1_tpn1f"]
 [ext_resource type="Texture2D" uid="uid://b5cwcu6odq4nm" path="res://addons/AWOC/editor/images/godot_icons/ArrowUp.svg" id="2_muc77"]
 [ext_resource type="Texture2D" uid="uid://ewubj3hvnnwq" path="res://addons/AWOC/editor/images/godot_icons/RotateRight.svg" id="3_vkkix"]

@@ -41,7 +41,9 @@ func _on_create_resource_requested(
 		push_error("No manager found for resource type: " + str(resource_type))
 		return
 	var result: String = await manager.create_resource(resource_name, additional_data)
-	SignalBus.resource_modified.emit(resource_type, result)
+	var signal_bus: AWOCGlobalSignalBus = AWOCEditorGlobal.get_signal_bus()
+	if signal_bus:
+		signal_bus.resource_modified.emit(resource_type, result)
 
 
 func _on_rename_resource_requested(
@@ -53,30 +55,31 @@ func _on_rename_resource_requested(
 		return
 
 	var result: String = manager.rename_resource(old_name, new_name)
-	SignalBus.resource_modified.emit(resource_type, result)
+	var signal_bus: AWOCGlobalSignalBus = AWOCEditorGlobal.get_signal_bus()
+	if signal_bus:
+		signal_bus.resource_modified.emit(resource_type, result)
 
 
-func _on_delete_resource_requested(
-	resource_type: AWOCResourceType.Type, resource_name: String
-) -> void:
+func _on_delete_resource_requested(resource_type: AWOCResourceType.Type, resource_name: String) -> void:
 	var manager = _get_manager_for_type(resource_type)
 	if !manager:
 		push_error("No manager found for resource type: " + str(resource_type))
 		return
 
 	var result: String = manager.delete_resource(resource_name)
-	SignalBus.resource_modified.emit(resource_type, result)
+	var signal_bus: AWOCGlobalSignalBus = AWOCEditorGlobal.get_signal_bus()
+	if signal_bus:
+		signal_bus.resource_modified.emit(resource_type, result)
 
 
 func _on_awoc_loaded(awoc_name: String) -> void:
-	var current_awoc: AWOCResource = AWOCState.current_awoc
+	var awoc_state: AWOCGlobalState = AWOCEditorGlobal.get_awoc_state()
+	if !awoc_state:
+		return
+	var current_awoc: AWOCResource = awoc_state.current_awoc
 	var awoc_uid = awoc_resource_manager.get_awoc_uid(awoc_name)
-	slot_resource_manager.init_resource_manager(
-		current_awoc, awoc_uid, current_awoc.slot_dictionary
-	)
-	mesh_resource_manager.init_resource_manager(
-		current_awoc, awoc_uid, current_awoc.mesh_dictionary
-	)
+	slot_resource_manager.init_resource_manager(current_awoc, awoc_uid, current_awoc.slot_dictionary)
+	mesh_resource_manager.init_resource_manager(current_awoc, awoc_uid, current_awoc.mesh_dictionary)
 
 
 func _ready() -> void:
@@ -84,11 +87,11 @@ func _ready() -> void:
 	awoc_resource_manager = awoc_resource_manager.load_welcome_resource_manager()
 	slot_resource_manager = AWOCEditorSlotManager.new()
 	mesh_resource_manager = AWOCEditorMeshManager.new()
-	var bus = get_node_or_null("/root/SignalBus")
-	if bus:
-		bus.create_new_resource_requested.connect(_on_create_resource_requested)
-		bus.delete_resource_requested.connect(_on_delete_resource_requested)
-		bus.rename_resource_requested.connect(_on_rename_resource_requested)
-	var state = get_node_or_null("/root/AWOCState")
-	if state:
-		state.awoc_loaded.connect(_on_awoc_loaded)
+	var signal_bus: AWOCGlobalSignalBus = AWOCEditorGlobal.get_signal_bus()
+	if signal_bus:
+		signal_bus.create_new_resource_requested.connect(_on_create_resource_requested)
+		signal_bus.delete_resource_requested.connect(_on_delete_resource_requested)
+		signal_bus.rename_resource_requested.connect(_on_rename_resource_requested)
+	var awoc_state = AWOCEditorGlobal.get_awoc_state()
+	if awoc_state:
+		awoc_state.awoc_loaded.connect(_on_awoc_loaded)

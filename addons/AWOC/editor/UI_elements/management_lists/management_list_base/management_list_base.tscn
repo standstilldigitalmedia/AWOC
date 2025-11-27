@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bkyouqx2d08lp"]
 
-[ext_resource type="Script" uid="uid://ufk3r0p076pr" path="res://addons/AWOC/editor/UI_elements/management_lists/management_list_base/managment_list_base.gd" id="1_qcn2y"]
+[ext_resource type="Script" uid="uid://dyrdksbek77ny" path="res://addons/AWOC/editor/UI_elements/management_lists/management_list_base/managment_list_base.gd" id="1_qcn2y"]
 
 [node name="ManagementListBase" type="VBoxContainer" node_paths=PackedStringArray("error_label", "content_container")]
 anchors_preset = 15

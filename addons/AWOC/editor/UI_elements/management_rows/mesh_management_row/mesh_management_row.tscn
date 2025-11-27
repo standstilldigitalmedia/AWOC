@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://cdlt7p5vba3ue"]
 
 [ext_resource type="PackedScene" uid="uid://c7mmm46yflmwh" path="res://addons/AWOC/editor/UI_elements/management_rows/base_management_row/base_management_row.tscn" id="1_ttf58"]
-[ext_resource type="Script" uid="uid://btfy747wm5cae" path="res://addons/AWOC/editor/UI_elements/management_rows/mesh_management_row/mesh_management_row.gd" id="2_paw6x"]
+[ext_resource type="Script" uid="uid://no6is73jh68x" path="res://addons/AWOC/editor/UI_elements/management_rows/mesh_management_row/mesh_management_row.gd" id="2_paw6x"]
 [ext_resource type="Texture2D" uid="uid://tx0pywsawqrg" path="res://addons/AWOC/editor/images/godot_icons/GuiVisibilityVisible.svg" id="3_nebt5"]
 [ext_resource type="Texture2D" uid="uid://dnmrdjdr58tn8" path="res://addons/AWOC/editor/images/godot_icons/GuiVisibilityHidden.svg" id="4_wfs2l"]
 

@@ -7,9 +7,7 @@ var parent_resource: Resource
 var parent_uid: int
 
 
-func add_disk_resource_to_dictionary_with_path(
-	res_name: String, uid: int, res_path: String
-) -> String:
+func add_disk_resource_to_dictionary_with_path(res_name: String, uid: int, res_path: String) -> String:
 	var res_validated: String = validate_new_res(res_name)
 	if !res_validated.is_empty():
 		return res_validated

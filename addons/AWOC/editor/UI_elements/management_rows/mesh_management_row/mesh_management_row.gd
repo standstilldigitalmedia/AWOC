@@ -4,4 +4,6 @@ extends AWOCBaseManagementRow
 
 
 func _on_show_hide_button_toggled(toggled_on: bool) -> void:
-	SignalBus.show_mesh.emit(previous_name, toggled_on)
+	var signal_bus: AWOCGlobalSignalBus = AWOCEditorGlobal.get_signal_bus()
+	if signal_bus:
+		signal_bus.show_mesh.emit(previous_name, toggled_on)

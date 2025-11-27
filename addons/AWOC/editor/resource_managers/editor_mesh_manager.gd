@@ -8,41 +8,30 @@ func save_skeleton_to_disk(skeleton_node: Skeleton3D, save_path: String) -> Stri
 	new_skeleton.position = Vector3.ZERO
 	new_skeleton.rotation = Vector3.ZERO
 	new_skeleton.scale = Vector3.ONE
-
 	var packed_scene = PackedScene.new()
 	var result = packed_scene.pack(new_skeleton)
-	print("DEBUG: pack() result: ", result)
-	print("DEBUG: packed_scene after pack: ", packed_scene)
-	print("DEBUG: packed_scene.can_instantiate(): ", packed_scene.can_instantiate())
 	if result != OK:
 		new_skeleton.queue_free()
 		return "Error: Could not pack skeleton scene. Error code: " + str(result)
-
 	var dir_created: String = create_dir_for_file_path(save_path)
 	if !dir_created.is_empty():
 		new_skeleton.queue_free()
 		return dir_created
-
-	# Save with proper flags for scene resources
-	var save_result = ResourceSaver.save(
-		packed_scene, save_path, ResourceSaver.FLAG_BUNDLE_RESOURCES
-	)
+	var save_result = ResourceSaver.save(packed_scene, save_path, ResourceSaver.FLAG_BUNDLE_RESOURCES)
 	new_skeleton.queue_free()
-
 	if save_result != OK:
 		return "Error saving skeleton file. Error code: " + str(save_result)
-
-	# Important: Wait for the filesystem to scan
 	await Engine.get_main_loop().process_frame
-
 	var uid = ResourceLoader.get_resource_uid(save_path)
 	if uid == ResourceUID.INVALID_ID:
 		return "Error: Failed to get UID for skeleton at " + save_path
-
 	var resource_reference: AWOCResourceReference = AWOCResourceReference.new()
 	resource_reference.set_uid(uid)
 	resource_reference.set_path(save_path)
-	AWOCState.current_awoc.skeleton_reference = resource_reference
+	var awoc_state: AWOCGlobalState = AWOCEditorGlobal.get_awoc_state()
+	if !awoc_state:
+		return "GlobalState not found"
+	awoc_state.current_awoc.skeleton_reference = resource_reference
 	return save_parent_resource()
 
 
@@ -58,10 +47,11 @@ func recursive_get_skeleton(source_obj: Node) -> Skeleton3D:
 
 func create_mesh_asset(mesh_instance: MeshInstance3D) -> String:
 	var mesh_name: String = mesh_instance.name
-	var mesh_instance_path: String = (
-		AWOCState.current_asset_path + "/meshes/mesh/" + mesh_name + ".res"
-	)
-	var mesh_resource_path: String = AWOCState.current_asset_path + "/meshes/resource"
+	var awoc_state: AWOCGlobalState = AWOCEditorGlobal.get_awoc_state()
+	if !awoc_state:
+		return "GlobalState not found"
+	var mesh_instance_path: String = awoc_state.current_asset_path + "/meshes/mesh/" + mesh_name + ".res"
+	var mesh_resource_path: String = awoc_state.current_asset_path + "/meshes/resource"
 	var create_mesh_instance_dir: String = create_dir_for_file_path(mesh_instance_path)
 	if !create_mesh_instance_dir.is_empty():
 		return create_mesh_instance_dir
@@ -95,9 +85,10 @@ func scan_imported_scene(root_node: Node) -> String:
 			valid_skin_meshes.append(mesh_inst)
 		else:
 			print("Ignored Static Mesh (Not rigged to avatar): ", mesh_inst.name)
-	var save_skeleton: String = await save_skeleton_to_disk(
-		found_skeleton, AWOCState.current_asset_path + "/skeleton/skeleton.tscn"
-	)
+	var awoc_state: AWOCGlobalState = AWOCEditorGlobal.get_awoc_state()
+	if !awoc_state:
+		return "GlobalState not found"
+	var save_skeleton: String = await save_skeleton_to_disk(found_skeleton, awoc_state.current_asset_path + "/skeleton/skeleton.tscn")
 	if !save_skeleton.is_empty():
 		return save_skeleton
 	for mesh: MeshInstance3D in valid_skin_meshes:

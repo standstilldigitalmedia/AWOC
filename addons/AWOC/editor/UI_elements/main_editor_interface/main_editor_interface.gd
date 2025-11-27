@@ -17,7 +17,9 @@ func _on_awoc_loaded(awoc_name: String) -> void:
 func _ready() -> void:
 	tab_container.hide()
 	preview_container.hide()
-	AWOCState.awoc_loaded.connect(_on_awoc_loaded)
+	var awoc_state: AWOCGlobalState = AWOCEditorGlobal.get_awoc_state()
+	if awoc_state:
+		awoc_state.awoc_loaded.connect(_on_awoc_loaded)
 
 
 func _on_home_button_pressed() -> void:
