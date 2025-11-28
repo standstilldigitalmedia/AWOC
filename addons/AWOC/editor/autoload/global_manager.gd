@@ -84,34 +84,24 @@ func _on_awoc_loaded(awoc_name: String) -> void:
 	if awoc_uid <= 0:
 		push_error("Invalid AWOC UID for: " + awoc_name)
 		return
-
-	# Ensure dictionaries are initialized
 	if current_awoc.slot_dictionary == null:
 		current_awoc.slot_dictionary = {}
 	if current_awoc.mesh_dictionary == null:
 		current_awoc.mesh_dictionary = {}
-
 	slot_resource_manager.init_resource_manager(current_awoc, awoc_uid, current_awoc.slot_dictionary)
 	mesh_resource_manager.init_resource_manager(current_awoc, awoc_uid, current_awoc.mesh_dictionary)
 
 
 func _ready() -> void:
-	# Initialize managers
 	awoc_resource_manager = AWOCLibraryManager.new()
 	slot_resource_manager = AWOCEditorSlotManager.new()
 	mesh_resource_manager = AWOCEditorMeshManager.new()
-
-	# Connect signals
 	var signal_bus: AWOCGlobalSignalBus = AWOCEditorGlobal.get_signal_bus()
 	if signal_bus:
 		signal_bus.create_new_resource_requested.connect(_on_create_resource_requested)
 		signal_bus.delete_resource_requested.connect(_on_delete_resource_requested)
 		signal_bus.rename_resource_requested.connect(_on_rename_resource_requested)
-
 	var awoc_state = AWOCEditorGlobal.get_awoc_state()
 	if awoc_state:
 		awoc_state.awoc_loaded.connect(_on_awoc_loaded)
-
-	# Initialize the library manager (this may trigger filesystem operations)
-	# We do this after signal connections so everything is ready
 	await awoc_resource_manager.init_library_manager()

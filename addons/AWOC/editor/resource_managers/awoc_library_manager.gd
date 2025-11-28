@@ -33,38 +33,29 @@ func get_awoc_uid(awoc_name: String) -> int:
 func load_welcome_resource_manager() -> AWOCLibrary:
 	var welcome_resource: AWOCLibrary
 	var full_file_path: String = AWOCEditorGlobal.plugin_path.path_join(AWOCEditorGlobal.WELCOME_BASE_PATH + AWOCEditorGlobal.WELCOME_FILE_NAME)
-
 	if FileAccess.file_exists(full_file_path):
 		welcome_resource = ResourceLoader.load(full_file_path, "", ResourceLoader.CACHE_MODE_IGNORE) as AWOCLibrary
 		if welcome_resource == null:
 			push_error("Unable to load AWOCLibrary from: " + full_file_path)
 			return null
-		# Ensure the dictionary is initialized
 		if welcome_resource.awoc_resource_reference_dictionary == null:
 			var typed_dict: Dictionary[String, AWOCResourceReference] = {}
 			welcome_resource.awoc_resource_reference_dictionary = typed_dict
 	else:
-		# Welcome file doesn't exist, create it
 		welcome_resource = AWOCLibrary.new()
-		# Initialize the dictionary if it's null
 		if welcome_resource.awoc_resource_reference_dictionary == null:
 			var typed_dict: Dictionary[String, AWOCResourceReference] = {}
 			welcome_resource.awoc_resource_reference_dictionary = typed_dict
-
 		var path_to_create = AWOCEditorGlobal.plugin_path.path_join(AWOCEditorGlobal.WELCOME_BASE_PATH)
-		# Ensure directory exists
 		if !DirAccess.dir_exists_absolute(path_to_create):
 			var dir_result = DirAccess.make_dir_recursive_absolute(path_to_create)
 			if dir_result != OK:
 				push_error("Failed to create directory: " + path_to_create)
 				return null
-
-		# Save the file - this will wait for any ongoing scan
 		var uid: int = await save_resource(welcome_resource, full_file_path)
 		if uid < 1:
 			push_error("AWOCLibrary could not be saved to: " + full_file_path)
 			return null
-
 	return welcome_resource
 
 
@@ -75,17 +66,13 @@ func init_library_manager() -> void:
 		var typed_dict: Dictionary[String, AWOCResourceReference] = {}
 		parent_resource_dictionary = typed_dict
 		return
-
 	var full_file_path: String = AWOCEditorGlobal.plugin_path.path_join(AWOCEditorGlobal.WELCOME_BASE_PATH + AWOCEditorGlobal.WELCOME_FILE_NAME)
 	parent_uid = ResourceLoader.get_resource_uid(full_file_path)
-
 	if parent_uid == ResourceUID.INVALID_ID:
 		push_warning("Welcome resource has invalid UID")
-
 	parent_resource_dictionary = parent_resource.awoc_resource_reference_dictionary
 	if !parent_resource_dictionary:
 		push_warning("Welcome resource dictionary is null, initializing to empty")
 		var typed_dict: Dictionary[String, AWOCResourceReference] = {}
 		parent_resource_dictionary = typed_dict
 		parent_resource.awoc_resource_reference_dictionary = typed_dict
-	

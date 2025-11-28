@@ -13,12 +13,7 @@ func create_resource(resource_name: String, additional_data: Dictionary) -> Stri
 		return "A slot named " + resource_name + " already exists"
 	if !AWOCValidator.is_valid_name(resource_name):
 		return "Please enter a valid slot name"
-	if !additional_data.has("hide_slot_array"):
-		return "New Slot must have a hide_slot_array"
 	var new_slot: AWOCSlot = AWOCSlot.new()
-	var new_hide_slot_array: Array[String] = additional_data.get("hide_slot_array")
-	if new_hide_slot_array.size() > 0:
-		new_slot.hide_slot_array = new_hide_slot_array
 	return add_resource_to_dictionary(resource_name, new_slot)
 
 

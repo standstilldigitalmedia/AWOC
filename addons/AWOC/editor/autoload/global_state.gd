@@ -29,7 +29,6 @@ func load_awoc(awoc_name: String) -> bool:
 			return false
 		current_awoc = loaded_awoc
 		current_asset_path = path.get_base_dir()
-		# Emit the signal - the global_manager will handle initializing the resource managers
 		awoc_loaded.emit(awoc_name)
 		return true
 	return false

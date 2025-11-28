@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://cpb7hk2t83lbe"]
+
+[ext_resource type="Texture2D" uid="uid://tx0pywsawqrg" path="res://addons/AWOC/editor/images/godot_icons/GuiVisibilityVisible.svg" id="1_j60uc"]
+[ext_resource type="Script" uid="uid://re7x7hlk" path="res://addons/AWOC/editor/UI_elements/row_management/eye_button/eye_button.gd" id="2_1bj22"]
+[ext_resource type="Texture2D" uid="uid://dnmrdjdr58tn8" path="res://addons/AWOC/editor/images/godot_icons/GuiVisibilityHidden.svg" id="3_4drky"]
+
+[node name="EyeButton" type="Button"]
+custom_minimum_size = Vector2(31, 31)
+offset_right = 8.0
+offset_bottom = 8.0
+toggle_mode = true
+icon = ExtResource("1_j60uc")
+icon_alignment = 1
+script = ExtResource("2_1bj22")
+open_eye = ExtResource("1_j60uc")
+closed_eye = ExtResource("3_4drky")
+
+[connection signal="toggled" from="." to="." method="_on_toggled"]

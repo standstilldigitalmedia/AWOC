@@ -4,7 +4,7 @@ extends Node3D
 
 var awoc_resource: AWOCResource
 var active_skeleton: Skeleton3D = null
-var equipped_meshes: Dictionary = {}  # Key: String (Mesh Name), Value: MeshInstance3D
+var equipped_meshes: Dictionary = {}
 
 
 func initialize_avatar(resource: AWOCResource) -> void:
@@ -29,8 +29,6 @@ func initialize_avatar(resource: AWOCResource) -> void:
 		printerr("AWOCAvatar: PackedScene instantiated but is not a Skeleton3D")
 		return
 	add_child(active_skeleton)
-	# Preserve the skeleton's transform from the saved scene
-	# Don't reset position/rotation as it may contain important orientation data
 
 
 func toggle_mesh(mesh_name: String, show: bool) -> void:

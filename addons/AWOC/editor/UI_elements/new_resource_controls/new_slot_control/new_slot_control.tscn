@@ -1,0 +1,41 @@
+[gd_scene load_steps=2 format=3 uid="uid://u0qyj607i87k"]
+
+[ext_resource type="Script" uid="uid://b4uh7dkf6t0x3" path="res://addons/AWOC/editor/UI_elements/new_resource_controls/new_slot_control/new_slot_control.gd" id="1_04gw6"]
+
+[node name="NewSlotControl" type="VBoxContainer" node_paths=PackedStringArray("name_line_edit", "create_button", "error_label")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+script = ExtResource("1_04gw6")
+name_line_edit = NodePath("HBoxContainer/NameLineEdit")
+create_button = NodePath("CreateButton")
+error_label = NodePath("ErrorLabel")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "New Slot Name: "
+
+[node name="NameLineEdit" type="LineEdit" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "New Slot Name"
+
+[node name="ErrorLabel" type="Label" parent="."]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 14
+horizontal_alignment = 1
+
+[node name="CreateButton" type="Button" parent="."]
+layout_mode = 2
+text = "Create Slot"
+
+[connection signal="text_changed" from="HBoxContainer/NameLineEdit" to="." method="_on_name_line_edit_text_changed"]
+[connection signal="pressed" from="CreateButton" to="." method="_on_create_button_pressed"]

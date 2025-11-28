@@ -31,7 +31,6 @@ func load_autoload(name: String, path: String) -> void:
 	if !ProjectSettings.has_setting(autoload_setting_path):
 		add_autoload_singleton(name, path)
 	else:
-		# Autoload already exists, probably from a previous session
 		pass
 
 
@@ -45,7 +44,6 @@ func create_dock():
 	if dock != null:
 		push_warning("AWOC: Dock already exists, skipping creation")
 		return
-
 	dock = Control.new()
 	main_editor_window_scene = load(main_editor_path)
 	if main_editor_window_scene:
@@ -70,16 +68,11 @@ func _enter_tree() -> void:
 	load_autoload(signal_bus_name, signal_bus_path)
 	load_autoload(awoc_state_name, awoc_state_path)
 	load_autoload(awoc_manager_name, awoc_manager_path)
-
-	# Wait for the autoloaded scripts to be registered and their _ready() to complete
-	# We need to defer dock creation to avoid conflicts with editor initialization
 	await get_tree().process_frame
 	await get_tree().process_frame
-
 	if not is_inside_tree():
 		push_warning("AWOC: Plugin removed from tree before initialization completed")
 		return
-
 	create_dock()
 
 

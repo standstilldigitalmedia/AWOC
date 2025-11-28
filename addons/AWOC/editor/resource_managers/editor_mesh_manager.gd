@@ -5,8 +5,6 @@ extends AWOCEditorDiskResourceManager
 
 func save_skeleton_to_disk(skeleton_node: Skeleton3D, save_path: String) -> String:
 	var new_skeleton = skeleton_node.duplicate()
-	# Preserve the skeleton's transform from the original model
-	# Don't reset position/rotation as it may contain important orientation data
 	var packed_scene = PackedScene.new()
 	var result = packed_scene.pack(new_skeleton)
 	if result != OK:
@@ -45,31 +43,20 @@ func create_mesh_asset(mesh_instance: MeshInstance3D) -> String:
 	var awoc_state: AWOCGlobalState = AWOCEditorGlobal.get_awoc_state()
 	if !awoc_state:
 		return "GlobalState not found"
-
 	var mesh_instance_path: String = awoc_state.current_asset_path + "/meshes/mesh/" + mesh_name + ".res"
 	var mesh_resource_path: String = awoc_state.current_asset_path + "/meshes/resource"
-
 	var create_mesh_instance_dir: String = create_dir_for_file_path(mesh_instance_path)
 	if !create_mesh_instance_dir.is_empty():
 		return create_mesh_instance_dir
-
-	# Save the mesh itself
 	var save_result = ResourceSaver.save(mesh_instance.mesh, mesh_instance_path)
 	if save_result != OK:
 		return "Failed to save mesh to: " + mesh_instance_path + " (Error: " + str(save_result) + ")"
-
-	# Wait for filesystem to update
 	await wait_for_scan()
-
-	# Load the mesh back
 	var loaded_mesh = ResourceLoader.load(mesh_instance_path, "", ResourceLoader.CACHE_MODE_IGNORE)
 	if !loaded_mesh:
 		return "Failed to load saved mesh from: " + mesh_instance_path
-
-	# Create the mesh resource wrapper
 	var mesh_resource = AWOCMeshResource.new()
 	mesh_resource.array_mesh = loaded_mesh
-
 	return await create_resource_on_disk(mesh_resource, mesh_name, mesh_resource_path)
 
 
@@ -129,11 +116,7 @@ func add_new_avatar(path: String) -> String:
 		else:
 			avatar.queue_free()
 			return "No skeleton found in the avatar model."
-		# This will be where we handle meshes that aren't skinned.
-		# We'll save this for some other time
 	elif AWOCValidator.is_valid_node_path(path):
-		# This is where we will handle a single mesh being adding to an existing AWOC.
-		# We'll handle this some other time
 		pass
 	return "Please provide a valid path to a valid source model file."
 

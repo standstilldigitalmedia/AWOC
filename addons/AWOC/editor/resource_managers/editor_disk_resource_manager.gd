@@ -5,19 +5,21 @@ extends AWOCEditorDictionaryResourceManager
 
 func wait_for_scan() -> void:
 	var filesystem = EditorInterface.get_resource_filesystem()
+	if filesystem.is_scanning():
+		await filesystem.filesystem_changed
+		return
+	filesystem.call_deferred("scan")
+	await filesystem.filesystem_changed
+	"""var filesystem = EditorInterface.get_resource_filesystem()
 	if !filesystem:
 		push_warning("EditorInterface.get_resource_filesystem() returned null")
 		return
-
 	var tree = Engine.get_main_loop() as SceneTree
 	if !tree:
 		push_warning("Could not get SceneTree")
 		return
-
-	# Check if already scanning - if so, just wait for it to complete
-	# Don't trigger another scan
 	if filesystem.is_scanning():
-		var timeout = 10.0  # 10 seconds timeout for initial scan
+		var timeout = 10.0
 		var start_time = Time.get_ticks_msec()
 		while filesystem.is_scanning():
 			await tree.process_frame
@@ -26,22 +28,15 @@ func wait_for_scan() -> void:
 				break
 		await tree.process_frame
 		return
-
-	# Trigger a scan only if not already scanning
 	filesystem.scan()
-
-	# Wait for the scan to complete
-	var timeout = 5.0  # 5 seconds timeout
+	var timeout = 5.0 
 	var start_time = Time.get_ticks_msec()
-
 	while filesystem.is_scanning():
 		await tree.process_frame
 		if (Time.get_ticks_msec() - start_time) / 1000.0 > timeout:
 			push_warning("Filesystem scan timeout after " + str(timeout) + " seconds")
 			break
-
-	# Give one extra frame for everything to settle
-	await tree.process_frame
+	await tree.process_frame"""
 	
 	
 func save_resource(resource: Resource, path: String, bundle: bool = false) -> int:
@@ -94,15 +89,12 @@ func delete_resource_from_disk(res_name: String) -> String:
 		return res_validated
 	if !parent_resource_dictionary.has(res_name):
 		return "Resource not found in dictionary: " + res_name
-
 	var resource_ref: AWOCResourceReference = parent_resource_dictionary[res_name]
 	var file_path: String = resource_ref.get_ref_path()
-
 	if file_path.is_empty():
 		push_warning("Empty file path for resource: " + res_name)
 		# Still try to remove from dictionary
 		return delete_resource_from_dictionary(res_name)
-
 	var extension = file_path.get_extension().to_lower()
 	if extension == "gd" or extension == "tscn":
 		parent_resource_dictionary.erase(res_name)
@@ -110,24 +102,19 @@ func delete_resource_from_disk(res_name: String) -> String:
 		var error_msg = "Attempted to delete source file (" + file_path + "). Removed dictionary reference only."
 		push_error(error_msg)
 		return error_msg
-
 	if !FileAccess.file_exists(file_path):
 		push_warning("File does not exist, removing from dictionary: " + file_path)
-		# File doesn't exist, but remove from dictionary anyway
 		return delete_resource_from_dictionary(res_name)
-
 	var result: String = ""
 	var base_dir = file_path.get_base_dir()
 	var dir: DirAccess = DirAccess.open("res://")
 	if !dir:
 		return "Failed to open directory for deletion"
-
 	if AWOCEditorGlobal.SEND_TO_RECYCLE:
 		var trash_result = OS.move_to_trash(ProjectSettings.globalize_path(file_path))
 		if trash_result != OK:
 			result = "Failed to move file to trash: " + file_path + " (Error: " + str(trash_result) + ")"
 		else:
-			# Successfully moved file, try to clean up empty directory
 			if dir.get_files_at(base_dir).size() < 1 and dir.get_directories_at(base_dir).size() < 1:
 				var dir_trash_result = OS.move_to_trash(ProjectSettings.globalize_path(base_dir))
 				if dir_trash_result != OK:
@@ -137,15 +124,12 @@ func delete_resource_from_disk(res_name: String) -> String:
 		if remove_result != OK:
 			result = "Failed to remove file: " + file_path + " (Error: " + str(remove_result) + ")"
 		else:
-			# Successfully removed file, try to clean up empty directory
 			if dir.get_files_at(base_dir).size() < 1 and dir.get_directories_at(base_dir).size() < 1:
 				var dir_remove_result = dir.remove(base_dir)
 				if dir_remove_result != OK:
 					push_warning("Failed to remove empty directory: " + base_dir + " (Error: " + str(dir_remove_result) + ")")
-
 	if !result.is_empty():
 		return result
-
 	await wait_for_scan()
 	return delete_resource_from_dictionary(res_name)
 
@@ -163,24 +147,14 @@ func rename_resource_on_disk(old_name: String, new_name: String) -> String:
 		return "Original file not found at " + old_path
 	var extension = old_path.get_extension().to_lower()
 	var new_path: String = old_path.get_base_dir() + "/" + new_name + "." + extension
-
-	# Check if new path already exists
 	if FileAccess.file_exists(new_path):
 		return "File already exists at destination: " + new_path
-
 	var dir: DirAccess = DirAccess.open("res://")
 	if !dir:
 		return "Failed to open directory"
-
 	var rename_result = dir.rename(old_path, new_path)
 	if rename_result != OK:
 		return "Failed to rename file from " + old_path + " to " + new_path + " (Error: " + str(rename_result) + ")"
-
-	# Godot 4 automatically updates the ResourceUID mapping when files are renamed
-	# We just need to wait for the filesystem to scan and update the path in our reference
 	await wait_for_scan()
-
-	# Update the path in the resource reference after scan completes
 	resource_ref.set_ref_path(new_path)
-
 	return rename_resource_in_dictionary(old_name, new_name)

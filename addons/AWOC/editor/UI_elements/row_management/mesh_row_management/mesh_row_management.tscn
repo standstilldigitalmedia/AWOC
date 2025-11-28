@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://brapvodkp7t37"]
+[gd_scene load_steps=6 format=3 uid="uid://brapvodkp7t37"]
 
 [ext_resource type="PackedScene" uid="uid://dgblueeli42go" path="res://addons/AWOC/editor/UI_elements/row_management/row_management_base/row_management_base.tscn" id="1_wwpag"]
 [ext_resource type="Script" uid="uid://no6is73jh68x" path="res://addons/AWOC/editor/UI_elements/row_management/mesh_row_management/mesh_row_management.gd" id="2_b4hrf"]
 [ext_resource type="Texture2D" uid="uid://tx0pywsawqrg" path="res://addons/AWOC/editor/images/godot_icons/GuiVisibilityVisible.svg" id="3_dabnl"]
 [ext_resource type="Texture2D" uid="uid://dnmrdjdr58tn8" path="res://addons/AWOC/editor/images/godot_icons/GuiVisibilityHidden.svg" id="4_v7sa7"]
+[ext_resource type="PackedScene" uid="uid://cpb7hk2t83lbe" path="res://addons/AWOC/editor/UI_elements/row_management/eye_button/eye_button.tscn" id="5_b4hrf"]
 
 [node name="MeshRowManagement" instance=ExtResource("1_wwpag")]
 script = ExtResource("2_b4hrf")
@@ -16,4 +17,8 @@ texture_normal = ExtResource("3_dabnl")
 texture_pressed = ExtResource("4_v7sa7")
 stretch_mode = 3
 
+[node name="EyeButton" parent="MarginContainer/VBoxContainer/HBoxContainer" index="4" instance=ExtResource("5_b4hrf")]
+layout_mode = 2
+
 [connection signal="toggled" from="MarginContainer/VBoxContainer/HBoxContainer/ShowHideButton" to="." method="_on_show_hide_button_toggled"]
+[connection signal="toggled" from="MarginContainer/VBoxContainer/HBoxContainer/EyeButton" to="." method="_on_show_hide_button_toggled"]
