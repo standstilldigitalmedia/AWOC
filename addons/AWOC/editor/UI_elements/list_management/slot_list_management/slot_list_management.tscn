@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://de03wv1wili2n"]
+
+[ext_resource type="PackedScene" uid="uid://bkyouqx2d08lp" path="res://addons/AWOC/editor/UI_elements/list_management/list_management_base/list_management_base.tscn" id="1_3sufj"]
+[ext_resource type="Script" uid="uid://c20aaovkccey2" path="res://addons/AWOC/editor/UI_elements/list_management/slot_list_management/slot_list_management.gd" id="2_6bxvj"]
+
+[node name="SlotListManagement" instance=ExtResource("1_3sufj")]
+script = ExtResource("2_6bxvj")
+
+[node name="ErrorLabel" parent="." index="0"]
+visible = false
