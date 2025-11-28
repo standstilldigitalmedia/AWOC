@@ -3,6 +3,7 @@ class_name AWOCGlobalState
 extends Node
 
 signal awoc_loaded(awoc_name: String)
+signal awoc_resource_managers_ready
 signal awoc_closed
 signal awoc_data_changed
 

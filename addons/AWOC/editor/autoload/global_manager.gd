@@ -7,6 +7,18 @@ var slot_resource_manager: AWOCEditorSlotManager
 var mesh_resource_manager: AWOCEditorMeshManager
 
 
+func _get_manager_for_type(resource_type: AWOCResourceType.Type):
+	match resource_type:
+		AWOCResourceType.Type.AWOC:
+			return awoc_resource_manager
+		AWOCResourceType.Type.SLOT:
+			return slot_resource_manager
+		AWOCResourceType.Type.MESH:
+			return mesh_resource_manager
+		_:
+			return null
+			
+			
 func has_resources(resource_type: AWOCResourceType.Type) -> bool:
 	var manager = _get_manager_for_type(resource_type)
 	if !manager:
@@ -21,16 +33,11 @@ func has_named_resource(resource_type: AWOCResourceType.Type, resource_name: Str
 	return manager.has_named_resource(resource_name)
 
 
-func _get_manager_for_type(resource_type: AWOCResourceType.Type):
-	match resource_type:
-		AWOCResourceType.Type.AWOC:
-			return awoc_resource_manager
-		AWOCResourceType.Type.SLOT:
-			return slot_resource_manager
-		AWOCResourceType.Type.MESH:
-			return mesh_resource_manager
-		_:
-			return null
+func get_sorted_name_array(resource_type: AWOCResourceType.Type) -> Array[String]:
+	var manager = _get_manager_for_type(resource_type)
+	if !manager:
+		return []
+	return manager.get_sorted_name_array()
 
 
 func _on_create_resource_requested(
@@ -90,6 +97,7 @@ func _on_awoc_loaded(awoc_name: String) -> void:
 		current_awoc.mesh_dictionary = {}
 	slot_resource_manager.init_resource_manager(current_awoc, awoc_uid, current_awoc.slot_dictionary)
 	mesh_resource_manager.init_resource_manager(current_awoc, awoc_uid, current_awoc.mesh_dictionary)
+	awoc_state.awoc_resource_managers_ready.emit()
 
 
 func _ready() -> void:

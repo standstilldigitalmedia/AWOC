@@ -42,14 +42,19 @@ func _on_manage_resource_button_toggled(toggled_on: bool) -> void:
 
 
 func _on_resource_modified(_resource_type: AWOCResourceType.Type, result: String) -> void:
-	if result.is_empty():
-		set_manage_button_state()
+	set_manage_button_state()
+
+
+func _on_awoc_resource_managers_ready() -> void:
+	set_manage_button_state()
 
 
 func _ready() -> void:
 	new_resource_panel_container.hide()
 	manage_resource_panel_container.hide()
-	set_manage_button_state()
 	var signal_bus: AWOCGlobalSignalBus = AWOCEditorGlobal.get_signal_bus()
 	if signal_bus:
 		signal_bus.resource_modified.connect(_on_resource_modified)
+	var global_state: AWOCGlobalState = AWOCEditorGlobal.get_awoc_state()
+	if global_state:
+		global_state.awoc_resource_managers_ready.connect(_on_awoc_resource_managers_ready)
