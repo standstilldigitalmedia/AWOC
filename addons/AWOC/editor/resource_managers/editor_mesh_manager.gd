@@ -5,9 +5,8 @@ extends AWOCEditorDiskResourceManager
 
 func save_skeleton_to_disk(skeleton_node: Skeleton3D, save_path: String) -> String:
 	var new_skeleton = skeleton_node.duplicate()
-	new_skeleton.position = Vector3.ZERO
-	new_skeleton.rotation = Vector3.ZERO
-	new_skeleton.scale = Vector3.ONE
+	# Preserve the skeleton's transform from the original model
+	# Don't reset position/rotation as it may contain important orientation data
 	var packed_scene = PackedScene.new()
 	var result = packed_scene.pack(new_skeleton)
 	if result != OK:
@@ -23,7 +22,7 @@ func save_skeleton_to_disk(skeleton_node: Skeleton3D, save_path: String) -> Stri
 	new_skeleton.queue_free()
 	var resource_reference: AWOCResourceReference = AWOCResourceReference.new()
 	resource_reference.set_uid(uid)
-	resource_reference.set_path(save_path)
+	resource_reference.set_ref_path(save_path)
 	var awoc_state: AWOCGlobalState = AWOCEditorGlobal.get_awoc_state()
 	if !awoc_state:
 		return "GlobalState not found"

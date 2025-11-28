@@ -29,8 +29,8 @@ func initialize_avatar(resource: AWOCResource) -> void:
 		printerr("AWOCAvatar: PackedScene instantiated but is not a Skeleton3D")
 		return
 	add_child(active_skeleton)
-	active_skeleton.position = Vector3.ZERO
-	active_skeleton.rotation = Vector3.ZERO
+	# Preserve the skeleton's transform from the saved scene
+	# Don't reset position/rotation as it may contain important orientation data
 
 
 func toggle_mesh(mesh_name: String, show: bool) -> void:

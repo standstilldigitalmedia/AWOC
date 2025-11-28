@@ -21,7 +21,7 @@ func delete_resource(resource_name: String) -> String:
 func get_awoc_path(awoc_name: String) -> String:
 	if !has_named_resource(awoc_name):
 		return ""
-	return parent_resource_dictionary.get(awoc_name).get_path()
+	return parent_resource_dictionary.get(awoc_name).get_ref_path()
 
 
 func get_awoc_uid(awoc_name: String) -> int:

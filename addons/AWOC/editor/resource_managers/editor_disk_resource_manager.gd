@@ -85,7 +85,7 @@ func create_resource_on_disk(resource: Resource, res_name: String, path: String,
 	var uid = await save_resource(resource,full_path) 
 	if uid == ResourceUID.INVALID_ID:
 		return "Failed to get UID for newly created resource: " + full_path
-	return add_disk_resource_to_dictionary_with_path(res_name, uid, full_path)
+	return add_disk_resource_to_dictionary(res_name, uid)
 
 
 func delete_resource_from_disk(res_name: String) -> String:
@@ -96,7 +96,7 @@ func delete_resource_from_disk(res_name: String) -> String:
 		return "Resource not found in dictionary: " + res_name
 
 	var resource_ref: AWOCResourceReference = parent_resource_dictionary[res_name]
-	var file_path: String = resource_ref.get_path()
+	var file_path: String = resource_ref.get_ref_path()
 
 	if file_path.is_empty():
 		push_warning("Empty file path for resource: " + res_name)
@@ -181,6 +181,6 @@ func rename_resource_on_disk(old_name: String, new_name: String) -> String:
 	await wait_for_scan()
 
 	# Update the path in the resource reference after scan completes
-	resource_ref.set_path(new_path)
+	resource_ref.set_ref_path(new_path)
 
 	return rename_resource_in_dictionary(old_name, new_name)

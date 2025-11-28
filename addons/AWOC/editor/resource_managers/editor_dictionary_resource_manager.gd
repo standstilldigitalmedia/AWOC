@@ -13,7 +13,7 @@ func add_disk_resource_to_dictionary_with_path(res_name: String, uid: int, res_p
 		return res_validated
 	var resource_reference: AWOCResourceReference = AWOCResourceReference.new()
 	resource_reference.set_uid(uid)
-	resource_reference.set_path(res_path)  # Explicitly set the path!
+	resource_reference.set_ref_path(res_path)  # Explicitly set the path!
 	parent_resource_dictionary[res_name] = resource_reference
 	var save_parent: String = save_parent_resource()
 	if !save_parent.is_empty():
@@ -73,7 +73,7 @@ func add_disk_resource_to_dictionary(res_name: String, uid: int) -> String:
 	resource_reference.set_uid(uid)
 	var ref_path = ResourceUID.get_id_path(uid)
 	if not ref_path.is_empty():
-		resource_reference.set_path(ref_path)
+		resource_reference.set_ref_path(ref_path)
 	parent_resource_dictionary[res_name] = resource_reference
 	var save_parent: String = save_parent_resource()
 	if !save_parent.is_empty():
