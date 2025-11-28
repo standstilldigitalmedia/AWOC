@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://be4qi7qb3gryo"]
+
+[ext_resource type="PackedScene" uid="uid://bkyouqx2d08lp" path="res://addons/AWOC/editor/UI_elements/list_management/list_management_base/list_management_base.tscn" id="1_oloc3"]
+[ext_resource type="Script" uid="uid://co3oqm28t32ps" path="res://addons/AWOC/editor/UI_elements/list_management/color_list_management/color_list_management.gd" id="2_ug6ww"]
+
+[node name="ColorListManagement" instance=ExtResource("1_oloc3")]
+script = ExtResource("2_ug6ww")
+
+[node name="ErrorLabel" parent="." index="0"]
+visible = false

@@ -13,7 +13,9 @@ const SIGNAL_BUS_PATH: String = "/root/SignalBus"
 const AWOC_ROW_PATH: String = "editor/UI_elements/row_management/awoc_row_management/awoc_row_management.tscn"
 const MESH_ROW_PATH: String = "editor/UI_elements/row_management/mesh_row_management/mesh_row_management.tscn"
 const SLOT_ROW_PATH: String = "editor/UI_elements/row_management/slot_row_management/slot_row_management.tscn"
+const COLOR_ROW_PATH: String = "editor/UI_elements/row_management/color_row_management/color_row_management.tscn"
 const ADDITIONAL_DATA_PATH: String = "path"
+const ADDITIONAL_DATA_COLOR: String = "color"
 
 
 static func get_awoc_manager() -> AWOCGlobalManager:

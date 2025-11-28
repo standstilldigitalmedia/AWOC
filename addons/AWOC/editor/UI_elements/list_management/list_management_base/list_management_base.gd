@@ -1,5 +1,5 @@
 @tool
-class_name AWOCListManagementList
+class_name AWOCListManagementBase
 extends VBoxContainer
 
 @export var error_label: Label

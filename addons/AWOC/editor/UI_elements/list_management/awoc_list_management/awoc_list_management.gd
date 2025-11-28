@@ -1,6 +1,6 @@
 @tool
 class_name AWOCListManagement
-extends AWOCListManagementList
+extends AWOCListManagementBase
 
 var awoc_manager_library: AWOCLibraryManager
 

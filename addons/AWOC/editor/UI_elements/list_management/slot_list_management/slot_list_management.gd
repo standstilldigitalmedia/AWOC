@@ -1,6 +1,6 @@
 @tool
 class_name AWOCSlotListManagement
-extends AWOCListManagementList
+extends AWOCListManagementBase
 
 
 func populate_control() -> void:

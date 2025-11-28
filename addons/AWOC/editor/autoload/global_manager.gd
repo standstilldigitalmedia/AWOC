@@ -5,6 +5,7 @@ extends Node
 var awoc_resource_manager: AWOCLibraryManager
 var slot_resource_manager: AWOCEditorSlotManager
 var mesh_resource_manager: AWOCEditorMeshManager
+var color_resource_manager: AWOCEditorColorResourceManager
 
 
 func _get_manager_for_type(resource_type: AWOCResourceType.Type):
@@ -15,6 +16,8 @@ func _get_manager_for_type(resource_type: AWOCResourceType.Type):
 			return slot_resource_manager
 		AWOCResourceType.Type.MESH:
 			return mesh_resource_manager
+		AWOCResourceType.Type.COLOR:
+			return color_resource_manager
 		_:
 			return null
 			
@@ -97,6 +100,7 @@ func _on_awoc_loaded(awoc_name: String) -> void:
 		current_awoc.mesh_dictionary = {}
 	slot_resource_manager.init_resource_manager(current_awoc, awoc_uid, current_awoc.slot_dictionary)
 	mesh_resource_manager.init_resource_manager(current_awoc, awoc_uid, current_awoc.mesh_dictionary)
+	color_resource_manager.init_resource_manager(current_awoc, awoc_uid, current_awoc.color_dictionary)
 	awoc_state.awoc_resource_managers_ready.emit()
 
 
@@ -104,6 +108,7 @@ func _ready() -> void:
 	awoc_resource_manager = AWOCLibraryManager.new()
 	slot_resource_manager = AWOCEditorSlotManager.new()
 	mesh_resource_manager = AWOCEditorMeshManager.new()
+	color_resource_manager = AWOCEditorColorResourceManager.new()
 	var signal_bus: AWOCGlobalSignalBus = AWOCEditorGlobal.get_signal_bus()
 	if signal_bus:
 		signal_bus.create_new_resource_requested.connect(_on_create_resource_requested)

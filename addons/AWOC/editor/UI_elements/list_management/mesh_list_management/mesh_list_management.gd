@@ -1,6 +1,6 @@
 @tool
 class_name AWOCMeshListManagement
-extends AWOCListManagementList
+extends AWOCListManagementBase
 
 
 func populate_control() -> void:

@@ -74,20 +74,6 @@ func _on_file_dialog_canceled() -> void:
 	browse_button.disabled = false
 
 
-func _on_new_awoc_created(resource_type: AWOCResourceType.Type, result: String) -> void:
-	if resource_type == AWOCResourceType.Type.AWOC:
-		if result.is_empty():
-			set_error("New AWOC Created Successfully")
-			reset_inputs()
-			disable_inputs(false)
-			if is_inside_tree():
-				await get_tree().create_timer(5.0).timeout
-				if is_inside_tree():
-					set_error()
-		else:
-			set_error(result)
-			disable_inputs(false)
-
 func _on_resource_modified(resource_type: AWOCResourceType.Type, result: String) -> void:
 	if resource_type == AWOCResourceType.Type.AWOC:
 		modified_resource("New AWOC Created Successfully", result)

@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dctiyopc5jdy4"]
+
+[ext_resource type="PackedScene" uid="uid://dgblueeli42go" path="res://addons/AWOC/editor/UI_elements/row_management/row_management_base/row_management_base.tscn" id="1_c5hxo"]
+[ext_resource type="Script" uid="uid://1xdwdsuyddws" path="res://addons/AWOC/editor/UI_elements/row_management/color_row_management/color_row_management.gd" id="2_utii0"]
+
+[node name="ColorRowManagement" instance=ExtResource("1_c5hxo")]
+script = ExtResource("2_utii0")
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="MarginContainer/VBoxContainer/HBoxContainer" index="3"]
+custom_minimum_size = Vector2(31, 0)
+layout_mode = 2
+
+[connection signal="color_changed" from="MarginContainer/VBoxContainer/HBoxContainer/ColorPickerButton" to="." method="_on_color_picker_button_color_changed"]
