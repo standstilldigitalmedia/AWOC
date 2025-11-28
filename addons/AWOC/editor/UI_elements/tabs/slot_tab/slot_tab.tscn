@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://pivxt72lhnud"]
+
+[ext_resource type="PackedScene" uid="uid://c8ipywjuf8whf" path="res://addons/AWOC/editor/UI_elements/tabs/tab_base/tab_base.tscn" id="1_sqkoj"]
+[ext_resource type="Script" uid="uid://djd3ahiabixy6" path="res://addons/AWOC/editor/UI_elements/tabs/slot_tab/slot_tab.gd" id="2_nsvnk"]
+
+[node name="SlotTab" instance=ExtResource("1_sqkoj")]
+script = ExtResource("2_nsvnk")
+
+[node name="NewResourceButton" parent="VBoxContainer" index="0"]
+text = "New Slot"
+
+[node name="ManageResourcesButton" parent="VBoxContainer2" index="0"]
+text = "Manage Slots"

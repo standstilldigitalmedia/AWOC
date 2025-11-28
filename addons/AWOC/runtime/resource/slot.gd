@@ -2,7 +2,7 @@
 class_name AWOCSlot
 extends Resource
 
-var hide_slot_array: Array[String]
+@export var hide_slot_array: Array[String] = []
 
 
 func has_hide_slot(hide_slot_name: String) -> bool:

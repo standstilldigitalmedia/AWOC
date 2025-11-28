@@ -7,7 +7,6 @@ const WELCOME_FILE_NAME: String = "welcome.tres"
 const SCAN_ON_FILE_CHANGE: bool = true
 const SEND_TO_RECYCLE: bool = false
 static var plugin_path: String = "res://addons/AWOC/"
-static var _scan_pending: bool = false
 const AWOC_MANAGER_PATH: String = "/root/AWOCManager"
 const AWOC_STATE_PATH: String = "/root/AWOCState"
 const SIGNAL_BUS_PATH: String = "/root/SignalBus"
@@ -45,16 +44,3 @@ static func get_signal_bus() -> AWOCGlobalSignalBus:
 			return signal_bus
 	push_error("Auto loaded SignalBus could not be found")
 	return null
-
-
-static func request_scan():
-	if not SCAN_ON_FILE_CHANGE or _scan_pending:
-		return
-	_scan_pending = true
-	Engine.get_main_loop().create_timer(0.3).timeout.connect(
-		func():
-			if EditorInterface.get_resource_filesystem():
-				EditorInterface.get_resource_filesystem().scan()
-			_scan_pending = false,
-		CONNECT_ONE_SHOT
-	)

@@ -43,7 +43,6 @@ visible = false
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_font_sizes/font_size = 14
-text = "error"
 horizontal_alignment = 1
 
 [node name="AddMeshesButton" type="Button" parent="."]
@@ -55,7 +54,7 @@ text = "Add Mesh(es)"
 title = "Open a File"
 initial_position = 1
 file_mode = 0
-filters = PackedStringArray("*.glb, *.gltf, *.fbx, *.obj, *.blend ; 3D Model Files")
+filters = PackedStringArray("*.glb, *.gltf, *.fbx, *.obj, *.blend ; 3D Model Files", "*.glb, *.gltf, *.fbx, *.obj, *.blend ; 3D Model Files")
 
 [connection signal="text_changed" from="HBoxContainer/ModelPathLineEdit" to="." method="_on_model_path_line_edit_text_changed"]
 [connection signal="pressed" from="HBoxContainer/ModelPathBrowseButton" to="." method="_on_model_path_browse_button_pressed"]

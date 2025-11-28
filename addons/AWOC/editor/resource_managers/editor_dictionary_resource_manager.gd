@@ -31,7 +31,6 @@ func save_parent_resource() -> String:
 	var resource_saved := ResourceSaver.save(parent_resource, ResourceUID.get_id_path(parent_uid))
 	if resource_saved != OK:
 		return error_string(resource_saved)
-	AWOCEditorGlobal.request_scan.call_deferred()
 	return ""
 
 

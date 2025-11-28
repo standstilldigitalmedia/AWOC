@@ -29,8 +29,7 @@ func load_awoc(awoc_name: String) -> bool:
 			return false
 		current_awoc = loaded_awoc
 		current_asset_path = path.get_base_dir()
-		var current_awoc_uid: int = awoc_library_manager.get_awoc_uid(awoc_name)
-		awoc_manager.slot_resource_manager.init_resource_manager(current_awoc, current_awoc_uid, current_awoc.slot_dictionary)
+		# Emit the signal - the global_manager will handle initializing the resource managers
 		awoc_loaded.emit(awoc_name)
 		return true
 	return false

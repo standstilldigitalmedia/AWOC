@@ -46,9 +46,9 @@ func _on_create_button_pressed() -> void:
 	var additional_data := {"path": asset_path_line_edit.text}
 	var signal_bus: AWOCGlobalSignalBus = AWOCEditorGlobal.get_signal_bus()
 	if !signal_bus:
+		disable_inputs(false)
 		return
 	signal_bus.create_new_resource_requested.emit(AWOCResourceType.Type.AWOC, name_line_edit.text, additional_data)
-	reset_inputs()
 
 
 func _on_name_line_edit_text_changed(_new_text: String) -> void:
@@ -88,12 +88,13 @@ func _on_new_awoc_created(resource_type: AWOCResourceType.Type, result: String) 
 			set_error(result)
 			disable_inputs(false)
 
+func _on_resource_modified(resource_type: AWOCResourceType.Type, result: String) -> void:
+	if resource_type == AWOCResourceType.Type.AWOC:
+		modified_resource("New AWOC Created Successfully", result)
+		
 
 func _ready() -> void:
-	set_error()
 	create_button.disabled = true
 	file_dialog.file_mode = FileDialog.FILE_MODE_OPEN_DIR
 	file_dialog.access = FileDialog.ACCESS_RESOURCES
-	var signal_bus: AWOCGlobalSignalBus = AWOCEditorGlobal.get_signal_bus()
-	if signal_bus:
-		signal_bus.resource_modified.connect(_on_new_awoc_created)
+	super._ready()
