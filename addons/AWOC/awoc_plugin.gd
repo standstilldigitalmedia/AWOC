@@ -44,30 +44,30 @@ func create_dock():
 	if dock != null:
 		push_warning("AWOC: Dock already exists, skipping creation")
 		return
-	dock = Control.new()
 	main_editor_window_scene = load(main_editor_path)
 	if main_editor_window_scene:
 		var main_editor_window := main_editor_window_scene.instantiate() as AWOCMainEditorInterface
 		if main_editor_window != null:
-			dock.add_child(main_editor_window)
+			dock = main_editor_window
 			dock.name = "AWOC"
-			add_control_to_dock(DOCK_SLOT_LEFT_UR, dock)
+			dock.set_anchors_preset(Control.PRESET_FULL_RECT)
+			dock.size_flags_horizontal = Control.SIZE_FILL | Control.SIZE_EXPAND
+			dock.size_flags_vertical = Control.SIZE_FILL | Control.SIZE_EXPAND
+			get_editor_interface().get_editor_main_screen().add_child(dock)
+			dock.hide()
+		else:
+			push_error("AWOC: Failed to instantiate main editor scene as AWOCMainEditorInterface")
 	else:
 		push_error("AWOC: Could not load main editor scene at " + main_editor_path)
 
 
 func destroy_dock():
 	if dock != null:
-		remove_control_from_docks(dock)
-		dock.free()
+		dock.queue_free()
+		dock = null
 
 
-func _enter_tree() -> void:
-	update_plugin_path()
-	set_autoloader_paths()
-	load_autoload(signal_bus_name, signal_bus_path)
-	load_autoload(awoc_state_name, awoc_state_path)
-	load_autoload(awoc_manager_name, awoc_manager_path)
+func _deferred_initialization() -> void:
 	await get_tree().process_frame
 	await get_tree().process_frame
 	if not is_inside_tree():
@@ -76,11 +76,41 @@ func _enter_tree() -> void:
 	create_dock()
 
 
+func _enter_tree() -> void:
+	update_plugin_path()
+	set_autoloader_paths()
+	load_autoload(signal_bus_name, signal_bus_path)
+	load_autoload(awoc_state_name, awoc_state_path)
+	load_autoload(awoc_manager_name, awoc_manager_path)
+	_deferred_initialization()
+
+
 func _exit_tree() -> void:
 	destroy_dock()
-	
-	
+
+
 func _disable_plugin() -> void:
 	unload_autoload(awoc_state_name)
 	unload_autoload(awoc_manager_name)
 	unload_autoload(signal_bus_name)
+
+
+func _has_main_screen() -> bool:
+	return true
+
+
+func _make_visible(visible: bool) -> void:
+	if dock:
+		dock.visible = visible
+	else:
+		push_warning("AWOC: _make_visible called but dock is null (initialization may not be complete)")
+
+
+func _get_plugin_name() -> String:
+	return "AWOC"
+
+
+func _get_plugin_icon() -> Texture2D:
+	# Return null to use default icon, or load a custom icon
+	# Example: return preload("res://addons/AWOC/icon.svg")
+	return null
