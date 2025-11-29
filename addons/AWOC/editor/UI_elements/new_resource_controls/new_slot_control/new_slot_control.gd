@@ -33,11 +33,11 @@ func validate() -> void:
 
 func _on_create_button_pressed() -> void:
 	disable_inputs(true)
-	var signal_bus: AWOCGlobalSignalBus = AWOCEditorGlobal.get_signal_bus()
-	if !signal_bus:
+	var global_manager: AWOCGlobalManager = AWOCEditorGlobal.get_awoc_manager()
+	if global_manager:
+		await global_manager.create_resource(AWOCResourceType.Type.SLOT, name_line_edit.text, {})
+	else:
 		disable_inputs(false)
-		return
-	signal_bus.create_new_resource_requested.emit(AWOCResourceType.Type.SLOT, name_line_edit.text, {})
 
 
 func _on_name_line_edit_text_changed(_new_text: String) -> void:

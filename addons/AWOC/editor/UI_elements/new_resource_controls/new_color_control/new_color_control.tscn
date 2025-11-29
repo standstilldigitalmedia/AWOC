@@ -36,6 +36,7 @@ custom_minimum_size = Vector2(31, 0)
 layout_mode = 2
 
 [node name="ErrorLabel" type="Label" parent="."]
+visible = false
 custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0, 0, 1)
@@ -45,8 +46,8 @@ autowrap_mode = 3
 
 [node name="CreateButton" type="Button" parent="."]
 layout_mode = 2
+disabled = true
 text = "Create Color"
 
 [connection signal="text_changed" from="HBoxContainer/NameLineEdit" to="." method="_on_name_line_edit_text_changed"]
-[connection signal="color_changed" from="HBoxContainer/ColorPickerButton" to="." method="_on_color_picker_button_color_changed"]
 [connection signal="pressed" from="CreateButton" to="." method="_on_create_button_pressed"]

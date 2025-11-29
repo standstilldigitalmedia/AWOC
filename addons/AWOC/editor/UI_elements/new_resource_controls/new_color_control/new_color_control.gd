@@ -34,11 +34,11 @@ func validate() -> void:
 func _on_create_button_pressed() -> void:
 	disable_inputs(true)
 	var additional_data := {AWOCEditorGlobal.ADDITIONAL_DATA_COLOR: color_picker_button.color}
-	var signal_bus: AWOCGlobalSignalBus = AWOCEditorGlobal.get_signal_bus()
-	if !signal_bus:
+	var global_manager: AWOCGlobalManager = AWOCEditorGlobal.get_awoc_manager()
+	if global_manager:
+		await global_manager.create_resource(AWOCResourceType.Type.COLOR, name_line_edit.text, additional_data)
+	else:
 		disable_inputs(false)
-		return
-	signal_bus.create_new_resource_requested.emit(AWOCResourceType.Type.COLOR, name_line_edit.text, additional_data)
 
 
 func _on_name_line_edit_text_changed(_new_text: String) -> void:
@@ -64,10 +64,6 @@ func _on_resource_modified(resource_type: AWOCResourceType.Type, result: String)
 		modified_resource("New AWOC Created Successfully", result)
 		
 
-func _on_color_picker_button_color_changed(color: Color) -> void:
-	pass # Replace with function body.
-	
-	
 func _ready() -> void:
 	create_button.disabled = true
 	super._ready()

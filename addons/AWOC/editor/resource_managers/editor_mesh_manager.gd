@@ -110,7 +110,6 @@ func add_new_avatar(path: String) -> String:
 		var skeleton: Skeleton3D = recursive_get_skeleton(avatar)
 		if skeleton:
 			var result = await scan_imported_scene(avatar)
-			# Clean up the instantiated avatar
 			avatar.queue_free()
 			return result
 		else:

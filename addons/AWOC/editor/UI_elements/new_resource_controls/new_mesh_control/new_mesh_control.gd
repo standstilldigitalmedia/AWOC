@@ -40,9 +40,10 @@ func _on_file_dialog_file_selected(path: String) -> void:
 
 
 func _on_add_meshes_button_pressed() -> void:
-	var signal_bus: AWOCGlobalSignalBus = AWOCEditorGlobal.get_signal_bus()
-	if signal_bus:
-		signal_bus.create_new_resource_requested.emit(AWOCResourceType.Type.MESH, "", {"path": model_path_line_edit.text})
+	disable_inputs(true)
+	var global_manager: AWOCGlobalManager = AWOCEditorGlobal.get_awoc_manager()
+	if global_manager:
+		await global_manager.create_resource(AWOCResourceType.Type.MESH, "", {"path": model_path_line_edit.text})
 
 
 func _on_resource_modified(resource_type: AWOCResourceType.Type, result: String) -> void:

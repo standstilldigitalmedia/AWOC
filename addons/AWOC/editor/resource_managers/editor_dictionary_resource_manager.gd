@@ -5,30 +5,43 @@ extends Resource
 @export var parent_resource_dictionary: Dictionary
 var parent_resource: Resource
 var parent_uid: int
+var parent_resource_path: String
+var use_uid_priority: bool = true 
 
 
-func add_disk_resource_to_dictionary_with_path(res_name: String, uid: int, res_path: String) -> String:
-	var res_validated: String = validate_new_res(res_name)
-	if !res_validated.is_empty():
-		return res_validated
-	var resource_reference: AWOCResourceReference = AWOCResourceReference.new()
-	resource_reference.set_uid(uid)
-	resource_reference.set_ref_path(res_path)  # Explicitly set the path!
-	parent_resource_dictionary[res_name] = resource_reference
-	var save_parent: String = save_parent_resource()
-	if !save_parent.is_empty():
-		return save_parent
-	return ""
-
-
-func init_resource_manager(p_resource: Resource, p_uid: int, r_dictionary: Dictionary) -> void:
+func init_resource_manager(p_resource: Resource, p_uid: int, r_dictionary: Dictionary, p_path: String = "") -> void:
 	parent_resource = p_resource
 	parent_uid = p_uid
 	parent_resource_dictionary = r_dictionary
+	parent_resource_path = p_path
 
 
 func save_parent_resource() -> String:
-	var resource_saved := ResourceSaver.save(parent_resource, ResourceUID.get_id_path(parent_uid))
+	var save_path: String = ""
+
+	if use_uid_priority:
+
+		if parent_uid != ResourceUID.INVALID_ID:
+			var uid_path = ResourceUID.get_id_path(parent_uid)
+			if !uid_path.is_empty() and FileAccess.file_exists(uid_path):
+				save_path = uid_path
+
+		if save_path.is_empty() and !parent_resource_path.is_empty():
+			save_path = parent_resource_path
+	else:
+
+		if !parent_resource_path.is_empty():
+			save_path = parent_resource_path
+
+		elif parent_uid != ResourceUID.INVALID_ID:
+			var uid_path = ResourceUID.get_id_path(parent_uid)
+			if !uid_path.is_empty() and FileAccess.file_exists(uid_path):
+				save_path = uid_path
+
+	if save_path.is_empty():
+		return "Cannot save parent resource: no valid path available"
+
+	var resource_saved := ResourceSaver.save(parent_resource, save_path)
 	if resource_saved != OK:
 		return error_string(resource_saved)
 	return ""
@@ -43,37 +56,43 @@ func validate_new_res(res_name: String) -> String:
 
 
 func validate_delete_res(res_name: String) -> String:
-	if !AWOCValidator.is_valid_name(res_name):
-		return "The name " + res_name + " is not valid"
 	if !parent_resource_dictionary.has(res_name):
 		return "Resource " + res_name + " does not exist."
 	return ""
 
 
 func validate_rename_res(old_name: String, new_name: String) -> String:
-	if !AWOCValidator.is_valid_name(old_name):
-		return "The name " + old_name + " is not valid"
+	if !parent_resource_dictionary.has(old_name):
+		return "Resource " + old_name + " does not exist."
 	if !AWOCValidator.is_valid_name(new_name):
 		return "The name " + new_name + " is not valid"
 	if old_name == new_name:
 		return "New name is the same as the old name"
-	if !parent_resource_dictionary.has(old_name):
-		return "Resource " + old_name + " does not exist in res dictionary."
-	for name in parent_resource_dictionary:
-		if name == new_name:
-			return "A resource named " + new_name + " already exists."
+	if parent_resource_dictionary.has(new_name):
+		return "A resource named " + new_name + " already exists."
 	return ""
 
 
-func add_disk_resource_to_dictionary(res_name: String, uid: int) -> String:
+func add_disk_resource_to_dictionary(res_name: String, uid: int, full_path: String = "") -> String:
 	var res_validated: String = validate_new_res(res_name)
 	if !res_validated.is_empty():
 		return res_validated
+
+	var ref_path: String = ""
+	if !full_path.is_empty():
+
+		if !AWOCValidator.is_valid_path_string(full_path):
+			return "Invalid path provided: " + full_path
+		ref_path = full_path
+	else:
+
+		ref_path = ResourceUID.get_id_path(uid)
+
 	var resource_reference: AWOCResourceReference = AWOCResourceReference.new()
 	resource_reference.set_uid(uid)
-	var ref_path = ResourceUID.get_id_path(uid)
-	if not ref_path.is_empty():
+	if !ref_path.is_empty():
 		resource_reference.set_ref_path(ref_path)
+
 	parent_resource_dictionary[res_name] = resource_reference
 	var save_parent: String = save_parent_resource()
 	if !save_parent.is_empty():
@@ -81,7 +100,7 @@ func add_disk_resource_to_dictionary(res_name: String, uid: int) -> String:
 	return ""
 
 
-func add_resource_to_dictionary(res_name: String, res: Resource) -> String:
+func add_resource_to_dictionary(res_name: String, res: Variant) -> String:
 	var res_validated: String = validate_new_res(res_name)
 	if !res_validated.is_empty():
 		return res_validated

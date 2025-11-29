@@ -19,7 +19,7 @@ func validate() -> void:
 		rename_button.disabled = true
 
 
-func set_control(name: String, type: AWOCResourceType.Type) -> void:
+func set_control(name: String, type: AWOCResourceType.Type, additional_data: Variant = null) -> void:
 	previous_name = name
 	resource_type = type
 	name_line_edit.text = name
@@ -43,13 +43,13 @@ func _on_delete_button_pressed() -> void:
 
 
 func _on_rename_confirmation_dialog_confirmed() -> void:
-	var signal_bus: AWOCGlobalSignalBus = AWOCEditorGlobal.get_signal_bus()
-	if signal_bus:
-		signal_bus.rename_resource_requested.emit(resource_type, previous_name, name_line_edit.text)
+	var global_manager: AWOCGlobalManager = AWOCEditorGlobal.get_awoc_manager()
+	if global_manager:
+		await global_manager.rename_resource(resource_type, previous_name, name_line_edit.text)
 
 
 func _on_delete_confirmation_dialog_confirmed() -> void:
-	var signal_bus: AWOCGlobalSignalBus = AWOCEditorGlobal.get_signal_bus()
-	if signal_bus:
-		signal_bus.delete_resource_requested.emit(resource_type, previous_name)
+	var global_manager: AWOCGlobalManager = AWOCEditorGlobal.get_awoc_manager()
+	if global_manager:
+		await global_manager.delete_resource(resource_type, previous_name)
 		

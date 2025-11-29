@@ -43,7 +43,7 @@ func get_sorted_name_array(resource_type: AWOCResourceType.Type) -> Array[String
 	return manager.get_sorted_name_array()
 
 
-func _on_create_resource_requested(
+func create_resource(
 	resource_type: AWOCResourceType.Type, resource_name: String, additional_data: Dictionary
 ) -> void:
 	var manager = _get_manager_for_type(resource_type)
@@ -56,7 +56,7 @@ func _on_create_resource_requested(
 		signal_bus.resource_modified.emit(resource_type, result)
 
 
-func _on_rename_resource_requested(
+func rename_resource(
 	resource_type: AWOCResourceType.Type, old_name: String, new_name: String
 ) -> void:
 	var manager = _get_manager_for_type(resource_type)
@@ -70,7 +70,7 @@ func _on_rename_resource_requested(
 		signal_bus.resource_modified.emit(resource_type, result)
 
 
-func _on_delete_resource_requested(resource_type: AWOCResourceType.Type, resource_name: String) -> void:
+func delete_resource(resource_type: AWOCResourceType.Type, resource_name: String) -> void:
 	var manager = _get_manager_for_type(resource_type)
 	if !manager:
 		push_error("No manager found for resource type: " + str(resource_type))
@@ -79,6 +79,22 @@ func _on_delete_resource_requested(resource_type: AWOCResourceType.Type, resourc
 	var signal_bus: AWOCGlobalSignalBus = AWOCEditorGlobal.get_signal_bus()
 	if signal_bus:
 		signal_bus.resource_modified.emit(resource_type, result)
+
+
+func update_color(color_name: String, new_color: Color) -> void:
+	if !color_resource_manager:
+		push_error("Color resource manager not found")
+		return
+	var result: String = await color_resource_manager.update_color(color_name, new_color)
+	if !result.is_empty():
+		push_error("Failed to update color: " + result)
+
+
+func get_color(color_name: String) -> Color:
+	if !color_resource_manager:
+		push_error("Color resource manager not found")
+		return Color.WHITE
+	return color_resource_manager.get_color(color_name)
 
 
 func _on_awoc_loaded(awoc_name: String) -> void:
@@ -94,13 +110,14 @@ func _on_awoc_loaded(awoc_name: String) -> void:
 	if awoc_uid <= 0:
 		push_error("Invalid AWOC UID for: " + awoc_name)
 		return
+	var awoc_path = awoc_resource_manager.get_awoc_path(awoc_name)
 	if current_awoc.slot_dictionary == null:
 		current_awoc.slot_dictionary = {}
 	if current_awoc.mesh_dictionary == null:
 		current_awoc.mesh_dictionary = {}
-	slot_resource_manager.init_resource_manager(current_awoc, awoc_uid, current_awoc.slot_dictionary)
-	mesh_resource_manager.init_resource_manager(current_awoc, awoc_uid, current_awoc.mesh_dictionary)
-	color_resource_manager.init_resource_manager(current_awoc, awoc_uid, current_awoc.color_dictionary)
+	slot_resource_manager.init_resource_manager(current_awoc, awoc_uid, current_awoc.slot_dictionary, awoc_path)
+	mesh_resource_manager.init_resource_manager(current_awoc, awoc_uid, current_awoc.mesh_dictionary, awoc_path)
+	color_resource_manager.init_resource_manager(current_awoc, awoc_uid, current_awoc.color_dictionary, awoc_path)
 	awoc_state.awoc_resource_managers_ready.emit()
 
 
@@ -109,11 +126,6 @@ func _ready() -> void:
 	slot_resource_manager = AWOCEditorSlotManager.new()
 	mesh_resource_manager = AWOCEditorMeshManager.new()
 	color_resource_manager = AWOCEditorColorResourceManager.new()
-	var signal_bus: AWOCGlobalSignalBus = AWOCEditorGlobal.get_signal_bus()
-	if signal_bus:
-		signal_bus.create_new_resource_requested.connect(_on_create_resource_requested)
-		signal_bus.delete_resource_requested.connect(_on_delete_resource_requested)
-		signal_bus.rename_resource_requested.connect(_on_rename_resource_requested)
 	var awoc_state = AWOCEditorGlobal.get_awoc_state()
 	if awoc_state:
 		awoc_state.awoc_loaded.connect(_on_awoc_loaded)

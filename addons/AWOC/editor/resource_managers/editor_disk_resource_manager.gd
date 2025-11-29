@@ -77,10 +77,10 @@ func create_resource_on_disk(resource: Resource, res_name: String, path: String,
 	var dir_created: String = create_dir_for_file_path(full_path)
 	if !dir_created.is_empty():
 		return dir_created
-	var uid = await save_resource(resource,full_path) 
+	var uid = await save_resource(resource,full_path)
 	if uid == ResourceUID.INVALID_ID:
 		return "Failed to get UID for newly created resource: " + full_path
-	return add_disk_resource_to_dictionary(res_name, uid)
+	return add_disk_resource_to_dictionary(res_name, uid, full_path)
 
 
 func delete_resource_from_disk(res_name: String) -> String:

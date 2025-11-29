@@ -67,9 +67,20 @@ func init_library_manager() -> void:
 		parent_resource_dictionary = typed_dict
 		return
 	var full_file_path: String = AWOCEditorGlobal.plugin_path.path_join(AWOCEditorGlobal.WELCOME_BASE_PATH + AWOCEditorGlobal.WELCOME_FILE_NAME)
+
+	parent_resource = ResourceLoader.load(full_file_path, "", ResourceLoader.CACHE_MODE_IGNORE) as AWOCLibrary
+	if !parent_resource:
+		push_error("Failed to reload welcome resource from: " + full_file_path)
+		return
+
 	parent_uid = ResourceLoader.get_resource_uid(full_file_path)
 	if parent_uid == ResourceUID.INVALID_ID:
 		push_warning("Welcome resource has invalid UID")
+
+	parent_resource_path = full_file_path
+
+	use_uid_priority = false
+
 	parent_resource_dictionary = parent_resource.awoc_resource_reference_dictionary
 	if !parent_resource_dictionary:
 		push_warning("Welcome resource dictionary is null, initializing to empty")
