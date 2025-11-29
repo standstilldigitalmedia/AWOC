@@ -169,8 +169,6 @@ func _on_show_mesh(mesh_name: String, show: bool) -> void:
 			return
 		preview_avatar.initialize_avatar(awoc_state.current_awoc)
 	preview_avatar.toggle_mesh(mesh_name, show)
-	if show:
-		show()
 
 
 func _ready() -> void:

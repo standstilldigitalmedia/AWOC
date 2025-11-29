@@ -1,64 +1,176 @@
-[gd_scene load_steps=5 format=3 uid="uid://byd7gfpljhp2q"]
+[gd_scene load_steps=8 format=3 uid="uid://byd7gfpljhp2q"]
 
 [ext_resource type="Script" uid="uid://cy5c6bsueadn3" path="res://addons/AWOC/editor/UI_elements/main_editor_interface/main_editor_interface.gd" id="1_4oqix"]
 [ext_resource type="PackedScene" uid="uid://bojjuauhlxp21" path="res://addons/AWOC/editor/UI_elements/tabs/welcome_tab/welcome_tab.tscn" id="2_tv30v"]
 [ext_resource type="PackedScene" uid="uid://bbubufxjfxgfk" path="res://addons/AWOC/editor/UI_elements/tab_container/tab_container.tscn" id="3_0syea"]
 [ext_resource type="PackedScene" uid="uid://7v1ni6wfy8to" path="res://addons/AWOC/editor/UI_elements/preview/preview.tscn" id="4_nkex8"]
+[ext_resource type="PackedScene" uid="uid://c3y8qh0m7vw8q" path="res://addons/AWOC/editor/UI_elements/details/details.tscn" id="5_details"]
 
-[node name="MainEditorInterface" type="HBoxContainer" node_paths=PackedStringArray("tab_label", "welcome_tab", "tab_container", "preview_container")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_main"]
+bg_color = Color(1, 1, 1, 0.0392157)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_preview"]
+bg_color = Color(1, 1, 1, 0.0392157)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_details"]
+bg_color = Color(1, 1, 1, 0.0392157)
+
+[node name="MainEditorInterface" type="MarginContainer" node_paths=PackedStringArray("tab_label", "welcome_tab", "tab_container", "preview_container", "details_container", "main_panel", "preview_panel", "details_panel", "logo_container", "preview_placeholder", "details_placeholder", "logo_texture")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 script = ExtResource("1_4oqix")
-tab_label = NodePath("ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/TabLabel")
-welcome_tab = NodePath("ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/WelcomeTab")
-tab_container = NodePath("ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/TabContainer")
-preview_container = NodePath("Preview")
+tab_label = NodePath("HBoxContainer/MainPanel/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/TabLabel")
+welcome_tab = NodePath("HBoxContainer/MainPanel/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/WelcomeTab")
+tab_container = NodePath("HBoxContainer/MainPanel/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/TabContainer")
+preview_container = NodePath("HBoxContainer/PreviewPanel/Preview")
+details_container = NodePath("HBoxContainer/DetailsPanel/Details")
+main_panel = NodePath("HBoxContainer/MainPanel")
+preview_panel = NodePath("HBoxContainer/PreviewPanel")
+details_panel = NodePath("HBoxContainer/DetailsPanel")
+logo_container = NodePath("HBoxContainer/LogoContainer")
+preview_placeholder = NodePath("HBoxContainer/PreviewPanel/PreviewPlaceholder")
+details_placeholder = NodePath("HBoxContainer/DetailsPanel/DetailsPlaceholder")
+logo_texture = NodePath("HBoxContainer/LogoContainer/CenterContainer/TextureRect")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="MainPanel" type="PanelContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_main")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/MainPanel"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/MainPanel/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="HomeButton" type="Button" parent="ScrollContainer/VBoxContainer"]
+[node name="HomeButton" type="Button" parent="HBoxContainer/MainPanel/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 text = "AWOC"
 
-[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/MainPanel/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_right = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/MainPanel/ScrollContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 10
 
-[node name="TabLabel" type="Label" parent="ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+[node name="TabLabel" type="Label" parent="HBoxContainer/MainPanel/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
 text = "Welcome"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="WelcomeTab" parent="ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("2_tv30v")]
+[node name="WelcomeTab" parent="HBoxContainer/MainPanel/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("2_tv30v")]
 layout_mode = 2
 
-[node name="TabContainer" parent="ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("3_0syea")]
+[node name="TabContainer" parent="HBoxContainer/MainPanel/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("3_0syea")]
 visible = false
 layout_mode = 2
 
-[node name="Preview" parent="." instance=ExtResource("4_nkex8")]
+[node name="PreviewPanel" type="PanelContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.5
+theme_override_styles/panel = SubResource("StyleBoxFlat_preview")
+
+[node name="Preview" parent="HBoxContainer/PreviewPanel" instance=ExtResource("4_nkex8")]
+visible = false
+layout_mode = 2
+
+[node name="PreviewPlaceholder" type="VBoxContainer" parent="HBoxContainer/PreviewPanel"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 4
 
-[connection signal="pressed" from="ScrollContainer/VBoxContainer/HomeButton" to="." method="_on_home_button_pressed"]
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/PreviewPanel/PreviewPlaceholder"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+
+[node name="TitleLabel" type="Label" parent="HBoxContainer/PreviewPanel/PreviewPlaceholder/MarginContainer"]
+layout_mode = 2
+text = "Preview"
+horizontal_alignment = 1
+
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/PreviewPanel/PreviewPlaceholder"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MessageLabel" type="Label" parent="HBoxContainer/PreviewPanel/PreviewPlaceholder/CenterContainer"]
+layout_mode = 2
+text = "Nothing to preview at this time"
+
+[node name="DetailsPanel" type="PanelContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.5
+theme_override_styles/panel = SubResource("StyleBoxFlat_details")
+
+[node name="Details" parent="HBoxContainer/DetailsPanel" instance=ExtResource("5_details")]
+visible = false
+layout_mode = 2
+
+[node name="DetailsPlaceholder" type="VBoxContainer" parent="HBoxContainer/DetailsPanel"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/DetailsPanel/DetailsPlaceholder"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+
+[node name="TitleLabel" type="Label" parent="HBoxContainer/DetailsPanel/DetailsPlaceholder/MarginContainer"]
+layout_mode = 2
+text = "Details"
+horizontal_alignment = 1
+
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/DetailsPanel/DetailsPlaceholder"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MessageLabel" type="Label" parent="HBoxContainer/DetailsPanel/DetailsPlaceholder/CenterContainer"]
+layout_mode = 2
+text = "No Details to view at this time"
+
+[node name="LogoContainer" type="PanelContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 7.0
+
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer/LogoContainer"]
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/LogoContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/LogoContainer/CenterContainer"]
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[connection signal="pressed" from="HBoxContainer/MainPanel/ScrollContainer/VBoxContainer/HomeButton" to="." method="_on_home_button_pressed"]
