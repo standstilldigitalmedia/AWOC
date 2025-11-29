@@ -10,10 +10,8 @@ extends MarginContainer
 @export var main_panel: PanelContainer
 @export var preview_panel: PanelContainer
 @export var details_panel: PanelContainer
-@export var logo_container: PanelContainer
 @export var preview_placeholder: VBoxContainer
 @export var details_placeholder: VBoxContainer
-@export var logo_texture: TextureRect
 
 var preview_has_content: bool = false
 var details_has_content: bool = false
@@ -24,13 +22,7 @@ func _ready() -> void:
 	preview_container.hide()
 	details_container.hide()
 
-	# Load the AWOC logo
-	var logo_path: String = "res://addons/AWOC/editor/images/AWOC_logo.png"
-	var logo: Texture2D = load(logo_path)
-	if logo:
-		logo_texture.texture = logo
-
-	# Initial state: show logo
+	# Initial state
 	_update_visibility_state()
 
 	var awoc_state: AWOCGlobalState = AWOCEditorGlobal.get_awoc_state()
@@ -68,29 +60,18 @@ func _on_details_content_changed(has_content: bool) -> void:
 
 ## Updates visibility of all right-side panels based on content state
 func _update_visibility_state() -> void:
-	if not preview_has_content and not details_has_content:
-		# Neither has content: show logo spanning both areas
-		preview_panel.hide()
-		details_panel.hide()
-		logo_container.show()
+	# Update preview panel
+	if preview_has_content:
+		preview_container.show()
+		preview_placeholder.hide()
 	else:
-		# At least one has content: hide logo, show individual panels
-		logo_container.hide()
-		preview_panel.show()
-		details_panel.show()
+		preview_container.hide()
+		preview_placeholder.show()
 
-		# Update preview panel
-		if preview_has_content:
-			preview_container.show()
-			preview_placeholder.hide()
-		else:
-			preview_container.hide()
-			preview_placeholder.show()
-
-		# Update details panel
-		if details_has_content:
-			details_container.show()
-			details_placeholder.hide()
-		else:
-			details_container.hide()
-			details_placeholder.show()
+	# Update details panel
+	if details_has_content:
+		details_container.show()
+		details_placeholder.hide()
+	else:
+		details_container.hide()
+		details_placeholder.show()

@@ -15,7 +15,7 @@ bg_color = Color(1, 1, 1, 0.0392157)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_details"]
 bg_color = Color(1, 1, 1, 0.0392157)
 
-[node name="MainEditorInterface" type="MarginContainer" node_paths=PackedStringArray("tab_label", "welcome_tab", "tab_container", "preview_container", "details_container", "main_panel", "preview_panel", "details_panel", "logo_container", "preview_placeholder", "details_placeholder", "logo_texture")]
+[node name="MainEditorInterface" type="MarginContainer" node_paths=PackedStringArray("tab_label", "welcome_tab", "tab_container", "preview_container", "details_container", "main_panel", "preview_panel", "details_panel", "preview_placeholder", "details_placeholder")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -34,10 +34,8 @@ details_container = NodePath("HBoxContainer/DetailsPanel/Details")
 main_panel = NodePath("HBoxContainer/MainPanel")
 preview_panel = NodePath("HBoxContainer/PreviewPanel")
 details_panel = NodePath("HBoxContainer/DetailsPanel")
-logo_container = NodePath("HBoxContainer/LogoContainer")
 preview_placeholder = NodePath("HBoxContainer/PreviewPanel/PreviewPlaceholder")
 details_placeholder = NodePath("HBoxContainer/DetailsPanel/DetailsPlaceholder")
-logo_texture = NodePath("HBoxContainer/LogoContainer/CenterContainer/TextureRect")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -155,22 +153,5 @@ size_flags_vertical = 3
 [node name="MessageLabel" type="Label" parent="HBoxContainer/DetailsPanel/DetailsPlaceholder/CenterContainer"]
 layout_mode = 2
 text = "No Details to view at this time"
-
-[node name="LogoContainer" type="PanelContainer" parent="HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 7.0
-
-[node name="ColorRect" type="ColorRect" parent="HBoxContainer/LogoContainer"]
-layout_mode = 2
-color = Color(0, 0, 0, 1)
-
-[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/LogoContainer"]
-layout_mode = 2
-
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/LogoContainer/CenterContainer"]
-layout_mode = 2
-expand_mode = 1
-stretch_mode = 5
 
 [connection signal="pressed" from="HBoxContainer/MainPanel/ScrollContainer/VBoxContainer/HomeButton" to="." method="_on_home_button_pressed"]
