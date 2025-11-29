@@ -4,8 +4,9 @@
 [ext_resource type="Script" uid="uid://no6is73jh68x" path="res://addons/AWOC/editor/UI_elements/row_management/mesh_row_management/mesh_row_management.gd" id="2_b4hrf"]
 [ext_resource type="PackedScene" uid="uid://cpb7hk2t83lbe" path="res://addons/AWOC/editor/UI_elements/row_management/eye_button/eye_button.tscn" id="5_b4hrf"]
 
-[node name="MeshRowManagement" instance=ExtResource("1_wwpag")]
+[node name="MeshRowManagement" node_paths=PackedStringArray("eye_button") instance=ExtResource("1_wwpag")]
 script = ExtResource("2_b4hrf")
+eye_button = NodePath("MarginContainer/VBoxContainer/HBoxContainer/EyeButton")
 
 [node name="EyeButton" parent="MarginContainer/VBoxContainer/HBoxContainer" index="3" instance=ExtResource("5_b4hrf")]
 layout_mode = 2
